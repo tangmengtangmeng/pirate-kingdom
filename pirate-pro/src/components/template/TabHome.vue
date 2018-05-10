@@ -1,6 +1,7 @@
 <template>
-  <div class="tab-home" :style="{'height':ContainerHeight}">
-    {{msg}}
+  <div class="tab-home">
+    <div class="introduce" :style="{'height':introduceheight}">{{msg}}</div>
+    <div class="players" :style="{'height':playersheight}">{{msg}}</div>
   </div>
 </template>
 
@@ -9,16 +10,18 @@ export default {
   name: 'TabHome',
   data () {
     return {
-      msg: '我是TabHome'
-
+      msg: '我是TabHome',
+      introduceheight: '',
+      playersheight: ''
     }
   },
   created:function(){
-    var screenHeight = document.documentElement.clientHeight;
-    var headerHeight = 150;
-    var footerHeight = 250;
-    this.ContainerHeight = screenHeight - headerHeight - footerHeight+ 'px';
-    console.log("iiiiii",this.ContainerHeight,screenHeight);
+    
+  },
+  mounted:function(){
+    var screenwidth = document.documentElement.clientWidth;
+    this.introduceheight = screenwidth / 1910 * 824 + "px";
+    this.playersheight = screenwidth / 1910 * 821 + "px";
   }
 }
 </script>
@@ -28,7 +31,16 @@ export default {
 .tab-home{
   width: 100%;
   height: auto;
-  background: #f4f8fb;
-  color: #333;
+  color: #fff;
+}
+.introduce{
+  width: 100%;
+  background: url("../../assets/introduce.png") left top no-repeat;
+  background-size: cover;
+}
+.players{
+  width: 100%;
+  background: url("../../assets/players.png") left top no-repeat;
+  background-size: cover;
 }
 </style>

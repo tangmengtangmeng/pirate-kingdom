@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :style="{'height':appheight}">
     <HeaderBanner></HeaderBanner>
     <router-view/>
     <FooterBar></FooterBar>
@@ -15,6 +15,14 @@ export default {
   components: {
     HeaderBanner,
     FooterBar
+  },
+  data () {
+    return {
+      appheight:""
+    }
+  },
+  mounted:function(){
+      this.appheight = document.documentElement.clientHeight + "px";
   }
 }
 </script>

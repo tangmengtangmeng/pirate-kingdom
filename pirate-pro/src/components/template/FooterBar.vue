@@ -1,5 +1,5 @@
 <template>
-  <div class="footer-bar">
+  <div class="footer-bar" :style="{'height':footerHeight}">
     {{msg}}
   </div>
 </template>
@@ -9,8 +9,13 @@ export default {
   name: 'FooterBar',
   data () {
     return {
-      msg: 'FooterBar'
+      msg: 'FooterBar',
+      footerHeight: ''
     }
+  },
+  mounted:function(){
+    this.footerHeight = parseInt(document.documentElement.clientWidth) / 1908 * 498 + "px";
+    console.log("footerHeight",this.footerHeight);
   }
 }
 </script>
@@ -19,10 +24,7 @@ export default {
 <style scoped>
 .footer-bar{
   width: 100%;
-  height: 250px;
   background: #000;
   color: #fff;
-  position: fixed;
-  bottom:0;
 }
 </style>
