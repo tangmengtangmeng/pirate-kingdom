@@ -9,12 +9,12 @@ export default {
   name: 'TabChannel2',
   data () {
     return {
-      msg: '我是TabChannel2',
+      msg: '我是TabChannel2'
 
     }
   },
   created:function(){
-    var screenHeight = document.documentElement.clientHeight || docuemnt.body.clientHeight;
+    var screenHeight = document.documentElement.clientHeight;
     var headerHeight = 150;
     var footerHeight = 250;
     this.ContainerHeight = screenHeight - headerHeight - footerHeight+ 'px';

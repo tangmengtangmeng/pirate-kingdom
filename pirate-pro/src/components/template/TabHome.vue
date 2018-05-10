@@ -9,12 +9,12 @@ export default {
   name: 'TabHome',
   data () {
     return {
-      msg: '我是TabHome',
+      msg: '我是TabHome'
 
     }
   },
   created:function(){
-    var screenHeight = document.documentElement.clientHeight || docuemnt.body.clientHeight;
+    var screenHeight = document.documentElement.clientHeight;
     var headerHeight = 150;
     var footerHeight = 250;
     this.ContainerHeight = screenHeight - headerHeight - footerHeight+ 'px';
