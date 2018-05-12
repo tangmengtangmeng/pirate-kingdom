@@ -27,7 +27,8 @@ export default {
       msg: 'HeaderBanner',
       topheight: '',
       topbannerheight: '',
-      topnavheight: ''
+      topnavheight: '',
+      
     }
   },
   mounted:function(){
@@ -38,6 +39,7 @@ export default {
     this.topbannerheight = parseInt(screenwidth) / 1910 * 810 + "px";
     this.topnavheight = parseInt(screenwidth) / 1910 * (890 - 810) + "px";
     console.log("topbannerheight",screenwidth);
+    
   }
 }
 </script>
@@ -46,6 +48,7 @@ export default {
 <style scoped>
   .header-banner{
     width: 100%;
+    color: #fff;
   }
   .topbanner{
     width: 100%;

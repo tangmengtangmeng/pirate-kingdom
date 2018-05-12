@@ -1,7 +1,7 @@
 <template>
   <div class="tab-home">
-    <div class="introduce" :style="{'height':introduceheight}">{{msg}}</div>
     <div class="players" :style="{'height':playersheight}">{{msg}}</div>
+    <div class="introduce" :style="{'height':introduceheight}">{{msg}}</div>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   name: 'TabHome',
   data () {
     return {
-      msg: '我是TabHome',
+      msg: this.$t("message.tabhome"),
       introduceheight: '',
       playersheight: ''
     }
@@ -20,8 +20,8 @@ export default {
   },
   mounted:function(){
     var screenwidth = document.documentElement.clientWidth;
-    this.introduceheight = screenwidth / 1910 * 824 + "px";
-    this.playersheight = screenwidth / 1910 * 821 + "px";
+    this.introduceheight = screenwidth / 1910 * 760 + "px";
+    this.playersheight = screenwidth / 1910 * 880 + "px";
   }
 }
 </script>

@@ -156,7 +156,6 @@ template {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background:#000; /*不支持背景色渐变的情况*/
-  background:linear-gradient(top, #000, rgba(0, 0, 0, 0.95));
   background:-o-linear-gradient(top, #000, rgba(0, 0, 0, 0.95)); /*opera*/
   background:-ms-linear-gradient(top, #000, rgba(0, 0, 0, 0.95)); /*ie*/ 
   background:-moz-linear-gradient(top, #000, rgba(0, 0, 0, 0.95));  /*firefox*/ 
