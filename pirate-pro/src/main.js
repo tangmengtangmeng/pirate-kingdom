@@ -24,6 +24,7 @@ const i18n = new VueI18n({
 })
 
 /* eslint-disable no-new */
+// 试一试提交
 new Vue({
   el: '#app',
   router,
