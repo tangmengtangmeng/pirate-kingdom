@@ -11,17 +11,21 @@ export default {
   data () {
     return {
       msg: this.$t("message.tabhome"),
-      introduceheight: '',
-      playersheight: ''
+      introduceheight: document.documentElement.clientWidth/ 1910 * 760 + "px",
+      playersheight: document.documentElement.clientWidth/ 1910 * 880 + "px"
     }
   },
   created:function(){
     
   },
   mounted:function(){
-    var screenwidth = document.documentElement.clientWidth;
-    this.introduceheight = screenwidth / 1910 * 760 + "px";
-    this.playersheight = screenwidth / 1910 * 880 + "px";
+    var _this = this;
+    window.addEventListener("resize",function(){
+      var val = document.documentElement.clientWidth;
+      _this.introduceheight = val / 1910 * 760 + "px";
+      _this.playersheight = val / 1910 * 880 + "px";
+      console.log("homeHeight",_this.playersheight);
+    })
   }
 }
 </script>

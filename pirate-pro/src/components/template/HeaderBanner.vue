@@ -25,20 +25,23 @@ export default {
   data () {
     return {
       msg: 'HeaderBanner',
-      topheight: '',
-      topbannerheight: '',
-      topnavheight: '',
-      
+      topheight: document.documentElement.clientWidth/1910*890 + "px",
+      topbannerheight: document.documentElement.clientWidth/1910*810 + "px",
+      topnavheight: document.documentElement.clientWidth/1910*80 + "px",
+      screenwidth: document.documentElement.clientWidth
     }
   },
   mounted:function(){
-    // this.$refs.banner.style.width = "100%";
-    var screenwidth;
-    screenwidth = document.documentElement.clientWidth;
-    this.topheight = parseInt(screenwidth) / 1910 * 890 + "px";
-    this.topbannerheight = parseInt(screenwidth) / 1910 * 810 + "px";
-    this.topnavheight = parseInt(screenwidth) / 1910 * (890 - 810) + "px";
-    console.log("topbannerheight",screenwidth);
+    const _this = this; 
+    window.addEventListener("resize",function(){
+      var val = document.documentElement.clientWidth;
+      _this.topheight = parseInt(val) / 1910 * 890 + "px";
+      _this.topbannerheight = parseInt(val) / 1910 * 810 + "px";
+      _this.topnavheight = parseInt(val) / 1910 * (890 - 810) + "px";
+      console.log("topbannerheight",val);
+    })
+  },
+  watch: {
     
   }
 }

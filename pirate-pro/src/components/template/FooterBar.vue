@@ -25,12 +25,17 @@ export default {
   data () {
     return {
       msg: 'FooterBar',
-      footerHeight: ''
+      footerHeight: document.documentElement.clientWidth / 1910 * 498 + "px"
     }
   },
   mounted:function(){
-    this.footerHeight = parseInt(document.documentElement.clientWidth) / 1910 * 498 + "px";
-    console.log("footerHeight",this.footerHeight);
+    var _this = this;
+    window.addEventListener("resize",function(){
+      var val = document.documentElement.clientWidth;
+      console.log("footerHeight",val);
+      _this.footerHeight = val / 1910 * 498 + "px";
+    })
+    
   }
 }
 </script>

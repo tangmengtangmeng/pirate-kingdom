@@ -9,16 +9,12 @@ export default {
   name: 'TabChannel4',
   data () {
     return {
-      msg: '我是TabChannel4'
-
+      msg: '我是TabChannel4',
+      ContainerHeight: document.documentElement.clientHeight + "px"
     }
   },
   created:function(){
-    var screenHeight = document.documentElement.clientHeight;
-    var headerHeight = 150;
-    var footerHeight = 250;
-    this.ContainerHeight = screenHeight - headerHeight - footerHeight+ 'px';
-    console.log("iiiiii",this.ContainerHeight,screenHeight);
+    
   }
 }
 </script>
