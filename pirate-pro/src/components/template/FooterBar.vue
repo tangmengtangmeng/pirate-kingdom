@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       msg: 'FooterBar',
-      footerHeight: document.documentElement.clientWidth / 1910 * 498 + "px"
+      footerHeight: document.documentElement.clientWidth / 1920 * 500 + "px"
     }
   },
   mounted:function(){
@@ -33,7 +33,7 @@ export default {
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
       console.log("footerHeight",val);
-      _this.footerHeight = val / 1910 * 498 + "px";
+      _this.footerHeight = val / 1920 * 500 + "px";
     })
     
   }

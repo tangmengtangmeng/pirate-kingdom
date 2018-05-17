@@ -25,9 +25,9 @@ export default {
   data () {
     return {
       msg: 'HeaderBanner',
-      topheight: document.documentElement.clientWidth/1910*890 + "px",
-      topbannerheight: document.documentElement.clientWidth/1910*810 + "px",
-      topnavheight: document.documentElement.clientWidth/1910*80 + "px",
+      topheight: document.documentElement.clientWidth/1920*890 + "px",
+      topbannerheight: document.documentElement.clientWidth/1920*810 + "px",
+      topnavheight: document.documentElement.clientWidth/1920*80 + "px",
       screenwidth: document.documentElement.clientWidth
     }
   },
@@ -35,9 +35,9 @@ export default {
     const _this = this; 
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
-      _this.topheight = parseInt(val) / 1910 * 890 + "px";
-      _this.topbannerheight = parseInt(val) / 1910 * 810 + "px";
-      _this.topnavheight = parseInt(val) / 1910 * (890 - 810) + "px";
+      _this.topheight = parseInt(val) / 1920 * 890 + "px";
+      _this.topbannerheight = parseInt(val) / 1920 * 810 + "px";
+      _this.topnavheight = parseInt(val) / 1920 * (890 - 810) + "px";
       console.log("topbannerheight",val);
     })
   },

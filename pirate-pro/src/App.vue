@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :style="{'height':appheight}" v-bind:lang="lang">
+  <div id="app" v-bind:lang="lang">
     <HeaderBanner></HeaderBanner>
     <router-view/>
     <FooterBar></FooterBar>
@@ -19,7 +19,6 @@ export default {
   data () {
     return {
       lang: "en",
-      appheight: ""
     }
   },
   methods: {
@@ -34,7 +33,6 @@ export default {
     }
   },
   mounted:function(){
-      this.appheight = document.documentElement.clientHeight + "px";
       // this.changeLanguage(this.$route.params.lang);
       
   }
@@ -44,5 +42,9 @@ export default {
 <style>
   p{
     color: #fff;
+  }
+  #app,body,html{
+    height: 100%;
+    background: #000;
   }
 </style>
