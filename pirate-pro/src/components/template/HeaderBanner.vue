@@ -1,19 +1,11 @@
 <template>
   <div class="header-banner" :style="{'height':topheight}">
-    <div class="topbanner" :style="{'height':topbannerheight}">
-      <div class="addbox"></div>
-      <div class="startbtn"></div>
-      <div class="addbox"></div>
-    </div>
+    <div class="topright"></div>
+    <div class="startbtn"></div>
     <div class="topnav" :style="{'height':topnavheight}">
       <ul class="navul">
-        <li><router-link to="tabhome"></router-link></li>
-        <li><router-link to="tabchannel1"></router-link></li>
-        <li><router-link to="tabchannel2"></router-link></li>      
-        <li><router-link to="tabchannel3"></router-link></li>
-        <li><router-link to="tabchannel4"></router-link></li>
-        <li><router-link to="tabchannel4"></router-link></li>
-        <li><router-link to="tabchannel4"></router-link></li>            
+        <li><router-link to="presale"></router-link></li>
+        <li><router-link to="introduction"></router-link></li>           
       </ul>
     </div>
   </div>
@@ -26,8 +18,7 @@ export default {
     return {
       msg: 'HeaderBanner',
       topheight: document.documentElement.clientWidth/1920*890 + "px",
-      topbannerheight: document.documentElement.clientWidth/1920*810 + "px",
-      topnavheight: document.documentElement.clientWidth/1920*80 + "px",
+      topnavheight: document.documentElement.clientWidth/1920*118 + "px",
       screenwidth: document.documentElement.clientWidth
     }
   },
@@ -36,9 +27,7 @@ export default {
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
       _this.topheight = parseInt(val) / 1920 * 890 + "px";
-      _this.topbannerheight = parseInt(val) / 1920 * 810 + "px";
-      _this.topnavheight = parseInt(val) / 1920 * (890 - 810) + "px";
-      console.log("topbannerheight",val);
+      _this.topnavheight = parseInt(val) / 1920 * 118 + "px";
     })
   },
   watch: {
@@ -52,49 +41,48 @@ export default {
   .header-banner{
     width: 100%;
     color: #fff;
-  }
-  .topbanner{
-    width: 100%;
-    border-top: 1px solid transparent;
-    margin-top: -1px;
-    background: url("../../assets/topbanner.png") left top no-repeat;
+    background:url("../../assets/topbanner.png") center center no-repeat;
     background-size: 100% 100%;
-    color: #fff;
   }
-  .topnav{   
+  .topright{
+    width: 15.89%;
+    height: 9%;
+    float: right;
+    background:url("../../assets/moresetting.png") center center no-repeat;
+    background-size: 100% 100%;
+  }
+  .startbtn{
+    width: 13.54%;
+    height: 9.67%;
+    margin: 0 auto;
+    position: relative;
+    top: 69.74%;
+    background: url("../../assets/topbtn.png") center center no-repeat;
+    background-size: 100% 100%;
+  }
+  .topnav{ 
+    width:76.88%;
+    margin: 0 auto;   
     background: url("../../assets/topnav.png") left top no-repeat;
     background-size: 100% 100%;
+    position: relative;
+    top: 81%;
   }
   .navul{
-      width: 69.1%;
+      width: 100%;
       height: 100%;
       padding: 0;
-      margin: 0 auto;      
+      margin: 0;      
   }
   .navul li{
     float:left;
-    width: 14.28%;
+    width: 50%;
     height: 100%;
-    background: rgba(255,255,255,.3);
   }
   .navul li>a{
     width: 100%;
     height: 100%;
     display: block;
   }
-  .addbox{
-    width: 40.57%;
-    height: 12.89%;
-    float: left;
-    position: relative;
-    top: 67.53%;
-  }
-  .startbtn{
-    width: 18.85%;
-    height: 12.89%;
-    float: left;
-    margin: 0;
-    position: relative;
-    top: 67.53%;
-  }
+  
 </style>

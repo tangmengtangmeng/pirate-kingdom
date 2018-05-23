@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       msg: 'FooterBar',
-      footerHeight: document.documentElement.clientWidth / 1920 * 500 + "px"
+      footerHeight: document.documentElement.clientWidth / 1920 * 360 + "px"
     }
   },
   mounted:function(){
@@ -33,7 +33,7 @@ export default {
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
       console.log("footerHeight",val);
-      _this.footerHeight = val / 1920 * 500 + "px";
+      _this.footerHeight = val / 1920 * 360 + "px";
     })
     
   }
@@ -44,36 +44,45 @@ export default {
 <style scoped>
 .footer-bar{
   width: 100%;
-  background:url("../../assets/footer.png") left top no-repeat;
-  background-size: 100% 100%;
+  background:#000;
   color: #fff;
 }
 .topfooter{
   width: 100%;
-  height: 86.5%;
+  height: 72.22%;
 }
 .botfooter{
   width: 100%;
-  height: 14.5%;
+  height: 27.78%;
 }
 ul{
-  width: 8.4%;
   height: 100%;
   float: left;
-  border: 1px solid blue;
 }
 .list1{
-  margin-left: 20.3%;
+  width:30.6%;
+  background: url("../../assets/footer1.png") center center no-repeat;
+  background-size: cover;
 }
 .list2{
-  margin-left:4%;
+  width: 15.6%;
+  background: url("../../assets/footer2.png") center center no-repeat;
+  background-size: cover;
 }
-.list1>li{
+.list3{
+  width: 20.1%;
+  background: url("../../assets/footer3.png") center center no-repeat;
+  background-size: cover;
+}
+.list4{
+  width: 33.7%;
+  background: url("../../assets/footer4.png") center center no-repeat;
+  background-size: cover;
+}
+.botfooter{
   width: 100%;
-  height: 7%;
-  border: 1px solid red;
-}
-.list1>li:nth-child(1){
-  height: 50%;
+  height: 27.77%;
+  background:url("../../assets/footer5.png") center center no-repeat;
+  background-size: cover; 
 }
 </style>
