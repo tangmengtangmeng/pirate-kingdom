@@ -4,9 +4,9 @@
       {{$t("message.tabhome")}}
       <div class="pretitle"></div>
       <ul class="preplayer">
-        <li><div @mouseover="light($event)" @mouseout="none($event)"><div></div></div></li>
-        <li><div @mouseover="light($event)" @mouseout="none($event)"><div></div></div></li>
-        <li><div @mouseover="light($event)" @mouseout="none($event)"><div></div></div></li>
+        <li><div @mouseenter="light($event)" @mouseleave="none($event)"><div></div></div></li>
+        <li><div @mouseenter="light($event)" @mouseleave="none($event)"><div></div></div></li>
+        <li><div @mouseenter="light($event)" @mouseleave="none($event)"><div></div></div></li>
       </ul>
       <ul class="prebtn">
         <li></li><li></li><li></li>
@@ -20,17 +20,17 @@ export default {
   name: 'Presale',
   data () {
     return {
-      playersheight: document.documentElement.clientWidth/ 1920 * 950 + "px"
+      playersheight: document.documentElement.clientWidth/ 1920 * 950 + "px",
     }
   },
   methods: {
     light: function (e) {
       var div = e.target;
-      div.childNodes[0].classList.add("light");
+      div.getElementsByTagName("div")[0].classList.add("light");
     },
     none: function (e) {
       var div = e.target;
-      div.childNodes[0].classList.remove("light");
+      div.getElementsByTagName("div")[0].classList.remove("light");
     }
   },
   created:function(){
