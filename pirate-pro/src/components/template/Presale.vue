@@ -4,7 +4,9 @@
       {{$t("message.tabhome")}}
       <div class="pretitle"></div>
       <ul class="preplayer">
-        <li></li><li></li><li></li>
+        <li><div @mouseover="light($event)" @mouseout="none($event)"><div></div></div></li>
+        <li><div @mouseover="light($event)" @mouseout="none($event)"><div></div></div></li>
+        <li><div @mouseover="light($event)" @mouseout="none($event)"><div></div></div></li>
       </ul>
       <ul class="prebtn">
         <li></li><li></li><li></li>
@@ -19,6 +21,16 @@ export default {
   data () {
     return {
       playersheight: document.documentElement.clientWidth/ 1920 * 950 + "px"
+    }
+  },
+  methods: {
+    light: function (e) {
+      var div = e.target;
+      div.childNodes[0].classList.add("light");
+    },
+    none: function (e) {
+      var div = e.target;
+      div.childNodes[0].classList.remove("light");
     }
   },
   created:function(){
@@ -89,5 +101,39 @@ export default {
 .prebtn li:nth-child(3){
   background:url("../../assets/player3b.png");
   background-size: 100% 100%; 
+}
+.preplayer li div{
+  width: 70%;
+  height: 90%;
+  margin: 5% 9%;
+  position: relative;
+  top: 10px;
+  left: 20px;
+  z-index: 2;
+  background:transparent;
+  overflow: hidden; 
+}
+.preplayer li div div{
+  width: 200%;
+  height: 9%;
+  margin: 0;
+  position: relative;
+  top: -10px;
+  left: 20px;
+  z-index: 3;
+  background:linear-gradient(0deg,rgba(250,220,150,0),rgba(250,220,150,0.3),rgba(250,220,150,0));
+  transform: rotate(45deg);
+}
+.preplayer li div div.light{
+  width: 200%;
+  height: 9%;
+  margin: 0;
+  position: relative;
+  top: 410px;
+  left: -270px;
+  z-index: 3;
+  background:linear-gradient(0deg,rgba(250,220,150,0),rgba(250,220,150,0.3),rgba(250,220,150,0));
+  transform: rotate(45deg);
+  transition: all .3s linear;
 }
 </style>

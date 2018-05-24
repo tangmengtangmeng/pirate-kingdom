@@ -1,7 +1,10 @@
 <template>
   <div class="header-banner" :style="{'height':topheight}">
     <div class="topright" @click="changeLocale()">{{$t("message.tabhome")}}</div>
-    <div class="startbtn"></div>
+    <div class="startbtn">
+      <div class="btnanimation"></div>
+      <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)"></div>
+    </div>
     <div class="topnav" :style="{'height':topnavheight}">
       <ul class="navul">
         <li><router-link to="presale"></router-link></li>
@@ -26,6 +29,14 @@ export default {
     changeLocale: function (locale) {
       this.$i18n.locale == "zh-ch" ? this.$i18n.locale = "en" : this.$i18n.locale = "zh-ch" ;
       console.log(this.$i18n.locale);
+    },
+    quicklight: function (e) {
+      var div = e.target;
+      div.previousElementSibling.classList.add("quick");
+    },
+    normallight: function(e){
+      var div = e.target;
+      div.previousElementSibling.classList.remove("quick");
     }
   },
   mounted:function(){
@@ -70,6 +81,43 @@ export default {
     top: 69.74%;
     background: url("../../assets/topbtn.png") center center no-repeat;
     background-size: 100% 100%;
+    z-index: 0;
+  }
+  .btntitle{
+    width: 100%;
+    height: 100%;
+    background:url("../../assets/topbtntitle.png") center center no-repeat; 
+    background-size: cover;
+    position: absolute;
+    z-index: 3;
+  }
+  .btnanimation{
+    width: 95%;
+    height: 98%;
+    margin-left: 2%;
+    position: absolute;
+    z-index: 2;
+    background:rgba(132,62,26,.4); 
+    border-radius: 20px;
+    animation: btnlight 1s infinite alternate;
+  }
+  @keyframes btnlight{
+    from {background:rgba(155,62,26,.6); }
+    to {background:rgba(255,155,90,.4); }
+  }
+  .quick{
+    width: 95%;
+    height: 98%;
+    margin-left: 2%;
+    position: absolute;
+    z-index: 2;
+    background:rgba(132,62,26,.4); 
+    border-radius: 20px;
+    animation: none .3s infinite alternate;
+  }
+  @keyframes none{
+    from {background:rgba(155,62,26,.5); }
+    to {background:rgba(230,170,100,.4); }
   }
   .topnav{ 
     width:76.88%;
