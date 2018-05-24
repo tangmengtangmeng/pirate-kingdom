@@ -134,6 +134,6 @@ export default {
   z-index: 3;
   background:linear-gradient(0deg,rgba(250,220,150,0),rgba(250,220,150,0.3),rgba(250,220,150,0));
   transform: rotate(45deg);
-  transition: all .3s linear;
+  transition: all .5s linear;
 }
 </style>
