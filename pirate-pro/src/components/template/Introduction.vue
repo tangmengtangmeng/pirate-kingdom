@@ -1,6 +1,6 @@
 <template>
   <div class="tab-introduction">
-    <div class="introduce" :style="{'height':introduceheight}">{{msg}}</div>
+    <div class="introduce" :style="{'height':introduceheight}">{{msg.msg}}</div>
   </div>
 </template>
 
@@ -9,12 +9,11 @@ export default {
   name: 'Introduction',
   data () {
     return {
-      msg: '我是详情介绍',
       introduceheight: document.documentElement.clientWidth/ 1920 * 760 + "px"
     }
   },
-  created:function(){
-    
+  created () {
+    console.log("实例创建完毕")
   },
   mounted () {
     var _this = this;
@@ -22,6 +21,13 @@ export default {
       var val = document.documentElement.clientWidth;
       _this.introduceheight = val / 1920 * 760 + "px";
     })
+  },
+  computed: {
+    msg () {
+      return {
+        msg:this.$t("message.tabhome")
+      }
+    }
   }
 }
 </script>
@@ -31,8 +37,8 @@ export default {
 .tab-introduction{
   width: 100%;
   height: auto;
-  background: #09b6f2;
-  color: #333;
+  background: transparent;
+  color: #fff;
 }
 .introduce{
   width: 100%;

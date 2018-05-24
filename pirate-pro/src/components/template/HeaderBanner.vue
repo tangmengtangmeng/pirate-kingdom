@@ -1,6 +1,6 @@
 <template>
   <div class="header-banner" :style="{'height':topheight}">
-    <div class="topright"></div>
+    <div class="topright" @click="changeLocale()">{{$t("message.tabhome")}}</div>
     <div class="startbtn"></div>
     <div class="topnav" :style="{'height':topnavheight}">
       <ul class="navul">
@@ -14,23 +14,34 @@
 <script>
 export default {
   name: 'HeaderBanner',
+  props:['lang'],
   data () {
     return {
-      msg: 'HeaderBanner',
       topheight: document.documentElement.clientWidth/1920*890 + "px",
       topnavheight: document.documentElement.clientWidth/1920*118 + "px",
-      screenwidth: document.documentElement.clientWidth
+      screenwidth: document.documentElement.clientWidth   
+    }
+  },
+  methods: {
+    changeLocale: function (locale) {
+      this.$i18n.locale == "zh-ch" ? this.$i18n.locale = "en" : this.$i18n.locale = "zh-ch" ;
+      console.log(this.$i18n.locale);
     }
   },
   mounted:function(){
+    console.log(this.$i18n.locale);
     const _this = this; 
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
       _this.topheight = parseInt(val) / 1920 * 890 + "px";
       _this.topnavheight = parseInt(val) / 1920 * 118 + "px";
     })
+
   },
   watch: {
+    
+  },
+  updated:function(){
     
   }
 }

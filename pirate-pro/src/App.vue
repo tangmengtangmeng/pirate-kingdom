@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:lang="lang">
+  <div id="app">
     <HeaderBanner></HeaderBanner>
     <router-view/>
     <FooterBar></FooterBar>
@@ -18,22 +18,13 @@ export default {
   },
   data () {
     return {
-      lang: "en",
+      
     }
   },
   methods: {
-    changeLanguage(lang){
-      this.$i18n.locale = lang;
-      this.lang = lang;
-      console.log("changeLanguage",lang);//undefined
-    },
-    changeAPPLocal(locale){
-      this.changeLanguage(locale);
-      this.$router.push({name: this.$route.name, params: {lang: this.lang}});
-    }
+    
   },
   mounted:function(){
-      // this.changeLanguage(this.$route.params.lang);
       
   }
 }

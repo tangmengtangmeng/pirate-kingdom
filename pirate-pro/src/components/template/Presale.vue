@@ -1,7 +1,7 @@
 <template>
   <div class="tab-presale">
     <div class="players" :style="{'height':playersheight}">
-      {{msg}}
+      {{$t("message.tabhome")}}
       <div class="pretitle"></div>
       <ul class="preplayer">
         <li></li><li></li><li></li>
@@ -18,7 +18,6 @@ export default {
   name: 'Presale',
   data () {
     return {
-      msg: this.$t("message.tabhome"),
       playersheight: document.documentElement.clientWidth/ 1920 * 950 + "px"
     }
   },
