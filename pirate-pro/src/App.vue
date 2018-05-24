@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="changeL">
     <HeaderBanner></HeaderBanner>
     <router-view/>
     <FooterBar></FooterBar>
@@ -22,7 +22,9 @@ export default {
     }
   },
   methods: {
-    
+    changeL () {
+      this.$store.commit("change");
+    }
   },
   mounted:function(){
       

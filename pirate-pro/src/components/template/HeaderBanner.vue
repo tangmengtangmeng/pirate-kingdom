@@ -1,7 +1,8 @@
 <template>
   <div class="header-banner" :style="{'height':topheight}">
-    <div class="topright" @click="changeLocale()">{{$t("message.tabhome")}}</div>
-    <div class="startbtn">
+    {{$t("message.tabhome")}}
+    <div class="topright" @click="changeLocale()">{{$t("message.changeLocale")}}</div>
+    <div class="startbtn" :class={hide:$store.state.show}>
       <div class="btnanimation"></div>
       <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)"></div>
     </div>
@@ -22,7 +23,7 @@ export default {
     return {
       topheight: document.documentElement.clientWidth/1920*890 + "px",
       topnavheight: document.documentElement.clientWidth/1920*118 + "px",
-      screenwidth: document.documentElement.clientWidth   
+      screenwidth: document.documentElement.clientWidth,
     }
   },
   methods: {
@@ -60,6 +61,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .hide{
+    visibility: hidden;
+  }
   .header-banner{
     width: 100%;
     color: #fff;

@@ -1,5 +1,6 @@
-const state = {
-	show: false
+const getters = {
+	reset (state) {
+		state.show = false;
+	}
 }
-
-export default state
+export default getters
