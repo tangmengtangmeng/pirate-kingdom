@@ -9,7 +9,7 @@
         <li><div @mouseenter="light($event)" @mouseleave="none($event)"><div></div></div></li>
       </ul>
       <ul class="prebtn">
-        <li></li><li></li><li></li>
+        <li><div></div></li><li><div></div></li><li><div></div></li>
       </ul>
   </div>
   </div>
@@ -89,6 +89,16 @@ export default {
 }
 .prebtn{
   height: 16.31%;
+}
+.prebtn>li>div{
+  width: 50%;
+  height: 40%;
+  margin:0 auto;
+  position:relative;
+  top:16%; 
+}
+.prebtn>li>div:hover{
+  cursor: pointer;
 }
 .prebtn li:nth-child(1){
   background:url("../../assets/player1b.png");

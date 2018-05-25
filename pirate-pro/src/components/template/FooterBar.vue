@@ -2,17 +2,18 @@
   <div class="footer-bar" :style="{'height':footerHeight}">
     <div class="topfooter">
       <ul class="list1">
-        <li></li><li></li><li></li>
-        <li></li><li></li><li></li>
+        <li></li>
+        <li><div></div></li><li><div></div></li><li><div></div></li><li><div></div></li><li><div></div></li>
       </ul>
       <ul class="list2">
-        <li></li><li></li><li></li>
+        <li></li>
+        <li><div></div></li><li><div></div></li>
       </ul>
       <ul class="list3">
-        <li></li><li></li>
+        <li><div></div></li><li><div></div></li>
       </ul>
       <ul class="list4">
-        <li></li><li></li><li></li>
+        <li><div></div></li><li><div></div></li><li><div></div></li>
       </ul>
     </div>
     <div class="botfooter"></div>
@@ -59,94 +60,134 @@ ul{
   height: 100%;
   float: left;
 }
+.list1>li{
+  padding-top: 5%;
+  padding-left: 13%;
+}
+.list1>li>div{
+  width: 70%;
+  height: 40%;
+}
+.list1>li:nth-child(2)>div,.list1>li:nth-child(4)>div,.list1>li:nth-child(5)>div{
+  width: 28%;
+}
+.list2>li{
+  padding-top: 5%;
+  padding-left: 26%;
+}
+.list2>li>div{
+  width: 67%;
+  height: 40%;
+}
+.list3>li{
+  padding-top: 37%;
+  padding-left: 27%;
+}
+.list3>li>div{
+  width: 70%;
+  height: 30%;
+}
+.list3>li:nth-child(2){
+  padding-top: 15%;
+}
+.list4>li{
+  padding-top: 25%;
+  padding-left: 35%;
+}
+.list4>li>div{
+  width: 80%;
+  height: 30%;
+}
+.list4>li:nth-child(2){
+  padding-top: 18%;
+}
+.list4>li:nth-child(3){
+  padding-top: 15%;
+}
+ul>li{
+  box-sizing: border-box;
+}
+ul>li>div:hover{
+  cursor: pointer;
+}
 .list1{
   width:29.8%; 
   padding-left: 18.9%;
-  box-sizing: border-box;
 }
 .list1 li:nth-child(1){
   height: 29.62%;
   background:url("../../assets/footer1-1.png") center center no-repeat;
-  background-size: contain;
 }
 .list1 li:nth-child(2){
   height: 13.46%;
   background:url("../../assets/footer1-2.png") center center no-repeat;
-  background-size: contain;
 }
 .list1 li:nth-child(3){
   height: 13.08%;
   background:url("../../assets/footer1-3.png") center center no-repeat;
-  background-size: contain;
 }
 .list1 li:nth-child(4){
   height: 13.08%;
   background:url("../../assets/footer1-4.png") center center no-repeat;
-  background-size: contain;
 }
 .list1 li:nth-child(5){
   height: 11.92%;
   background:url("../../assets/footer1-5.png") center center no-repeat;
-  background-size: contain;
 }
 .list1 li:nth-child(6){
   height: 20.38%;
   background:url("../../assets/footer1-6.png") center center no-repeat;
-  background-size: contain;
 }
 .list2{
   width: 11.82%;
-  box-sizing: border-box;
 }
 .list2 li:nth-child(1){
   height: 29.62%;
   background:url("../../assets/footer2-1.png") center center no-repeat;
-  background-size: contain;
 }
 .list2 li:nth-child(2){
   height: 13.46%;
   background:url("../../assets/footer2-2.png") center center no-repeat;
-  background-size: contain;
 }
 .list2 li:nth-child(3){
   height: 13.46%;
   background:url("../../assets/footer2-3.png") center center no-repeat;
-  background-size: contain;
 }
 .list3{
   width: 19.74%;
-  box-sizing: border-box;
   padding-left:13%; 
 }
 .list3 li:nth-child(1){
   height: 36.15%;
   background:url("../../assets/footer3-1.png") center center no-repeat;
-  background-size: contain;
 }
 .list3 li:nth-child(2){
   height: 19.23%;
   background:url("../../assets/footer3-2.png") center center no-repeat;
-  background-size: contain;
 }
 .list4{
   width: 21.88%;
-  box-sizing: border-box;
   padding-left: 10%;
 }
 .list4 li:nth-child(1){
   height: 36.15%;
   background:url("../../assets/footer4-1.png") center center no-repeat;
-  background-size: contain;
 }
 .list4 li:nth-child(2){
   height: 31.92%;
   background:url("../../assets/footer4-2.png") center center no-repeat;
-  background-size: contain;
 }
 .list4 li:nth-child(3){
   height: 31.92%;
   background:url("../../assets/footer4-3.png") center center no-repeat;
+}
+.list1 li:nth-child(1),.list1 li:nth-child(2),.list1 li:nth-child(3),.list1 li:nth-child(4),.list1 li:nth-child(5),
+.list1 li:nth-child(6),.list2 li:nth-child(1),.list2 li:nth-child(2),.list2 li:nth-child(3),.list3 li:nth-child(1),
+.list3 li:nth-child(2),.list4 li:nth-child(1),.list4 li:nth-child(2),.list4 li:nth-child(3){
   background-size: contain;
+}
+.list1,.list2,.list3,.list4{
+  box-sizing: border-box;
 }
 .botfooter{
   width: 100%;

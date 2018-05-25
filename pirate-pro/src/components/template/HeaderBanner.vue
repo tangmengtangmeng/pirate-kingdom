@@ -1,7 +1,9 @@
 <template>
   <div class="header-banner" :style="{'height':topheight}">
     {{$t("message.tabhome")}}
-    <div class="topright" @click="changeLocale()">{{$t("message.changeLocale")}}</div>
+    <div class="topright" @click="changeLocale()">
+      <div></div><div></div>{{$t("message.changeLocale")}}
+    </div>
     <div class="startbtn" :class={hide:$store.state.show}>
       <div class="btnanimation"></div>
       <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)"></div>
@@ -77,6 +79,20 @@ export default {
     background:url("../../assets/moresetting.png") center center no-repeat;
     background-size: 100% 100%;
   }
+  .topright>div{
+    width: 20%;
+    height: 17%;
+    float:left;
+    position: relative;
+    top: 60%;
+    left: 2%; 
+  }
+  .topright>div:nth-child(2){
+    left: 10%;
+  }
+  .topright>div:hover{
+    cursor: pointer;
+  }
   .startbtn{
     width: 13.54%;
     height: 9.67%;
@@ -94,6 +110,9 @@ export default {
     background-size: cover;
     position: absolute;
     z-index: 3;
+  }
+  .btntitle:hover{
+    cursor: pointer;
   }
   .btnanimation{
     width: 95%;
