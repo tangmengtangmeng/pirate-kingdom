@@ -3,17 +3,17 @@
     <div class="topfooter">
       <ul class="list1">
         <li></li>
-        <li v-for="n in 5"><div @click="goto(n,'ul1')"></div></li>
+        <li v-for="(item,index) in items1"><a v-bind:href="item.href">{{item.title}}</a></li>
       </ul>
       <ul class="list2">
         <li></li>
-        <li v-for="n in 2"><div @click="goto(n,'ul2')"></div></li>
+        <li v-for="(item,index) in items2"><a v-bind:href="item.href">{{item.title}}</a></li>
       </ul>
       <ul class="list3">
-        <li v-for="n in 2"><div @click="goto(n,'ul3')"></div></li>
+        <li v-for="(item,index) in items3"><a v-bind:href="item.href">{{item.title}}</a></li>
       </ul>
       <ul class="list4">
-        <li v-for="n in 3"><div @click="goto(n,'ul4')"></div></li>
+        <li v-for="(item,index) in items4"><a v-bind:href="item.href">{{item.title}}</a></li>
       </ul>
     </div>
     <div class="botfooter"></div>
@@ -26,7 +26,11 @@ export default {
   data () {
     return {
       msg: 'FooterBar',
-      footerHeight: document.documentElement.clientWidth / 1920 * 360 + "px"
+      footerHeight: document.documentElement.clientWidth / 1920 * 360 + "px",
+      items1: [{title:"Home",href:this.configData.foot_ul1.foot_ul1_1},{title:"How it works",href:this.configData.foot_ul1.foot_ul1_2},{title:"FAQ",href:this.configData.foot_ul1.foot_ul1_3},{title:"TOS",href:this.configData.foot_ul1.foot_ul1_4},{title:"Pravacy Policy",href:this.configData.foot_ul1.foot_ul1_5}],
+      items2: [{title:"Marketplace",href:this.configData.foot_ul2.foot_ul2_1},{title:"My Contacts",href:this.configData.foot_ul2.foot_ul2_2}],
+      items3: [{title:"FACEBOOK",href:this.configData.foot_ul3.foot_ul3_1},{title:"TWITTER",href:this.configData.foot_ul3.foot_ul3_2}],
+      items4: [{title:"METAMASK",href:this.configData.foot_ul4.foot_ul4_1},{title:"ETHERRUM",href:this.configData.foot_ul4.foot_ul4_2},{title:"BITGUILD",href:this.configData.foot_ul4.foot_ul4_3}]
     }
   },
   methods: {
@@ -75,132 +79,111 @@ export default {
 ul{
   height: 100%;
   float: left;
-}
-.list1>li{
-  padding-top: 5%;
-  padding-left: 13%;
-}
-.list1>li>div{
-  width: 70%;
-  height: 40%;
-}
-.list1>li:nth-child(2)>div,.list1>li:nth-child(4)>div,.list1>li:nth-child(5)>div{
-  width: 28%;
-}
-.list2>li{
-  padding-top: 5%;
-  padding-left: 26%;
-}
-.list2>li>div{
-  width: 67%;
-  height: 40%;
-}
-.list3>li{
-  padding-top: 37%;
-  padding-left: 27%;
-}
-.list3>li>div{
-  width: 70%;
-  height: 30%;
-}
-.list3>li:nth-child(2){
-  padding-top: 15%;
-}
-.list4>li{
-  padding-top: 25%;
-  padding-left: 35%;
-}
-.list4>li>div{
-  width: 80%;
-  height: 30%;
-}
-.list4>li:nth-child(2){
-  padding-top: 18%;
-}
-.list4>li:nth-child(3){
-  padding-top: 15%;
+  box-sizing: border-box;
 }
 ul>li{
   box-sizing: border-box;
 }
-ul>li>div:hover{
-  cursor: pointer;
+ul>li>a{
+  font-family: Windlass,Georgia,"serif";
+  font-weight: 400;
+  font-size: 15px;
+  font-variant: small-caps;
+  color: rgb(67,63,52);
 }
 .list1{
-  width:29.8%; 
-  padding-left: 18.9%;
+  width: 9.2%; 
+  margin-left: 19.95%;
 }
 .list1 li:nth-child(1){
-  height: 29.62%;
+  height: 30.8%;
+  padding-left: 0;
   background:url("../../assets/footer1-1.png") center center no-repeat;
 }
 .list1 li:nth-child(2){
-  height: 13.46%;
-  background:url("../../assets/footer1-2.png") center center no-repeat;
+  height: 10.8%;
+  padding-left: 4%;
+  padding-top: 1%;
 }
 .list1 li:nth-child(3){
-  height: 13.08%;
-  background:url("../../assets/footer1-3.png") center center no-repeat;
+  height: 13.1%;
+  padding-left: 4%;
+  padding-top: 2%;
 }
 .list1 li:nth-child(4){
-  height: 13.08%;
-  background:url("../../assets/footer1-4.png") center center no-repeat;
+  height: 13.1%;
+  padding-left: 4%;
+  padding-top: 3%;
 }
 .list1 li:nth-child(5){
-  height: 11.92%;
-  background:url("../../assets/footer1-5.png") center center no-repeat;
+  height: 11.5%;
+  padding-left: 4%;
+  padding-top: 3%;
 }
 .list1 li:nth-child(6){
-  height: 20.38%;
-  background:url("../../assets/footer1-6.png") center center no-repeat;
+  height: 12.3%;
+  padding-left: 4%;
+  padding-top: 3%;
 }
 .list2{
-  width: 11.82%;
+  width: 9.4%;
+  margin-left:3.4%;
 }
 .list2 li:nth-child(1){
-  height: 29.62%;
+  height: 30.8%;
   background:url("../../assets/footer2-1.png") center center no-repeat;
 }
 .list2 li:nth-child(2){
-  height: 13.46%;
-  background:url("../../assets/footer2-2.png") center center no-repeat;
+  height: 10.8%;
+  padding-left: 4%;
+  padding-top: 2%;
 }
 .list2 li:nth-child(3){
-  height: 13.46%;
-  background:url("../../assets/footer2-3.png") center center no-repeat;
+  height: 13.1%;
+  padding-left: 4%;
+  padding-top: 2%;
 }
 .list3{
-  width: 19.74%;
-  padding-left:13%; 
+  width: 9%;
+  margin-left:9.5%; 
 }
 .list3 li:nth-child(1){
-  height: 36.15%;
+  height: 35.8%;
   background:url("../../assets/footer3-1.png") center center no-repeat;
+  padding-left: 24%;
+  padding-top: 30%;
 }
 .list3 li:nth-child(2){
-  height: 19.23%;
+  height: 18.8%;
   background:url("../../assets/footer3-2.png") center center no-repeat;
+  padding-left: 24%;
+  padding-top: 11%;
 }
 .list4{
-  width: 21.88%;
-  padding-left: 10%;
+  width: 10.4%;
+  margin-left:12.3%;
 }
 .list4 li:nth-child(1){
-  height: 36.15%;
+  height: 35.8%;
   background:url("../../assets/footer4-1.png") center center no-repeat;
+  padding-left: 30%;
+  padding-top: 26%;
 }
 .list4 li:nth-child(2){
-  height: 31.92%;
+  height: 33.8%;
   background:url("../../assets/footer4-2.png") center center no-repeat;
+  padding-left: 30%;
+  padding-top: 20%;
 }
 .list4 li:nth-child(3){
-  height: 31.92%;
+  height: 28.5%;
   background:url("../../assets/footer4-3.png") center center no-repeat;
+  padding-left: 30%;
+  padding-top: 13%;
 }
-.list1 li:nth-child(1),.list1 li:nth-child(2),.list1 li:nth-child(3),.list1 li:nth-child(4),.list1 li:nth-child(5),
-.list1 li:nth-child(6),.list2 li:nth-child(1),.list2 li:nth-child(2),.list2 li:nth-child(3),.list3 li:nth-child(1),
+.list1 li:nth-child(1),.list2 li:nth-child(1),.list3 li:nth-child(1),
 .list3 li:nth-child(2),.list4 li:nth-child(1),.list4 li:nth-child(2),.list4 li:nth-child(3){
-  background-size: contain;
+  background-size: 100% 100%;
 }
 .list1,.list2,.list3,.list4{
   box-sizing: border-box;

@@ -133,8 +133,8 @@ export default {
   height: 9%;
   margin: 0;
   position: relative;
-  top: -10px;
-  left: 20px;
+  top: -3.1%;
+  left: 6.2%;
   z-index: 3;
   background:linear-gradient(0deg,rgba(250,220,150,0),rgba(250,220,150,0.3),rgba(250,220,150,0));
   transform: rotate(45deg);
@@ -144,8 +144,8 @@ export default {
   height: 9%;
   margin: 0;
   position: relative;
-  top: 410px;
-  left: -270px;
+  top: 110%;
+  left: -120%;
   z-index: 3;
   background:linear-gradient(0deg,rgba(250,220,150,0),rgba(250,220,150,0.3),rgba(250,220,150,0));
   transform: rotate(45deg);

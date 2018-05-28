@@ -38,86 +38,10 @@ export default {
       this.service.login();
     },
     quicklight: function (e) {
-      var div = e.target;
-      // div.previousElementSibling.classList.add("quick");
-      console.log(div.previousElementSibling.firstChild.firstChild);
-      div.previousElementSibling.classList.add("big");
-      while(div.previousElementSibling.hasChildNodes()){  
-        div.previousElementSibling.removeChild(div.previousElementSibling.firstChild);  
-      }  
-      var circleBox = document.createElement('div');
-      for (var i = 0; i < 50; i++) {
-        var div = document.createElement('div');
-        function randomNum(from, to) {
-          from = Number(from);
-          to = Number(to);
-          var Range = to - from;
-          var num = from + Math.round(Math.random() * Range); //四舍五入
-          return num;
-        };
-        var bottom = randomNum(-80, -70);
-        var left = randomNum(-78, 78);
-        var duration = randomNum(10, 20) / 10;
-        div.style.cssText += `animation:move1 ${duration}s linear infinite;bottom:${bottom}px;left:${left}px;`;
-        div.classList.add("dot1");
-        circleBox.appendChild(div);
-      }
-      var fire = document.getElementsByClassName("btnanimation")[0];
-      fire.appendChild(circleBox);
+      e.target.previousElementSibling.classList.add("quicklight");
     },
     normallight: function(e){
-      var div = e.target;
-      // div.previousElementSibling.classList.remove("quick");
-      div.previousElementSibling.classList.remove("big");
-      while(div.previousElementSibling.hasChildNodes()){  
-        div.previousElementSibling.removeChild(div.previousElementSibling.firstChild);  
-      }  
-      var circleBox = document.createElement('div');
-      for (var i = 0; i < 40; i++) {
-          var div = document.createElement('div');
-          //获取随机数 from 参数表示从哪个数开始  to参数表示到哪个数结束 from<= num <= to
-          function randomNum(from, to) {
-              from = Number(from);
-              to = Number(to);
-              var Range = to - from;
-              var num = from + Math.round(Math.random() * Range); //四舍五入
-              return num;
-          };
-          var bottom = randomNum(-80, -70);
-          var left = randomNum(-73, 73);
-          var duration = randomNum(10, 30) / 10;
-          var delay = randomNum(0, 3) / 10;
-          div.classList.add("dot");
-          div.style.cssText += `animation:move ${duration}s linear ${delay}s infinite;bottom:${bottom}px;left:${left}px;`;
-          // console.log(div);
-          circleBox.appendChild(div);
-      }
-      var fire = document.getElementsByClassName("btnanimation")[0];
-      fire.appendChild(circleBox);
-    },
-    creatediv: function(){
-      var circleBox = document.createElement('div');
-      for (var i = 0; i < 40; i++) {
-          var div = document.createElement('div');
-          //获取随机数 from 参数表示从哪个数开始  to参数表示到哪个数结束 from<= num <= to
-          function randomNum(from, to) {
-              from = Number(from);
-              to = Number(to);
-              var Range = to - from;
-              var num = from + Math.round(Math.random() * Range); //四舍五入
-              return num;
-          };
-          var bottom = randomNum(-80, -70);
-          var left = randomNum(-73, 73);
-          var duration = randomNum(10, 30) / 10;
-          var delay = randomNum(0, 30) / 10;
-          div.classList.add("dot");
-          div.style.cssText += `animation:move ${duration}s linear ${delay}s infinite;bottom:${bottom}px;left:${left}px;`;
-          // console.log(div);
-          circleBox.appendChild(div);
-      }
-      var fire = document.getElementsByClassName("btnanimation")[0];
-      fire.appendChild(circleBox);
+      e.target.previousElementSibling.classList.remove("quicklight");
     }
   },
   mounted:function(){
@@ -127,7 +51,6 @@ export default {
       _this.topheight = parseInt(val) / 1920 * 890 + "px";
       _this.topnavheight = parseInt(val) / 1920 * 118 + "px";
     })
-    this.creatediv();
   },
   watch: {
     
@@ -187,39 +110,39 @@ export default {
     background-size: cover;
     position: absolute;
     z-index: 3;
+    animation: bigger .5s infinite alternate;
+    text-align: center;
+    position: relative;
+    left: 0;
+    transition: left .5s;
+  }
+  @keyframes bigger{
+    from {left: 0;}
+    to {left:-1.5%;}
   }
   .btntitle:hover{
     cursor: pointer;
+    animation: none;
   }
   .btnanimation{
-    /*width: 95%;
+    width: 95%;
     height: 98%;
     margin-left: 2%;
     position: absolute;
     z-index: 2;
     background:rgba(132,62,26,.4); 
     border-radius: 20px;
-    animation: btnlight .7s infinite alternate;*/
-    position: absolute;
-    width: 0;
-    height: 0;
-    bottom: 5px;
-    left: 48%;
-    border-radius: 50%;
-    box-sizing: border-box;
-    border: 83px solid transparent;
-    border-bottom: 83px solid rgba(255,165,0,.1);
-    transform: translate(-50%, 0);
-    filter: blur(12px) contrast(5);
-  }
-  .btnanimation.big{
-    bottom: 2px;
-    border: 85px solid transparent;
-    border-bottom: 85px solid rgba(255,165,0,.1);
-    filter: blur(11px) contrast(6);
+    animation: btnlight 1s infinite normal;
   }
   @keyframes btnlight{
-    from {background:rgba(155,62,26,.5); }
+    from {background:repeating-linear-gradient(to top right,rgba(135,62,26,.5),rgba(180,90,70,.4),rgba(255,155,120,.4),rgba(180,90,70,.4),rgba(135,62,26,.5)); }
+    to {background:repeating-linear-gradient(to top right,rgba(255,155,120,.4),rgba(180,90,70,.4),rgba(135,62,26,.5),rgba(180,90,70,.4),rgba(255,155,120,.4)); }
+  }
+  .btnanimation.quicklight{
+    animation: quicklight .3s infinite alternate;
+  }
+  @keyframes quicklight{
+    from {background:rgba(135,62,26,.5); }
     to {background:rgba(255,155,90,.4); }
   }
   .quick{
