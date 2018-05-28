@@ -10,11 +10,15 @@ import LangEn from './i18n/lang/en'
 import LangZhCH from './i18n/lang/zhCH'
 import LangZhHK from './i18n/lang/zhHK'
 import axios from 'axios'
+import service from "./util/service"
+import configData from "./util/configData"
 
+Vue.prototype.configData = configData;
+Vue.prototype.service = service ;
 
 Vue.config.productionTip = false
-Vue.use(VueI18n)
 
+Vue.use(VueI18n)
 const i18n = new VueI18n({
   locale: store.state.locale ,
   messages: {  

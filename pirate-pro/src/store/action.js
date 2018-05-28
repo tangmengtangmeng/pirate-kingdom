@@ -4,9 +4,6 @@ const actions = {
 	},
 	initLang(context){
 		context.commit("initLang");
-	},
-	login(context,params){
-		context.commit("login");
 	}
 }
 

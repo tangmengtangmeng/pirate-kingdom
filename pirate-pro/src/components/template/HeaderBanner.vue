@@ -35,7 +35,7 @@ export default {
       console.log(this.$i18n.locale,this.$store.state.locale);
     },
     login: function () {
-      this.$store.dispatch("login","lili");
+      this.service.login();
     },
     quicklight: function (e) {
       var div = e.target;

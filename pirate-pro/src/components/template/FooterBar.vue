@@ -3,17 +3,17 @@
     <div class="topfooter">
       <ul class="list1">
         <li></li>
-        <li><div></div></li><li><div></div></li><li><div></div></li><li><div></div></li><li><div></div></li>
+        <li v-for="n in 5"><div @click="goto(n,'ul1')"></div></li>
       </ul>
       <ul class="list2">
         <li></li>
-        <li><div></div></li><li><div></div></li>
+        <li v-for="n in 2"><div @click="goto(n,'ul2')"></div></li>
       </ul>
       <ul class="list3">
-        <li><div></div></li><li><div></div></li>
+        <li v-for="n in 2"><div @click="goto(n,'ul3')"></div></li>
       </ul>
       <ul class="list4">
-        <li><div></div></li><li><div></div></li><li><div></div></li>
+        <li v-for="n in 3"><div @click="goto(n,'ul4')"></div></li>
       </ul>
     </div>
     <div class="botfooter"></div>
@@ -27,6 +27,22 @@ export default {
     return {
       msg: 'FooterBar',
       footerHeight: document.documentElement.clientWidth / 1920 * 360 + "px"
+    }
+  },
+  methods: {
+    goto: function (i,p) {
+      if(p.indexOf("ul1")>-1){
+        alert("ul1");
+        window.open(this.configData.foot_ul1.foot_ul1_1,"_self");
+      }else if(p.indexOf("ul2")>-1){
+        alert("ul2");
+      }else if(p.indexOf("ul3")>-1){
+        var arrurl = [this.configData.foot_ul3.foot_ul3_1,this.configData.foot_ul3.foot_ul3_2] ;
+        window.open(arrurl[i],"_self");
+      }else{
+        var arrurl = [this.configData.foot_ul4.foot_ul4_1,this.configData.foot_ul4.foot_ul4_2,this.configData.foot_ul4.foot_ul4_3] ;
+        window.open(arrurl[i],"_self");
+      }
     }
   },
   mounted:function(){

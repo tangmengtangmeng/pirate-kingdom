@@ -9,13 +9,15 @@
         <li><div @mouseenter="light($event)" @mouseleave="none($event)"><div></div></div></li>
       </ul>
       <ul class="prebtn">
-        <li><div></div></li><li><div></div></li><li><div></div></li>
+        <li v-for="n in 3"><div @click="buycard(n)"></div></li>
       </ul>
   </div>
   </div>
 </template>
 
 <script>
+
+
 export default {
   name: 'Presale',
   data () {
@@ -31,6 +33,9 @@ export default {
     none: function (e) {
       var div = e.target;
       div.getElementsByTagName("div")[0].classList.remove("light");
+    },
+    buycard: function (i) {
+      this.service.buycard(i);
     }
   },
   created:function(){
