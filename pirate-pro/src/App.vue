@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @click="changeL">
+  <div id="app">
     <HeaderBanner></HeaderBanner>
     <router-view/>
     <FooterBar></FooterBar>
@@ -22,9 +22,12 @@ export default {
     }
   },
   methods: {
-    changeL () {
-      this.$store.commit("change");
-    }
+    
+  },
+  beforeCreate:function(){
+    console.log("i18n语种--",this.$i18n.locale);
+    this.$store.dispatch("initLang");
+    console.log("i18n语种++",this.$i18n.locale);
   },
   mounted:function(){
       

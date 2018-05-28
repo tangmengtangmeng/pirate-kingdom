@@ -6,7 +6,7 @@
     </div>
     <div class="startbtn" :class={hide:$store.state.show}>
       <div class="btnanimation"></div>
-      <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)"></div>
+      <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)" @click="login"></div>
     </div>
     <div class="topnav" :style="{'height':topnavheight}">
       <ul class="navul">
@@ -29,10 +29,13 @@ export default {
     }
   },
   methods: {
-    changeLocale: function (locale) {
-      this.$i18n.locale == "zh-ch" ? this.$i18n.locale = "en" : this.$i18n.locale = "zh-ch" ;
-      console.log(this.$i18n.locale);
-      this.$store.dispatch("init","lili");
+    changeLocale: function () {
+      console.log(this.$i18n.locale,this.$store.state.locale);
+      this.$store.dispatch("change");
+      console.log(this.$i18n.locale,this.$store.state.locale);
+    },
+    login: function () {
+      this.$store.dispatch("login","lili");
     },
     quicklight: function (e) {
       var div = e.target;
@@ -86,7 +89,7 @@ export default {
           var delay = randomNum(0, 3) / 10;
           div.classList.add("dot");
           div.style.cssText += `animation:move ${duration}s linear ${delay}s infinite;bottom:${bottom}px;left:${left}px;`;
-          console.log(div);
+          // console.log(div);
           circleBox.appendChild(div);
       }
       var fire = document.getElementsByClassName("btnanimation")[0];
@@ -110,7 +113,7 @@ export default {
           var delay = randomNum(0, 30) / 10;
           div.classList.add("dot");
           div.style.cssText += `animation:move ${duration}s linear ${delay}s infinite;bottom:${bottom}px;left:${left}px;`;
-          console.log(div);
+          // console.log(div);
           circleBox.appendChild(div);
       }
       var fire = document.getElementsByClassName("btnanimation")[0];
@@ -118,7 +121,6 @@ export default {
     }
   },
   mounted:function(){
-    console.log(this.$i18n.locale);
     const _this = this; 
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;

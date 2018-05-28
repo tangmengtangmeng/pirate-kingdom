@@ -1,5 +1,6 @@
 const state = {
-	show: false
+	show: false,
+	locale: "zh-ch"
 }
 
 export default state

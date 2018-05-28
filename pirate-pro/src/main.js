@@ -9,19 +9,23 @@ import initCss from './components/css/init.css'
 import LangEn from './i18n/lang/en'
 import LangZhCH from './i18n/lang/zhCH'
 import LangZhHK from './i18n/lang/zhHK'
+import axios from 'axios'
 
 
 Vue.config.productionTip = false
 Vue.use(VueI18n)
 
 const i18n = new VueI18n({
-  locale: 'zh-ch',
+  locale: store.state.locale ,
   messages: {  
     'en': LangEn,
     'zh-ch': LangZhCH,
     'zh-hk': LangZhHK
   }
 })
+
+window.i18n = i18n 
+window.axios = axios
 
 /* eslint-disable no-new */
 new Vue({
