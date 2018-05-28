@@ -55,7 +55,7 @@ export default {
           var num = from + Math.round(Math.random() * Range); //四舍五入
           return num;
         };
-        var bottom = randomNum(-84, -74);
+        var bottom = randomNum(-80, -70);
         var left = randomNum(-78, 78);
         var duration = randomNum(10, 20) / 10;
         div.style.cssText += `animation:move1 ${duration}s linear infinite;bottom:${bottom}px;left:${left}px;`;
@@ -204,7 +204,7 @@ export default {
     width: 0;
     height: 0;
     bottom: 5px;
-    left: 49%;
+    left: 48%;
     border-radius: 50%;
     box-sizing: border-box;
     border: 83px solid transparent;
@@ -213,7 +213,7 @@ export default {
     filter: blur(12px) contrast(5);
   }
   .btnanimation.big{
-    bottom: 10px;
+    bottom: 2px;
     border: 85px solid transparent;
     border-bottom: 85px solid rgba(255,165,0,.1);
     filter: blur(11px) contrast(6);
