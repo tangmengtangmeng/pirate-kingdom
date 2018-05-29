@@ -1,3 +1,7 @@
+import configData from "./configData"
+import store from '../store/store'
+
+
 let service = {};
 
 service.login = function(){
@@ -12,14 +16,25 @@ service.login = function(){
 	var myaccount = web3.eth.accounts[0];
 	if(myaccount){
 		console.log(myaccount);
-		axios.post("/").then(function(response){
-			console.log(response);
+		var url=configData.base_url+configData.get_username;
+		var tokenstr = myaccount.toString();
+		axios.post(url, {token: tokenstr}).then(function(result){
+			console.log("成功",result.data.data.name);
+			if(result.data.data.name == tokenstr){
+				alert("请先注册账户");
+				store.state.username = result.data.data.name;
+				console.log("000",store.state.username)
+			}else{
+				store.state.username = result.data.data.name;
+
+			}
 		}).catch(function(err){
-			console.log(err);
+			console.log("失败",err);
 		})
 	}else{
 		alert("请先登录metamask");
 	}
+
 }
 
 service.buycard = function(i){

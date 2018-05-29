@@ -1,6 +1,7 @@
 const state = {
 	show: false,
-	locale: "zh-ch"
+	locale: "zh-ch",
+	username: 'login'
 }
 
 export default state

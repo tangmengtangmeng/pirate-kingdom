@@ -1,9 +1,9 @@
 <template>
   <div class="header-banner" :style="{'height':topheight}">
-    {{$t("message.tabhome")}}
-    <div class="topright" @click="changeLocale()">
-      <div></div><div></div>{{$t("message.changeLocale")}}
+    <div class="topright">
+      <div @click="login">{{username.username}}</div><div></div>
     </div>
+    <div class="language"  @click="changeLocale()">{{$t("message.changeLocale")}}</div>
     <div class="startbtn" :class={hide:$store.state.show}>
       <div class="btnanimation"></div>
       <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)" @click="login"></div>
@@ -20,7 +20,7 @@
 <script>
 export default {
   name: 'HeaderBanner',
-  props:['lang'],
+  // props:['lang'],
   data () {
     return {
       topheight: document.documentElement.clientWidth/1920*890 + "px",
@@ -55,8 +55,12 @@ export default {
   watch: {
     
   },
-  updated:function(){
-    
+  computed: {
+    username () {
+      return {
+        username:this.$store.state.username.slice(0,6)
+      }
+    }
   }
 }
 </script>
@@ -72,20 +76,33 @@ export default {
     background:url("../../assets/topbanner.png") center center no-repeat;
     background-size: 100% 100%;
   }
+  .language{
+    width: 15.89%;
+    height: 9%;
+    float: right;
+    text-align: center;
+    padding-top: 2.2%;
+  }
+  .language:hover{
+    cursor: pointer;
+  }
   .topright{
     width: 15.89%;
     height: 9%;
     float: right;
     background:url("../../assets/moresetting.png") center center no-repeat;
     background-size: 100% 100%;
+    display: table;
   }
   .topright>div{
     width: 20%;
-    height: 17%;
+    height: 30%;
     float:left;
     position: relative;
-    top: 60%;
-    left: 2%; 
+    left: 5%; 
+    display: table-cell;
+    vertical-align: middle;
+    margin-top: 13%;
   }
   .topright>div:nth-child(2){
     left: 10%;

@@ -31,6 +31,7 @@ const i18n = new VueI18n({
 window.i18n = i18n 
 window.axios = axios
 
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
