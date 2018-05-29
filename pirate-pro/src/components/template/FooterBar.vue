@@ -34,29 +34,23 @@ export default {
     }
   },
   methods: {
-    goto: function (i,p) {
-      if(p.indexOf("ul1")>-1){
-        alert("ul1");
-        window.open(this.configData.foot_ul1.foot_ul1_1,"_self");
-      }else if(p.indexOf("ul2")>-1){
-        alert("ul2");
-      }else if(p.indexOf("ul3")>-1){
-        var arrurl = [this.configData.foot_ul3.foot_ul3_1,this.configData.foot_ul3.foot_ul3_2] ;
-        window.open(arrurl[i],"_self");
-      }else{
-        var arrurl = [this.configData.foot_ul4.foot_ul4_1,this.configData.foot_ul4.foot_ul4_2,this.configData.foot_ul4.foot_ul4_3] ;
-        window.open(arrurl[i],"_self");
-      }
+    lineHeight: function () {
+      
     }
   },
   mounted:function(){
     var _this = this;
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
-      console.log("footerHeight",val);
+      console.log("footerHeight",val/1920*360);
       _this.footerHeight = val / 1920 * 360 + "px";
     })
-    
+
+  },
+  watch: {
+    footerHeight () {
+      
+    }
   }
 }
 </script>
@@ -83,6 +77,8 @@ ul{
 }
 ul>li{
   box-sizing: border-box;
+  width: 100%;
+  display: table;
 }
 ul>li>a{
   font-family: Windlass,Georgia,"serif";
@@ -90,10 +86,45 @@ ul>li>a{
   font-size: 15px;
   font-variant: small-caps;
   color: rgb(67,63,52);
+  display: table-cell;
+  vertical-align: middle;
+}
+
+@media all and (max-width:1300px){
+  ul>li>a{
+    font-size: 13px;
+  }
+}
+@media all and (max-width:1100px){
+  ul>li>a{
+    font-size: 11px;
+  }
+}
+@media all and (max-width:900px){
+  ul>li>a{
+    font-size: 10px;
+  }
+}
+@media all and (max-width:800px){
+  ul>li>a{
+    font-size: 9px;
+  }
+}
+@media all and (max-width:700px){
+  ul>li>a{
+    font-size: 7px;
+  }
+}
+@media all and (max-width:600px){
+  ul>li>a{
+    font-size: 5px;
+  }
 }
 .list1{
   width: 9.2%; 
   margin-left: 19.95%;
+  display: table;
+  align-items: center;
 }
 .list1 li:nth-child(1){
   height: 30.8%;
@@ -103,27 +134,22 @@ ul>li>a{
 .list1 li:nth-child(2){
   height: 10.8%;
   padding-left: 4%;
-  padding-top: 1%;
 }
 .list1 li:nth-child(3){
   height: 13.1%;
   padding-left: 4%;
-  padding-top: 2%;
 }
 .list1 li:nth-child(4){
   height: 13.1%;
   padding-left: 4%;
-  padding-top: 3%;
 }
 .list1 li:nth-child(5){
   height: 11.5%;
   padding-left: 4%;
-  padding-top: 3%;
 }
 .list1 li:nth-child(6){
   height: 12.3%;
   padding-left: 4%;
-  padding-top: 3%;
 }
 .list2{
   width: 9.4%;
@@ -136,54 +162,51 @@ ul>li>a{
 .list2 li:nth-child(2){
   height: 10.8%;
   padding-left: 4%;
-  padding-top: 2%;
 }
 .list2 li:nth-child(3){
   height: 13.1%;
   padding-left: 4%;
-  padding-top: 2%;
 }
 .list3{
   width: 9%;
   margin-left:9.5%; 
+  padding-top: 0.5%;
 }
 .list3 li:nth-child(1){
   height: 35.8%;
   background:url("../../assets/footer3-1.png") center center no-repeat;
   padding-left: 24%;
-  padding-top: 30%;
 }
 .list3 li:nth-child(2){
   height: 18.8%;
   background:url("../../assets/footer3-2.png") center center no-repeat;
   padding-left: 24%;
-  padding-top: 11%;
 }
 .list4{
   width: 10.4%;
   margin-left:12.3%;
+  padding-top: 0.5%;
 }
 .list4 li:nth-child(1){
   height: 35.8%;
   background:url("../../assets/footer4-1.png") center center no-repeat;
   padding-left: 30%;
-  padding-top: 26%;
 }
 .list4 li:nth-child(2){
   height: 33.8%;
   background:url("../../assets/footer4-2.png") center center no-repeat;
   padding-left: 30%;
-  padding-top: 20%;
 }
 .list4 li:nth-child(3){
   height: 28.5%;
   background:url("../../assets/footer4-3.png") center center no-repeat;
   padding-left: 30%;
-  padding-top: 13%;
 }
-.list1 li:nth-child(1),.list2 li:nth-child(1),.list3 li:nth-child(1),
-.list3 li:nth-child(2),.list4 li:nth-child(1),.list4 li:nth-child(2),.list4 li:nth-child(3){
-  background-size: 100% 100%;
+.list1 li:nth-child(1),.list2 li:nth-child(1){
+  background-size: 100%;
+}
+.list3 li:nth-child(1),.list3 li:nth-child(2),.list4 li:nth-child(1),.list4 li:nth-child(2),.list4 li:nth-child(3){
+  background-size: 100%;
 }
 .list1,.list2,.list3,.list4{
   box-sizing: border-box;
