@@ -4,6 +4,12 @@ const actions = {
 	},
 	initLang(context){
 		context.commit("initLang");
+	},
+	hideheader(context){
+		context.commit("hideheader");
+	},
+	showbigpopup(context){
+		context.commit("showbigpopup");
 	}
 }
 

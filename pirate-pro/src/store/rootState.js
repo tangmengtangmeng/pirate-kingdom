@@ -1,7 +1,10 @@
 const state = {
 	show: false,
 	locale: "zh-ch",
-	username: 'login'
+	username: "login",
+	showheader: true,
+	showfooter:true,
+	showbigpopup:false,
 }
 
 export default state

@@ -12,6 +12,7 @@ import LangZhHK from './i18n/lang/zhHK'
 import axios from 'axios'
 import service from "./util/service"
 import configData from "./util/configData"
+import bigPopup from './components/template/common/index.js'
 
 Vue.prototype.configData = configData;
 Vue.prototype.service = service ;
@@ -19,6 +20,8 @@ Vue.prototype.service = service ;
 Vue.config.productionTip = false
 
 Vue.use(VueI18n)
+Vue.use(bigPopup)
+
 const i18n = new VueI18n({
   locale: store.state.locale ,
   messages: {  

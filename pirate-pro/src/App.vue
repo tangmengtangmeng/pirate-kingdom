@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <HeaderBanner></HeaderBanner>
+    <HeaderBanner v-show="showheader.showheader"></HeaderBanner>
     <router-view/>
-    <FooterBar></FooterBar>
+    <FooterBar v-show="showfooter.showfooter"></FooterBar>
   </div>
 </template>
 
@@ -25,12 +25,28 @@ export default {
     
   },
   beforeCreate:function(){
-    console.log("i18n语种--",this.$i18n.locale);
+    console.log("i18n语种--",document.documentElement.clientWidth);
     this.$store.dispatch("initLang");
     console.log("i18n语种++",this.$i18n.locale);
+    //单独拿出预售页的路由显示
+    if(this.$route.path.indexOf("presale")>-1){
+      this.$store.dispatch("hideheader");
+    }
   },
   mounted:function(){
       
+  },
+  computed: {
+    showheader () {
+      return {
+        showheader:this.$store.state.showheader
+      }
+    },
+    showfooter () {
+      return {
+        showfooter:this.$store.state.showfooter
+      }
+    }
   }
 }
 </script>

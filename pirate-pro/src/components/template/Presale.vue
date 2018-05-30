@@ -1,28 +1,45 @@
 <template>
-  <div class="tab-presale">
-    <div class="players" :style="{'height':playersheight}">
-      {{$t("message.tabhome")}}
-      <div class="pretitle"></div>
-      <ul class="preplayer">
-        <li><div @mouseenter="light($event)" @mouseleave="none($event)"><div></div></div></li>
-        <li><div @mouseenter="light($event)" @mouseleave="none($event)"><div></div></div></li>
-        <li><div @mouseenter="light($event)" @mouseleave="none($event)"><div></div></div></li>
-      </ul>
-      <ul class="prebtn">
-        <li v-for="n in 3"><div @click="buycard(n)"></div></li>
-      </ul>
-  </div>
-  </div>
+    <div class="tab-presale">
+      <div class="addbox" v-show="!showheader.showheader" :style="{'height':addheight}"></div>
+      <div class="players" :style="{'height':playersheight}">
+        <div class="topright">
+          <div class="row">
+            <div class="col-40" @click="login"><p class="text-left">{{username.username}}</p></div>
+            <div class="col-60"><p class="text-right">My assets</p></div>
+          </div>
+        </div>
+        <div class="pretitle" :style="{'height':titleheight}"></div>
+        <ul class="preplayer" :style="{'height':playerheight}">
+          <li><div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail"><div></div></div></li>
+          <li><div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail"><div></div></div></li>
+          <li><div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail"><div></div></div></li>
+        </ul>
+        <ul class="prebtn" :style="{'height':btnheight}">
+          <li v-for="n in 3"><div @click="buycard(n)" :style="{'height':divheight}"></div></li>
+        </ul>
+        <div class="sale" v-show="showpopup">
+          <div class="shadow">
+            <bigPopup></bigPopup>
+          </div>
+        </div>
+      </div>
+      <div class="addbox" v-show="!showfooter.showfooter" :style="{'height':addheight}"></div>
+    </div>
 </template>
 
 <script>
-
 
 export default {
   name: 'Presale',
   data () {
     return {
-      playersheight: document.documentElement.clientWidth/ 1920 * 950 + "px",
+      screenwidth: document.documentElement.clientWidth,
+      addheight: "",
+      playersheight: "",
+      titleheight: "",
+      playerheight: "",
+      btnheight: "",
+      divheight: "",
     }
   },
   methods: {
@@ -36,97 +53,228 @@ export default {
     },
     buycard: function (i) {
       this.service.buycard(i);
+    },
+    login: function () {
+      this.service.login();
+    },
+    detail: function () {
+      this.$store.dispatch("showbigpopup");
     }
   },
   created:function(){
-    
+    console.log("高度",this.playersheight);
   },
   mounted:function(){
+    if(document.documentElement.clientWidth > 1680){
+      this.addheight = 0;
+      this.playersheight = "100%";
+      this.titleheight = "24.5%";
+      this.playerheight = "63.3%";
+      this.btnheight = "12%";
+      this.divheight = "76%";
+    }else{
+      this.addheight = ((document.documentElement.clientHeight) - (document.documentElement.clientWidth)/ 1920 * 1080)/2 + "px";
+      this.playersheight = (document.documentElement.clientWidth)/ 1920 * 1080 + "px";
+    }
+
     var _this = this;
     window.addEventListener("resize",function(){
-      var val = document.documentElement.clientWidth;
-      _this.playersheight = val / 1920 * 950 + "px";
+        console.log("缩放lllll")
+        var val = document.documentElement.clientWidth;
+        var val2 = document.documentElement.clientHeight;
+        if(document.documentElement.clientWidth > 1680){
+          _this.addheight = 0;
+          _this.playersheight = "100%";
+          _this.titleheight = "24.5%";
+          _this.playerheight = "63.3%";
+          _this.btnheight = "12%";
+          _this.divheight = "76%";
+        }else{
+          _this.addheight = ((document.documentElement.clientHeight) - (document.documentElement.clientWidth)/ 1920 * 1080)/2 + "px";
+          _this.playersheight = (document.documentElement.clientWidth)/ 1920 * 1080 + "px";
+          _this.titleheight = "22.2%";
+          _this.playerheight = "57.4%";
+          _this.btnheight = "20%";
+          _this.divheight = "45.2%";
+        }
     })
+  },
+  computed: {
+    showheader () {
+      return {
+        showheader:this.$store.state.showheader
+      }
+    },
+    showfooter () {
+      return {
+        showfooter:this.$store.state.showfooter
+      }
+    },
+    username () {
+      return {
+        username:this.$store.state.username.slice(0,6)
+      }
+    },
+    showpopup () {
+      return this.$store.state.showbigpopup
+    }
+  },
+  watch: {
+    screenwidth () {
+      
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.sale{
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 5;
+}
+.shadow{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+}
 .tab-presale{
   width: 100%;
   height: auto;
   color: #fff;
+  background: black;
+}
+@media all and (min-width: 1680px){
+  .tab-presale{
+    height: 100%;
+  }
 }
 .players{
   width: 100%;
-  background: url("../../assets/presale.png") left top no-repeat;
+  background: url("../../assets/presale.png") center center no-repeat;
   background-size: 100% 100%;
 }
 .pretitle{
-  width: 38%;
-  height: 22.1%;
+  width: 46.9%;
+  height: 22.2%;
   margin: 0 auto;
   background:url("../../assets/pretitle.png") center center no-repeat;
   background-size: 100% 100%; 
 }
+.topright{
+  width: 11.2%;
+  min-width: 156px;
+  height: 5.6%;
+  float: right;
+  background:url("../../assets/moresetting.png") center center no-repeat;
+  background-size: 100%;
+  margin-top: 1.3%;
+  margin-right: 5.2%;
+}
+.topright>div{
+  width: 81.4%;
+  min-width: 126px;
+  height:100%;
+  padding: 0 9%;
+  box-sizing: border-box;
+}
+.topright>div>div:hover{
+  cursor: pointer;
+}
+.topright>div>div>p{
+  width: 100%;
+  font-size: 13px;
+  color: rgb(149,139,114);
+}
+@media all and (min-width: 1200px){
+  .topright>div>div>p{
+    font-size: 14px;
+  }
+}
+@media all and (min-width: 1600px){
+  .topright>div>div>p{
+    font-size: 15px;
+  }
+}
+@media all and (min-width: 1800px){
+  .topright>div>div>p{
+    font-size: 16px;
+  }
+}
 .preplayer,.prebtn{
-  width:66.25%;
-  height: 57.37%;
+  width:64%;
+  height: 57.4%;
   margin: 0 auto; 
 }
 .preplayer li,.prebtn li{
-  width: 33.33%;
   height: 100%;
   float: left;
 }
 .preplayer li:nth-child(1){
+  width: 33%;
   background:url("../../assets/player1.png");
   background-size: 100% 100%; 
 }
 .preplayer li:nth-child(2){
+  width: 34%;
   background:url("../../assets/player2.png");
   background-size: 100% 100%; 
 }
 .preplayer li:nth-child(3){
+  width: 33%;
   background:url("../../assets/player3.png");
   background-size: 100% 100%; 
 }
 .prebtn{
-  height: 16.31%;
+  height: 20%;
+}
+.prebtn>li{
+  width: 33.33%;
 }
 .prebtn>li>div{
-  width: 50%;
-  height: 40%;
+  width: 100%;
+  height: 45.2%;
   margin:0 auto;
-  position:relative;
-  top:16%; 
 }
 .prebtn>li>div:hover{
   cursor: pointer;
 }
-.prebtn li:nth-child(1){
+.prebtn li:nth-child(1) div{
   background:url("../../assets/player1b.png");
   background-size: 100% 100%; 
 }
-.prebtn li:nth-child(2){
+.prebtn li:nth-child(2) div{
   background:url("../../assets/player2b.png");
   background-size: 100% 100%; 
 }
-.prebtn li:nth-child(3){
+.prebtn li:nth-child(3) div{
   background:url("../../assets/player3b.png");
   background-size: 100% 100%; 
 }
 .preplayer li div{
   width: 70%;
-  height: 90%;
-  margin: 5% 9%;
+  height: 77%;
+  margin: 25% 9%;
   position: relative;
   top: 10px;
   left: 20px;
   z-index: 2;
   background:transparent;
   overflow: hidden; 
+}
+.preplayer li:nth-child(3) div{
+  margin:25% 10%;
 }
 .preplayer li div div{
   width: 200%;

@@ -14,6 +14,14 @@ const mutations = {
 		}else{
 			
 		}
+	},
+	hideheader (state) {
+		//隐藏头部底部
+		state.showheader = false;
+		state.showfooter = false;
+	},
+	showbigpopup (state) {
+		state.showbigpopup = state.showbigpopup?false:true;
 	}
 }
 export default mutations

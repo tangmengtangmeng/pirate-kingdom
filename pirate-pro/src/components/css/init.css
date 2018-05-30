@@ -160,6 +160,56 @@ template {
   background:-moz-linear-gradient(top, #000, rgba(0, 0, 0, 0.95));  /*firefox*/ 
   background:-webkit-gradient(top, #000, rgba(0, 0, 0, 0.95));  /*chorme\safari*/ 
 }
-
-
+.row{
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.col-20{
+  display: flex;
+  width: 20%;
+}
+.col-40{
+  display: flex;
+  width: 40%;
+}
+.col-50{
+  display: flex;
+  width: 50%;
+}
+.col-60{
+  display: flex;
+  width: 60%;
+}
+.col-80{
+  display: flex;
+  width: 80%;
+}
+.col-100{
+  display: flex;
+  width: 100%;
+}
+.text-center{
+  text-align: center;
+}
+.text-left{
+  text-align: left;
+}
+.text-right{
+  text-align: right;
+}
+.fr-left{
+  float: left;
+  display: block;
+}
+.fr-right{
+  float: right;
+  display: block;
+}
+.center{
+  margin: 0 auto;
+}
+.hide{
+  display: none;
+}
 

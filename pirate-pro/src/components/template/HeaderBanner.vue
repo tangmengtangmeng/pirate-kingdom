@@ -1,14 +1,17 @@
 <template>
   <div class="header-banner" :style="{'height':topheight}">
     <div class="topright">
-      <div @click="login">{{username.username}}</div><div></div>
+      <div class="row">
+        <div class="col-40" @click="login"><p class="text-left">{{username.username}}</p></div>
+        <div class="col-60"><p class="text-right">My assets</p></div>
+      </div>
     </div>
     <div class="language"  @click="changeLocale()">{{$t("message.changeLocale")}}</div>
     <div class="startbtn" :class={hide:$store.state.show}>
       <div class="btnanimation"></div>
-      <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)" @click="login"></div>
+      <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)" @click="buycard"></div>
     </div>
-    <div class="topnav" :style="{'height':topnavheight}">
+    <div class="topnav hide" :style="{'height':topnavheight}">
       <ul class="navul">
         <li><router-link to="presale"></router-link></li>
         <li><router-link to="introduction"></router-link></li>           
@@ -42,6 +45,10 @@ export default {
     },
     normallight: function(e){
       e.target.previousElementSibling.classList.remove("quicklight");
+    },
+    buycard: function(){
+      this.$store.dispatch("hideheader");
+      this.$router.push("/presale");
     }
   },
   mounted:function(){
@@ -87,28 +94,44 @@ export default {
     cursor: pointer;
   }
   .topright{
-    width: 15.89%;
-    height: 9%;
+    width: 11.2%;
+    min-width: 156px;
+    height: 5.6%;
     float: right;
     background:url("../../assets/moresetting.png") center center no-repeat;
-    background-size: 100% 100%;
-    display: table;
+    background-size: 100%;
+    margin-top: 1.3%;
+    margin-right: 5.2%;
   }
   .topright>div{
-    width: 20%;
-    height: 30%;
-    float:left;
-    position: relative;
-    left: 5%; 
-    display: table-cell;
-    vertical-align: middle;
-    margin-top: 13%;
+    width: 81.4%;
+    min-width: 126px;
+    height:100%;
+    padding: 0 9%;
+    box-sizing: border-box;
   }
-  .topright>div:nth-child(2){
-    left: 10%;
-  }
-  .topright>div:hover{
+  .topright>div>div:hover{
     cursor: pointer;
+  }
+  .topright>div>div>p{
+    width: 100%;
+    font-size: 13px;
+    color: rgb(149,139,114);
+  }
+  @media all and (min-width: 1200px){
+    .topright>div>div>p{
+      font-size: 14px;
+    }
+  }
+  @media all and (min-width: 1600px){
+    .topright>div>div>p{
+      font-size: 15px;
+    }
+  }
+  @media all and (min-width: 1800px){
+    .topright>div>div>p{
+      font-size: 16px;
+    }
   }
   .startbtn{
     width: 13.54%;
@@ -185,13 +208,13 @@ export default {
     top: 81%;
   }
   .navul{
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      margin: 0;      
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;      
   }
   .navul li{
-    float:left;
+    float: left;
     width: 50%;
     height: 100%;
   }
