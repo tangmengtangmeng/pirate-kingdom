@@ -55,7 +55,12 @@ export default {
       this.buymsg = {confirmbuycard:true,player:i};
     },
     login: function () {
-      this.service.login();
+      if(this.$store.state.username.indexOf("login") > -1){
+        this.service.login();
+      }else{
+        this.$store.dispatch("showbigpopup");
+        this.buymsg = {setnickname:true};
+      }
     },
     detail: function (i) {
       this.$store.dispatch("showbigpopup",{buycard:true,player:i});

@@ -47,9 +47,9 @@ export default {
       if(this.$store.state.username.indexOf("login") > -1){
         this.service.login();
       }else{
-        alert("修改昵称");
+        this.$store.dispatch("showbigpopup");
+        this.buymsg = {setnickname:true};
       }
-      
     },
     quicklight: function (e) {
       e.target.previousElementSibling.classList.add("quicklight");

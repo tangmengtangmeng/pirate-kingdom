@@ -24,6 +24,11 @@
 	</div>
 	<div v-show="bigpopupBuymsg.myassets" class="myassets">
 		
+	</div>
+	<div v-show="bigpopupBuymsg.setnickname" class="setnickname">
+		<input class="inputname" type="text" maxlength="16" ref="inputname"/>
+		<div class="cancelbtn" @click="closepopup"></div>
+		<div class="nextbtn" @click="setnickname"></div>
 	</div>	  	
   </div>
 </template>
@@ -48,6 +53,13 @@ export default {
   		var i = this.bigpopupBuymsg.player;
   		this.service.buycard(i);
   		this.$store.dispatch("closebigpopup");
+  	},
+  	setnickname: function () {
+  		var name = this.$refs.inputname.value;
+  		console.log(name);
+  		var data = {name:name}
+  		this.service.setnickname(data);
+  		this.closepopup();
   	}
   },
   created () {
@@ -253,6 +265,30 @@ export default {
 		height: 100%;
 		background: url("../../../assets/bigpopup3.png") center center no-repeat;
 		background-size: 100% 100%;
+	}
+	/*设置昵称弹窗样式*/
+	.setnickname{
+		width: 100%;
+		height: 100%;
+		background: url("../../../assets/bigpopup4.png") center center no-repeat;
+		background-size: 100% 100%;
+	}
+	.inputname{
+		width: 51%;
+	    height: 8%;
+	    display: block;
+	    margin: 0 auto;
+	    position: relative;
+	    top: 32.4%;
+	    left: -1.2%;
+	    outline: none;
+	    border: 0;
+	    background: transparent;
+	    color: rgb(119,93,71);
+	}
+	.setnickname .cancelbtn,.setnickname .nextbtn{
+		position: relative;
+		top: 66.5%;
 	}
 </style>
 
