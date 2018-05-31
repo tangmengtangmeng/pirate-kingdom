@@ -23,7 +23,7 @@ service.login = function(){
 		axios.post(url, {token: tokenstr}).then(function(result){
 			console.log("成功",result);
 			if(!result.data.data.name){
-				alert("请设置账户昵称");
+				alert("点击用户名设置账户昵称");
 				store.state.username = tokenstr.slice(0,5);
 				console.log("用户名",store.state.username);
 			}else{
@@ -89,7 +89,17 @@ service.setnickname = function(nameObj){
 		  console.info(postData);
 		  axios.post(url, postData).then(function (response) {
 			console.log("设置用户名",response);
-			store.state.username = response.data.data.name;
+			if(response.data.state == 200){
+				alert("修改用户名成功")
+				store.state.username = username.slice(0,5);
+			}else if(response.data.state == 10003){
+				alert("设置昵称过长")
+			}else if(response.data.state == 10004){
+				alert("该昵称已经存在")
+			}else if(response.data.state == 500){
+				alert("服务器内部错误")
+			}
+			
 		  }).catch(function (error) {
 		    console.log(error);
 		  });

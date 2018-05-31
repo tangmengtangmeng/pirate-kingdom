@@ -26,7 +26,7 @@
 		
 	</div>
 	<div v-show="bigpopupBuymsg.setnickname" class="setnickname">
-		<input class="inputname" type="text" maxlength="16" ref="inputname"/>
+		<input class="inputname" type="text" maxlength="16" v-bind:placeholder="alertplaceholder" ref="inputname" @focus="clearplace"/>
 		<div class="cancelbtn" @click="closepopup"></div>
 		<div class="nextbtn" @click="setnickname"></div>
 	</div>	  	
@@ -43,10 +43,13 @@ export default {
       popuptop: "",
       showbuypopup: "",
       showconfirmpopup: "",
+      alertplaceholder: "",
     }
   },
   methods: {
   	closepopup: function () {
+  		this.$refs.inputname.value = "";
+  		this.alertplaceholder = "";
   		this.$store.dispatch("closebigpopup");
   	},
   	buycard: function () {
@@ -56,10 +59,17 @@ export default {
   	},
   	setnickname: function () {
   		var name = this.$refs.inputname.value;
-  		console.log(name);
-  		var data = {name:name}
-  		this.service.setnickname(data);
-  		this.closepopup();
+  		console.log("设置新用户名是：",name);
+  		if(name){
+  			var data = {name:name}
+	  		this.service.setnickname(data);
+	  		this.closepopup();
+  		}else{
+  			this.alertplaceholder = "请输入新的昵称";
+  		}
+  	},
+  	clearplace: function () {
+  		this.alertplaceholder = "";
   	}
   },
   created () {

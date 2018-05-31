@@ -81,7 +81,7 @@ export default {
   computed: {
     username () {
       return {
-        username:this.$store.state.username.slice(0,6)
+        username:this.$store.state.username
       }
     },
     showpopup () {
