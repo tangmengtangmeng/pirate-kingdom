@@ -20,8 +20,11 @@ const mutations = {
 		state.showheader = false;
 		state.showfooter = false;
 	},
-	showbigpopup (state) {
+	showbigpopup (state,params) {
 		state.showbigpopup = state.showbigpopup?false:true;
-	}
+	},
+	closebigpopup (state) {
+		state.showbigpopup = state.showbigpopup?false:true;
+	},
 }
 export default mutations

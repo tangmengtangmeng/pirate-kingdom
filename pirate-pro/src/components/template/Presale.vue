@@ -5,21 +5,19 @@
         <div class="topright">
           <div class="row">
             <div class="col-40" @click="login"><p class="text-left">{{username.username}}</p></div>
-            <div class="col-60"><p class="text-right">My assets</p></div>
+            <div class="col-60"><p class="text-right" @click="myassets">My assets</p></div>
           </div>
         </div>
         <div class="pretitle" :style="{'height':titleheight}"></div>
         <ul class="preplayer" :style="{'height':playerheight}">
-          <li><div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail"><div></div></div></li>
-          <li><div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail"><div></div></div></li>
-          <li><div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail"><div></div></div></li>
+          <li v-for="n in 3"><div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail(n)"><div></div></div></li>
         </ul>
         <ul class="prebtn" :style="{'height':btnheight}">
-          <li v-for="n in 3"><div @click="buycard(n)" :style="{'height':divheight}"></div></li>
+          <li v-for="n in 3"><div @click="confirmbuycard(n)" :style="{'height':divheight}"></div></li>
         </ul>
         <div class="sale" v-show="showpopup">
           <div class="shadow">
-            <bigPopup></bigPopup>
+            <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
           </div>
         </div>
       </div>
@@ -40,6 +38,7 @@ export default {
       playerheight: "",
       btnheight: "",
       divheight: "",
+      buymsg: {},
     }
   },
   methods: {
@@ -51,14 +50,21 @@ export default {
       var div = e.target;
       div.getElementsByTagName("div")[0].classList.remove("light");
     },
-    buycard: function (i) {
-      this.service.buycard(i);
+    confirmbuycard: function (i) {
+      this.$store.dispatch("showbigpopup",{confirmbuycard:true,player:i});
+      this.buymsg = {confirmbuycard:true,player:i};
     },
     login: function () {
       this.service.login();
     },
-    detail: function () {
+    detail: function (i) {
+      this.$store.dispatch("showbigpopup",{buycard:true,player:i});
+      this.buymsg = {buycard:true,player:i};
+    },
+    myassets: function () {
+      this.service.myassets();
       this.$store.dispatch("showbigpopup");
+      this.buymsg = {myassets:true};
     }
   },
   created:function(){

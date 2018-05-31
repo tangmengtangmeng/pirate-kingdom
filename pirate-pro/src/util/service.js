@@ -38,14 +38,18 @@ service.login = function(){
 }
 
 service.buycard = function(i){
-	alert(i);
 	//购买角色卡牌
-	var data = {};
-	axios.post("/",data).then(function(response){
+	var url=configData.base_url+configData.get_username;
+	var tokenstr = i.toString();
+	axios.post(url,{token:tokenstr}).then(function(response){
 		console.log(response);
 	}).catch(function(error){
 		console.log(error);
 	})
+}
+
+service.myassets = function(){
+	
 }
 
 export default service

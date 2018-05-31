@@ -3,7 +3,7 @@
     <div class="topright">
       <div class="row">
         <div class="col-40" @click="login"><p class="text-left">{{username.username}}</p></div>
-        <div class="col-60"><p class="text-right">My assets</p></div>
+        <div class="col-60"><p class="text-right"  @click="myassets">My assets</p></div>
       </div>
     </div>
     <div class="language"  @click="changeLocale()">{{$t("message.changeLocale")}}</div>
@@ -17,6 +17,11 @@
         <li><router-link to="introduction"></router-link></li>           
       </ul>
     </div>
+    <div class="myassets" v-show="showpopup">
+      <div class="shadow">
+        <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,6 +34,7 @@ export default {
       topheight: document.documentElement.clientWidth/1920*890 + "px",
       topnavheight: document.documentElement.clientWidth/1920*118 + "px",
       screenwidth: document.documentElement.clientWidth,
+      buymsg: {},
     }
   },
   methods: {
@@ -38,7 +44,12 @@ export default {
       console.log(this.$i18n.locale,this.$store.state.locale);
     },
     login: function () {
-      this.service.login();
+      if(this.$store.state.username.indexOf("login") > -1){
+        this.service.login();
+      }else{
+        alert("修改昵称");
+      }
+      
     },
     quicklight: function (e) {
       e.target.previousElementSibling.classList.add("quicklight");
@@ -49,6 +60,11 @@ export default {
     buycard: function(){
       this.$store.dispatch("hideheader");
       this.$router.push("/presale");
+    },
+    myassets: function () {
+      this.service.myassets();
+      this.$store.dispatch("showbigpopup");
+      this.buymsg = {myassets:true};
     }
   },
   mounted:function(){
@@ -67,6 +83,9 @@ export default {
       return {
         username:this.$store.state.username.slice(0,6)
       }
+    },
+    showpopup () {
+      return this.$store.state.showbigpopup
     }
   }
 }
@@ -74,6 +93,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .myassets{
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+  }
+  .shadow{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+  }
   .hide{
     visibility: hidden;
   }
@@ -172,17 +211,29 @@ export default {
     z-index: 2;
     background:rgba(132,62,26,.4); 
     border-radius: 20px;
-    animation: btnlight 1s infinite normal;
+    animation: btnlight 1.6s infinite normal;
   }
   @keyframes btnlight{
-    from {background:repeating-linear-gradient(to top right,rgba(135,62,26,.5),rgba(180,90,70,.4),rgba(255,155,120,.4),rgba(180,90,70,.4),rgba(135,62,26,.5)); }
-    to {background:repeating-linear-gradient(to top right,rgba(255,155,120,.4),rgba(180,90,70,.4),rgba(135,62,26,.5),rgba(180,90,70,.4),rgba(255,155,120,.4)); }
+    0% {background:repeating-linear-gradient(to left,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    30% {background:repeating-linear-gradient(to left,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    60% {background:repeating-linear-gradient(to left,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    64% {background:repeating-linear-gradient(to left,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    68% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    72% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    76% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    80% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    84% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    88% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    92% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    96% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5)); }
+    100% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4)); }
+
   }
   .btnanimation.quicklight{
     animation: quicklight .3s infinite alternate;
   }
   @keyframes quicklight{
-    from {background:rgba(135,62,26,.5); }
+    from {background:rgba(135,62,26,.4); }
     to {background:rgba(255,155,90,.4); }
   }
   .quick{
@@ -196,7 +247,7 @@ export default {
     animation: none .2s infinite alternate;
   }
   @keyframes none{
-    from {background:rgba(155,62,26,.5); }
+    from {background:rgba(155,62,26,.4); }
     to {background:rgba(230,170,100,.4); }
   }
   .topnav{ 

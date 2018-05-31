@@ -1,45 +1,68 @@
 <template>
   <div :style="{'height':popupheight,'top':popuptop}" class="bigpopup">
   	<div class="close" @click="closepopup"></div>
-  	<div class="role"></div>
-  	<div class="introduce">
-  		<div class="name"><p> </p></div>
-  		<div class="moredetail"> </div>
-  		<div class="ability">
-  			<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
-  			<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
-  			<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
-  			<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
-  			<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
-  		</div>
-  		<div class="btn" @click="buycard(i)"></div>
+  	<div v-show="bigpopupBuymsg.buycard" class="buycard">
+  		<div class="role"></div>
+		<div class="introduce">
+		  	<div class="name"><p> </p></div>
+		  	<div class="moredetail"> </div>
+		  	<div class="ability">
+		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
+		  	</div>
+		  	<div class="btn" @click="buycard"></div>
+		</div>
   	</div>
+	<div v-show="bigpopupBuymsg.confirmbuycard" class="confirmbuycard">
+		<div class="known"></div>
+		<div class="price"></div>
+		<div class="cancelbtn" @click="closepopup"></div>
+		<div class="nextbtn" @click="buycard"></div>
+	</div>
+	<div v-show="bigpopupBuymsg.myassets" class="myassets">
+		
+	</div>	  	
   </div>
 </template>
 
 <script>
 export default {
   name: 'bigPopup',
+  props:["bigpopupBuymsg"],
   data () {
     return {
       popupheight: "",
       popuptop: "",
+      showbuypopup: "",
+      showconfirmpopup: "",
     }
   },
   methods: {
   	closepopup: function () {
-  		this.$store.dispatch("showbigpopup");
+  		this.$store.dispatch("closebigpopup");
   	},
-  	buycard: function (i) {
+  	buycard: function () {
+  		var i = this.bigpopupBuymsg.player;
   		this.service.buycard(i);
+  		this.$store.dispatch("closebigpopup");
   	}
   },
   created () {
-    console.log("公用弹窗组件");
+
   },
   mounted () {
-    this.popupheight = ((document.documentElement.clientWidth)/ 1920 * 1080)*0.58 + "px";
-    this.popuptop = (document.documentElement.clientHeight - parseInt(this.popupheight) )/2 + "px";
+    var val = document.documentElement.clientWidth;
+    var val2 = document.documentElement.clientHeight;
+    if(val > 1680){
+      this.popupheight = "58%";
+      this.popuptop = "21%";
+    }else{
+      this.popupheight = ((val)/ 1920 * 1080)* 0.58 + "px";
+      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + "px";
+    }
     var _this = this;
     window.addEventListener("resize",function(){
         console.log("缩放")
@@ -47,7 +70,7 @@ export default {
         var val2 = document.documentElement.clientHeight;
         if(val > 1680){
           _this.popupheight = "58%";
-          _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + "px";
+          _this.popuptop = "21%";
         }else{
           _this.popupheight = ((val)/ 1920 * 1080)* 0.58 + "px";
           _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + "px";
@@ -65,8 +88,6 @@ export default {
 	.bigpopup{
 		width: 42%;
 		margin: 0 29%;
-		background: url("../../../assets/bigpopup.png") center center no-repeat;
-		background-size: 100%;
 		color: white;
 		position: relative;
 	}
@@ -76,6 +97,12 @@ export default {
 		top: 0;
 		width: 8.5%;
 		height: 11%;
+	}
+	.buycard{
+		width: 100%;
+		height: 100%;
+		background: url("../../../assets/bigpopup.png") center center no-repeat;
+		background-size: 100% 100%;
 	}
 	.role{
 		width: 34.4%;
@@ -182,6 +209,50 @@ export default {
 		position: absolute;
 		top: 80.8%;
 		left: 14.1%;
+	}
+	/*确认购买卡牌弹窗样式*/
+	.confirmbuycard{
+		width: 100%;
+		height: 100%;
+		background: url("../../../assets/bigpopup2.png") center center no-repeat;
+		background-size: 100% 100%;
+	}
+	.known{
+		width: 100%;
+		height: 27.4%;
+		position: relative;
+		top: 20%;
+		padding: 4% 16% 6% 14%;
+		box-sizing: border-box;
+	}
+	.price{
+		width: 21.7%;
+		height: 10.5%;
+		margin: 0 auto;
+		background:url("../../../assets/price1.png") center center no-repeat; 
+		background-size: 100% 100%;
+		position: relative;
+		top: 20%;
+	}
+	.cancelbtn,.nextbtn{
+		width: 23.6%;
+		height: 9.7%;
+		float: left;
+		position: relative;
+		top: 37.4%;
+	}
+	.cancelbtn{
+		margin: 0 10% 0 19.9%;
+	}
+	.cancelbtn:hover,.nextbtn:hover{
+		cursor: pointer;
+	}
+	/*我的卡牌弹窗样式*/
+	.myassets{
+		width: 100%;
+		height: 100%;
+		background: url("../../../assets/bigpopup3.png") center center no-repeat;
+		background-size: 100% 100%;
 	}
 </style>
 

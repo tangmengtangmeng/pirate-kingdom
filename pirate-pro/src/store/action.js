@@ -8,9 +8,12 @@ const actions = {
 	hideheader(context){
 		context.commit("hideheader");
 	},
-	showbigpopup(context){
-		context.commit("showbigpopup");
-	}
+	showbigpopup(context,params){
+		context.commit("showbigpopup",params);
+	},
+	closebigpopup(context){
+		context.commit("closebigpopup");
+	},
 }
 
 export default actions
