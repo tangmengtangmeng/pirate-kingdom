@@ -5,6 +5,9 @@ const actions = {
 	initLang(context){
 		context.commit("initLang");
 	},
+	showheader(context){
+		context.commit("showheader");
+	},
 	hideheader(context){
 		context.commit("hideheader");
 	},

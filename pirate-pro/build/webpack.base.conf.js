@@ -18,10 +18,11 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    /*publicPath: process.env.NODE_ENV === 'production'            //开发路径
+    publicPath: process.env.NODE_ENV === 'production'            
       ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath*/
-    publicPath:'./'                                           //打包路径
+      : config.dev.assetsPublicPath
+    // publicPath:'./'                                           //打包路径
+    // publicPath:'/'                                           //开发路径
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

@@ -7,17 +7,27 @@ let service = {};
 service.login = function(){
 	//初始化web3对象
 	if (typeof web3 !== 'undefined') {
+		console.log("已有web3账户")
 	    web3 = new Web3(web3.currentProvider);
+	    console.log("已有web3账户",web3)
 	} else {
 	    // set the provider you want from Web3.providers
+	    console.log("新建web3用户");
 	    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8080"));
+	    console.log("新建web3用户",web3)
 	}
+
 	//获取以太账户
 	store.state.myaccount = web3.eth.accounts[0];
 	var myaccount = store.state.myaccount;
+	console.log("本地账户地址是：",myaccount);
+	
+	/*store.state.myaccount = '0x48821fde07865431ad3d3a27e5e888c02d8ba5eb';
+	var myaccount = store.state.myaccount;*/
+	
+
 	//登录海盗游戏用户
 	if(myaccount){
-		console.log("本地账户地址是：",myaccount);
 		var url=configData.base_url+configData.get_username;
 		var tokenstr = myaccount.toString();
 		axios.post(url, {token: tokenstr}).then(function(result){

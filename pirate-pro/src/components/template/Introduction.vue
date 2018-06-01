@@ -14,6 +14,7 @@ export default {
   },
   created () {
     console.log("实例创建完毕")
+    this.$store.dispatch("showheader");
   },
   mounted () {
     var _this = this;
@@ -42,7 +43,7 @@ export default {
 }
 .introduce{
   width: 100%;
-  background: url("../../assets/introduce.png") left top no-repeat;
+  background: url("/static/image/introduce.png") left top no-repeat;
   background-size: cover;
 }
 </style>

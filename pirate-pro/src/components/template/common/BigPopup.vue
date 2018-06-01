@@ -123,7 +123,7 @@ export default {
 	.buycard{
 		width: 100%;
 		height: 100%;
-		background: url("../../../assets/bigpopup.png") center center no-repeat;
+		background: url("/static/image/bigpopup.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.role{
@@ -191,35 +191,35 @@ export default {
 		position: relative;
 	}
 	.ability>.row:nth-child(1)>.col-80{
-		background: url("../../../assets/ability1.png") left top no-repeat;
+		background: url("/static/image/ability1.png") left top no-repeat;
 		background-size: auto 100%;
 	}
 	.ability>.row:nth-child(1)>.col-20{
 		left: -40.5%;
 	}
 	.ability>.row:nth-child(2)>.col-80{
-		background: url("../../../assets/ability2.png") left top no-repeat;
+		background: url("/static/image/ability2.png") left top no-repeat;
 		background-size: auto 100%;
 	}
 	.ability>.row:nth-child(2)>.col-20{
 		left: -37%;
 	}
 	.ability>.row:nth-child(3)>.col-80{
-		background: url("../../../assets/ability3.png") left top no-repeat;
+		background: url("/static/image/ability3.png") left top no-repeat;
 		background-size: auto 100%;
 	}
 	.ability>.row:nth-child(3)>.col-20{
 		left: -26%;
 	}
 	.ability>.row:nth-child(4)>.col-80{
-		background: url("../../../assets/ability4.png") left top no-repeat;
+		background: url("/static/image/ability4.png") left top no-repeat;
 		background-size: auto 100%;
 	}
 	.ability>.row:nth-child(4)>.col-20{
 		left: -51%;
 	}
 	.ability>.row:nth-child(5){
-		background: url("../../../assets/ability5.png") left top no-repeat;
+		background: url("/static/image/ability5.png") left top no-repeat;
 		background-size: auto 81%;
 	}
 	.ability>.row:nth-child(5)>.col-20{
@@ -236,7 +236,7 @@ export default {
 	.confirmbuycard{
 		width: 100%;
 		height: 100%;
-		background: url("../../../assets/bigpopup2.png") center center no-repeat;
+		background: url("/static/image/bigpopup2.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.known{
@@ -251,7 +251,7 @@ export default {
 		width: 21.7%;
 		height: 10.5%;
 		margin: 0 auto;
-		background:url("../../../assets/price1.png") center center no-repeat; 
+		background:url("/static/image/price1.png") center center no-repeat; 
 		background-size: 100% 100%;
 		position: relative;
 		top: 20%;
@@ -273,14 +273,14 @@ export default {
 	.myassets{
 		width: 100%;
 		height: 100%;
-		background: url("../../../assets/bigpopup3.png") center center no-repeat;
+		background: url("/static/image/bigpopup3.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	/*设置昵称弹窗样式*/
 	.setnickname{
 		width: 100%;
 		height: 100%;
-		background: url("../../../assets/bigpopup4.png") center center no-repeat;
+		background: url("/static/image/bigpopup4.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.inputname{

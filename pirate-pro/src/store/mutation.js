@@ -15,6 +15,11 @@ const mutations = {
 			
 		}
 	},
+	showheader (state) {
+		//显示头部底部
+		state.showheader = true;
+		state.showfooter = true;
+	},
 	hideheader (state) {
 		//隐藏头部底部
 		state.showheader = false;

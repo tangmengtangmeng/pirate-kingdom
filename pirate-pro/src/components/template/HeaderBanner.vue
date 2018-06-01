@@ -119,7 +119,7 @@ export default {
   .header-banner{
     width: 100%;
     color: #fff;
-    background:url("../../assets/topbanner.png") center center no-repeat;
+    background:url("/static/image/topbanner.png") center center no-repeat;
     background-size: 100% 100%;
   }
   .language{
@@ -137,7 +137,7 @@ export default {
     min-width: 156px;
     height: 5.6%;
     float: right;
-    background:url("../../assets/moresetting.png") center center no-repeat;
+    background:url("/static/image/moresetting.png") center center no-repeat;
     background-size: 100%;
     margin-top: 1.3%;
     margin-right: 5.2%;
@@ -178,14 +178,14 @@ export default {
     margin: 0 auto;
     position: relative;
     top: 69.74%;
-    background: url("../../assets/topbtn.png") center center no-repeat;
+    background: url("/static/image/topbtn.png") center center no-repeat;
     background-size: 100% 100%;
     z-index: 0;
   }
   .btntitle{
     width: 100%;
     height: 100%;
-    background:url("../../assets/topbtntitle.png") center center no-repeat; 
+    background:url("/static/image/topbtntitle.png") center center no-repeat; 
     background-size: cover;
     position: absolute;
     z-index: 3;
@@ -253,7 +253,7 @@ export default {
   .topnav{ 
     width:76.88%;
     margin: 0 auto;   
-    background: url("../../assets/topnav.png") left top no-repeat;
+    background: url("/static/image/topnav.png") left top no-repeat;
     background-size: 100% 100%;
     position: relative;
     top: 81%;

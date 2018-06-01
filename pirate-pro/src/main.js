@@ -14,6 +14,7 @@ import service from "./util/service"
 import configData from "./util/configData"
 import bigPopup from './components/template/common/index.js'
 
+
 Vue.prototype.configData = configData;
 Vue.prototype.service = service ;
 
@@ -33,6 +34,7 @@ const i18n = new VueI18n({
 
 window.i18n = i18n 
 window.axios = axios
+
 
 
 /* eslint-disable no-new */

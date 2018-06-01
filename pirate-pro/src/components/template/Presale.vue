@@ -173,14 +173,14 @@ export default {
 }
 .players{
   width: 100%;
-  background: url("../../assets/presale.png") center center no-repeat;
+  background: url("/static/image/presale.png") center center no-repeat;
   background-size: 100% 100%;
 }
 .pretitle{
   width: 46.9%;
   height: 22.2%;
   margin: 0 auto;
-  background:url("../../assets/pretitle.png") center center no-repeat;
+  background:url("/static/image/pretitle.png") center center no-repeat;
   background-size: 100% 100%; 
 }
 .topright{
@@ -188,7 +188,7 @@ export default {
   min-width: 156px;
   height: 5.6%;
   float: right;
-  background:url("../../assets/moresetting.png") center center no-repeat;
+  background:url("/static/image/moresetting.png") center center no-repeat;
   background-size: 100%;
   margin-top: 1.3%;
   margin-right: 5.2%;
@@ -234,17 +234,17 @@ export default {
 }
 .preplayer li:nth-child(1){
   width: 33%;
-  background:url("../../assets/player1.png");
+  background:url("/static/image/player1.png");
   background-size: 100% 100%; 
 }
 .preplayer li:nth-child(2){
   width: 34%;
-  background:url("../../assets/player2.png");
+  background:url("/static/image/player2.png");
   background-size: 100% 100%; 
 }
 .preplayer li:nth-child(3){
   width: 33%;
-  background:url("../../assets/player3.png");
+  background:url("/static/image/player3.png");
   background-size: 100% 100%; 
 }
 .prebtn{
@@ -262,15 +262,15 @@ export default {
   cursor: pointer;
 }
 .prebtn li:nth-child(1) div{
-  background:url("../../assets/player1b.png");
+  background:url("/static/image/player1b.png");
   background-size: 100% 100%; 
 }
 .prebtn li:nth-child(2) div{
-  background:url("../../assets/player2b.png");
+  background:url("/static/image/player2b.png");
   background-size: 100% 100%; 
 }
 .prebtn li:nth-child(3) div{
-  background:url("../../assets/player3b.png");
+  background:url("/static/image/player3b.png");
   background-size: 100% 100%; 
 }
 .preplayer li div{
