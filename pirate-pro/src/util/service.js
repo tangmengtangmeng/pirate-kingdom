@@ -1,5 +1,7 @@
 import configData from "./configData"
 import store from '../store/store'
+import CaptainSell from './contracts/CaptainSell'
+import CaptainToken from './contracts/CaptainToken'
 
 
 let service = {};
@@ -46,14 +48,40 @@ service.login = function(){
 }
 
 service.buycard = function(i){
-	//购买角色卡牌
-	var url=configData.base_url+configData.get_username;
-	var tokenstr = i.toString();
-	axios.post(url,{token:tokenstr}).then(function(response){
-		console.log(response);
-	}).catch(function(error){
-		console.log(error);
-	})
+	console.log(i);
+	//获取角色卡牌信息
+	var version = web3.version.network;
+	var captainTokenContract = web3.eth.contract(store.state.captaintoken_abiarray);
+	var captainTokenContractInstance = "";
+	//判断以太坊的网络线路
+	if(version == 4){
+		captainTokenContractInstance = captainTokenContract.at(store.state.captaintoken_address4);
+	}else{
+
+	}
+	console.log(store.state.captaintoken_abiarray,store.state.captaintoken_address4);
+
+	captainTokenContractInstance.tokensOfOwner(store.state.myaccount,function(error,result){
+		if(!error){
+			console.log(result);
+		}else{
+			console.log(error);
+		}
+	});
+	captainTokenContractInstance.tokensOfCaptain(i,function(error,result){
+		if(!error){
+			console.log(result);
+		}else{
+			console.log(error);
+		}
+	});
+	captainTokenContractInstance.getCaptainInfo(i,function(error,result){
+		if(!error){
+			console.log(result);
+		}else{
+			console.log(error);
+		}
+	});
 }
 
 service.myassets = function(){
