@@ -278,14 +278,19 @@ export default {
   height: 77%;
   margin: 25% 9%;
   position: relative;
-  top: 10px;
-  left: 20px;
+  top: 2.7%;
+  left: 2.4%;
   z-index: 2;
   background:transparent;
   overflow: hidden; 
 }
+.preplayer li:nth-child(2) div{
+  top: 2.2%;
+  left: 5%;
+}
 .preplayer li:nth-child(3) div{
-  margin:25% 10%;
+  top: 2.3%;
+  left: 9%;
 }
 .preplayer li div div{
   width: 200%;

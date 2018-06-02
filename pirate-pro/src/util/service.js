@@ -7,14 +7,10 @@ let service = {};
 service.login = function(){
 	//初始化web3对象
 	if (typeof web3 !== 'undefined') {
-		console.log("已有web3账户")
 	    web3 = new Web3(web3.currentProvider);
-	    console.log("已有web3账户",web3)
 	} else {
 	    // set the provider you want from Web3.providers
-	    console.log("新建web3用户");
 	    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8080"));
-	    console.log("新建web3用户",web3)
 	}
 
 	//获取以太账户
