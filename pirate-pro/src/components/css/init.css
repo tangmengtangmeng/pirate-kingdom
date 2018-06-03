@@ -25,6 +25,9 @@ a {
   color: #000;
   text-decoration: none;
 }
+p{
+  margin: 0;
+}
 ul{
 	margin: 0;
 	padding: 0;
@@ -212,4 +215,6 @@ template {
 .hide{
   display: none;
 }
-
+.colorb{
+  color: rgb(76,38,2);
+}

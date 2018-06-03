@@ -65,6 +65,7 @@ export default {
     detail: function (i) {
       this.$store.dispatch("showbigpopup",{buycard:true,player:i});
       this.buymsg = {buycard:true,player:i};
+      // this.service.buycard(i);
     },
     myassets: function () {
       this.service.myassets();
@@ -90,7 +91,7 @@ export default {
 
     var _this = this;
     window.addEventListener("resize",function(){
-        console.log("缩放lllll")
+        console.log("缩放");
         var val = document.documentElement.clientWidth;
         var val2 = document.documentElement.clientHeight;
         if(document.documentElement.clientWidth > 1680){

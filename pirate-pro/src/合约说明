@@ -1,14 +1,17 @@
-Rinkeby: 
+Rinkeby Network: 
 
-CaptainToken : 0x4da56128e247136423a07ecccb420c71f9ea45df
+CaptainGameConfig:  0x7c84f484967fec9ad949a624dfd3eca64f554b3a 
 
- 1.  获取 卡牌的详细信息： function getCaptainInfo(uint256 _tokenId) external view returns (  string name,  uint32 captainId,  uint32 color,  uint32 attType,  uint256 price,  address owner  )   
- 2. 获取某个地址拥有的卡牌TokenId 
- function tokensOfOwner(address _owner) external view returns (uint256[]) 
+function getCardInfo(uint32 cardId) external constant returns (uint32, uint32, uint32,uint32,uint256,bool,uint256) { 
+return ( 
+cardInfo[cardId].color,
+cardInfo[cardId].attack,
+cardInfo[cardId].strength,
+cardInfo[cardId].defense,
+cardInfo[cardId].price,
+cardInfo[cardId].unitSellable,
+captainIndxToCount[cardId]);  //卡牌总数
+}
 
- 3.获取卡牌的tokenId列表，以及卡牌的数目 
- function tokensOfCaptain(uint256 _captainId) public view returns(uint256[] captainTokens)、、 
 
- 4.captainId  序列从 1 到 9 ，一共9张，目前只创建了 1-3 
-  
- 5.注意，玩家购买的时候，tokenId 唯一，传入的是tokenId ，不是captainId
+获取卡牌基础信息，预售页首页获取卡牌的信息。

@@ -2,9 +2,78 @@ import configData from "./configData"
 import store from '../store/store'
 import CaptainSell from './contracts/CaptainSell'
 import CaptainToken from './contracts/CaptainToken'
+import CaptainGameConfig from './contracts/CaptainGameConfig'
 
 
 let service = {};
+
+service.init = function(){
+	console.log("初始化海盗网站");
+	//获取角色卡牌信息
+	var version = web3.version.network;
+	var CaptainGameConfig = web3.eth.contract(store.state.CaptainGameConfig_abiarray);
+	var CaptainGameConfigInstance = "";
+	//判断以太坊的网络线路
+	if(version == 4){
+		CaptainGameConfigInstance = CaptainGameConfig.at(store.state.CaptainGameConfig_address4);
+	}else{
+		CaptainGameConfigInstance = CaptainGameConfig.at(store.state.CaptainGameConfig_address4);
+	}
+	console.log(store.state.CaptainGameConfig_abiarray,store.state.CaptainGameConfig_address4);
+
+	/*var i=0;
+	var inittimer = setInterval(function(){
+		++i;
+		if(i<4){*/
+			CaptainGameConfigInstance.getCardInfo(1,function(error,result){
+				// console.log(i);
+				if(!error){
+					console.log(result);
+					store.state.captain[0].color = result[0].c[0];
+					store.state.captain[0].attack = result[1].c[0];
+					store.state.captain[0].strength = result[2].c[0];
+					store.state.captain[0].defense = result[3].c[0];
+					store.state.captain[0].price = result[4].c[0];
+					store.state.captain[0].unitSellable = result[5].c;
+					store.state.captain[0].totalcount = result[6].c[0];
+				}else{
+					console.log(error);
+				}
+			})
+		/*}else{
+			clearInterval(inittimer);
+		}
+	},1000)*/
+	CaptainGameConfigInstance.getCardInfo(2,function(error,result){
+		if(!error){
+			console.log(result);
+			store.state.captain[1].color = result[0].c[0];
+			store.state.captain[1].attack = result[1].c[0];
+			store.state.captain[1].strength = result[2].c[0];
+			store.state.captain[1].defense = result[3].c[0];
+			store.state.captain[1].price = result[4].c[0];
+			store.state.captain[1].unitSellable = result[5].c;
+			store.state.captain[1].totalcount = result[6].c[0];
+		}else{
+			console.log(error);
+		}
+	})
+	CaptainGameConfigInstance.getCardInfo(3,function(error,result){
+		if(!error){
+			console.log(result);
+			store.state.captain[2].color = result[0].c[0];
+			store.state.captain[2].attack = result[1].c[0];
+			store.state.captain[2].strength = result[2].c[0];
+			store.state.captain[2].defense = result[3].c[0];
+			store.state.captain[2].price = result[4].c[0];
+			store.state.captain[2].unitSellable = result[5].c;
+			store.state.captain[2].totalcount = result[6].c[0];
+		}else{
+			console.log(error);
+		}
+	})
+		
+}
 
 service.login = function(){
 	//初始化web3对象
@@ -48,40 +117,7 @@ service.login = function(){
 }
 
 service.buycard = function(i){
-	console.log(i);
-	//获取角色卡牌信息
-	var version = web3.version.network;
-	var captainTokenContract = web3.eth.contract(store.state.captaintoken_abiarray);
-	var captainTokenContractInstance = "";
-	//判断以太坊的网络线路
-	if(version == 4){
-		captainTokenContractInstance = captainTokenContract.at(store.state.captaintoken_address4);
-	}else{
-
-	}
-	console.log(store.state.captaintoken_abiarray,store.state.captaintoken_address4);
-
-	captainTokenContractInstance.tokensOfOwner(store.state.myaccount,function(error,result){
-		if(!error){
-			console.log(result);
-		}else{
-			console.log(error);
-		}
-	});
-	captainTokenContractInstance.tokensOfCaptain(i,function(error,result){
-		if(!error){
-			console.log(result);
-		}else{
-			console.log(error);
-		}
-	});
-	captainTokenContractInstance.getCaptainInfo(i,function(error,result){
-		if(!error){
-			console.log(result);
-		}else{
-			console.log(error);
-		}
-	});
+	
 }
 
 service.myassets = function(){

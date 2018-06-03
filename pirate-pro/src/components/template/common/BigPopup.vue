@@ -2,16 +2,16 @@
   <div :style="{'height':popupheight,'top':popuptop}" class="bigpopup">
   	<div class="close" @click="closepopup"></div>
   	<div v-show="bigpopupBuymsg.buycard" class="buycard">
-  		<div class="role"></div>
+			<div class="role"></div>
 		<div class="introduce">
-		  	<div class="name"><p> </p></div>
-		  	<div class="moredetail"> </div>
+		  	<div class="name"><p class="colorb">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].name:""}}</p></div>
+		  	<div class="moredetail colorb">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].detail:""}}</div>
 		  	<div class="ability">
-		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].color:""}}</div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].attack:""}}</div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].strength:""}}</div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].defense:""}}</div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].price:""}}</div></div>
 		  	</div>
 		  	<div class="btn" @click="buycard"></div>
 		</div>
@@ -44,6 +44,7 @@ export default {
       showbuypopup: "",
       showconfirmpopup: "",
       alertplaceholder: "",
+      
     }
   },
   methods: {
@@ -73,7 +74,7 @@ export default {
   	}
   },
   created () {
-
+  	
   },
   mounted () {
     var val = document.documentElement.clientWidth;
@@ -98,6 +99,8 @@ export default {
           _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + "px";
         }
     })
+
+    
   },
   computed: {
     
