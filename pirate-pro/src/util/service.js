@@ -33,9 +33,10 @@ service.init = function(){
 					store.state.captain[0].attack = result[1].c[0];
 					store.state.captain[0].strength = result[2].c[0];
 					store.state.captain[0].defense = result[3].c[0];
-					store.state.captain[0].price = result[4].c[0];
+					store.state.captain[0].price = web3.fromWei(result[4].c[0]*Math.pow(10,result[4].e),"ether");
 					store.state.captain[0].unitSellable = result[5].c;
 					store.state.captain[0].totalcount = result[6].c[0];
+					console.log("价格",store.state.captain[0].price);
 				}else{
 					console.log(error);
 				}
