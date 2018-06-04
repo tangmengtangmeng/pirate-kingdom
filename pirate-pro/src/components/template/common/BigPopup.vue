@@ -7,13 +7,13 @@
 		  	<div class="name"><p class="colorb">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].name:""}}</p></div>
 		  	<div class="moredetail colorb">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].detail:""}}</div>
 		  	<div class="ability">
-		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].color:""}}</div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].attack:""}}</div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].strength:""}}</div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].defense:""}}</div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].price:""}}</div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20"><p>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].color:""}}</p></div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20"><p>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].attack:""}}</p></div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20"><p>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].strength:""}}</p></div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
+		  		<div class="row"><div class="col-80"></div><div class="col-20"><p>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].defense:""}}</p></div></div>
 		  	</div>
-		  	<div class="btn" @click="buycard"></div>
+		  	<div class="btn" @click="buycard"><div>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].price:""}}ETH</div></div>
 		</div>
   	</div>
 	<div v-show="bigpopupBuymsg.confirmbuycard" class="confirmbuycard">
@@ -192,6 +192,13 @@ export default {
 	.ability>.row>.col-20{
 		width: 24.1%;
 		position: relative;
+		display: table;
+	}
+	.ability>.row>.col-20>p{
+		text-align: center;
+		width: 100%;
+		display: table-cell;
+		vertical-align: middle;
 	}
 	.ability>.row:nth-child(1)>.col-80{
 		background: url("/static/image/ability1.png") left top no-repeat;
@@ -226,7 +233,8 @@ export default {
 		background-size: auto 81%;
 	}
 	.ability>.row:nth-child(5)>.col-20{
-		left: -12%;
+		left: -13%;
+		top: -12%;
 	}
 	.btn{
 		width: 60.3%;
@@ -234,6 +242,14 @@ export default {
 		position: absolute;
 		top: 80.8%;
 		left: 14.1%;
+		font-size: 24px;
+	    color: rgb(254,238,0);
+	    text-align: center;
+	    display: table;
+	}
+	.btn>div{
+		display: table-cell;
+		vertical-align: middle;
 	}
 	/*确认购买卡牌弹窗样式*/
 	.confirmbuycard{

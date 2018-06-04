@@ -29,13 +29,13 @@ service.init = function(){
 				// console.log(i);
 				if(!error){
 					console.log(result);
-					store.state.captain[0].color = result[0].c[0];
-					store.state.captain[0].attack = result[1].c[0];
-					store.state.captain[0].strength = result[2].c[0];
-					store.state.captain[0].defense = result[3].c[0];
-					store.state.captain[0].price = web3.fromWei(result[4].c[0]*Math.pow(10,result[4].e),"ether");
-					store.state.captain[0].unitSellable = result[5].c;
-					store.state.captain[0].totalcount = result[6].c[0];
+					store.state.captain[0].color = result[0].toString();
+					store.state.captain[0].attack = result[1].toString();
+					store.state.captain[0].strength = result[2].toString();
+					store.state.captain[0].defense = result[3].toString();
+					store.state.captain[0].price = web3.fromWei(parseFloat(result[4]),"ether");
+					store.state.captain[0].unitSellable = result[5].toString();
+					store.state.captain[0].totalcount = result[6].toString();
 					console.log("价格",store.state.captain[0].price);
 				}else{
 					console.log(error);
@@ -48,13 +48,13 @@ service.init = function(){
 	CaptainGameConfigInstance.getCardInfo(2,function(error,result){
 		if(!error){
 			console.log(result);
-			store.state.captain[1].color = result[0].c[0];
-			store.state.captain[1].attack = result[1].c[0];
-			store.state.captain[1].strength = result[2].c[0];
-			store.state.captain[1].defense = result[3].c[0];
-			store.state.captain[1].price = result[4].c[0];
-			store.state.captain[1].unitSellable = result[5].c;
-			store.state.captain[1].totalcount = result[6].c[0];
+			store.state.captain[1].color = result[0].toString();
+			store.state.captain[1].attack = result[1].toString();
+			store.state.captain[1].strength = result[2].toString();
+			store.state.captain[1].defense = result[3].toString();
+			store.state.captain[1].price = web3.fromWei(parseFloat(result[4]),"ether");
+			store.state.captain[1].unitSellable = result[5].toString();
+			store.state.captain[1].totalcount = result[6].toString();
 		}else{
 			console.log(error);
 		}
@@ -62,15 +62,25 @@ service.init = function(){
 	CaptainGameConfigInstance.getCardInfo(3,function(error,result){
 		if(!error){
 			console.log(result);
-			store.state.captain[2].color = result[0].c[0];
-			store.state.captain[2].attack = result[1].c[0];
-			store.state.captain[2].strength = result[2].c[0];
-			store.state.captain[2].defense = result[3].c[0];
-			store.state.captain[2].price = result[4].c[0];
-			store.state.captain[2].unitSellable = result[5].c;
-			store.state.captain[2].totalcount = result[6].c[0];
+			store.state.captain[2].color = result[0].toString();
+			store.state.captain[2].attack = result[1].toString();
+			store.state.captain[2].strength = result[2].toString();
+			store.state.captain[2].defense = result[3].toString();
+			store.state.captain[2].price = web3.fromWei(parseFloat(result[4]),"ether");
+			store.state.captain[2].unitSellable = result[5].toString();
+			store.state.captain[2].totalcount = result[6].toString();
 		}else{
 			console.log(error);
+		}
+	})
+
+	//获取当前区块GAS价格
+	web3.eth.getGasPrice(function(error,result){
+		if(!error){
+			console.log(result);
+			console.log("当前GAS价格是：",web3.fromWei(parseFloat(result),'microether')+"microether");
+		}else{
+			console.log(error)
 		}
 	})
 		
@@ -118,7 +128,12 @@ service.login = function(){
 }
 
 service.buycard = function(i){
-	
+	if(store.state.username.indexOf("login")>-1){
+		alert("请先登录metamask和海盗官网");
+	}else{
+		//购买卡牌
+		
+	}
 }
 
 service.myassets = function(){
@@ -136,7 +151,7 @@ service.setnickname = function(nameObj){
 		}).catch(function(error){
 			console.log(error);
 		})
-		store.state.username = "login";
+		store.state.username = "Login";
 		var invite_uid = Math.round(Math.random()*10).toString() + Math.round(Math.random()*10).toString() + Math.round(Math.random()*10).toString() + Math.round(Math.random()*10).toString() + Math.round(Math.random()*10).toString();
 		document.cookie = "invite_uid="+invite_uid;
 	}

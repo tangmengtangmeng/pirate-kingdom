@@ -5,7 +5,7 @@
         <div class="topright">
           <div class="row">
             <div class="col-40" @click="login"><p class="text-left">{{username.username}}</p></div>
-            <div class="col-60"><p class="text-right" @click="myassets">My assets</p></div>
+            <div class="col-60"><p class="text-right" @click="myassets">My Assets</p></div>
           </div>
         </div>
         <div class="pretitle" :style="{'height':titleheight}"></div>
@@ -55,7 +55,7 @@ export default {
       this.buymsg = {confirmbuycard:true,player:i};
     },
     login: function () {
-      if(this.$store.state.username.indexOf("login") > -1){
+      if(this.$store.state.username.indexOf("Login") > -1){
         this.service.login();
       }else{
         this.$store.dispatch("showbigpopup");
@@ -74,7 +74,7 @@ export default {
     }
   },
   created:function(){
-    console.log("高度",this.playersheight);
+    console.log("预售栏目的高度是：",this.playersheight);
   },
   mounted:function(){
     if(document.documentElement.clientWidth > 1680){
@@ -198,7 +198,7 @@ export default {
   width: 81.4%;
   min-width: 126px;
   height:100%;
-  padding: 0 9%;
+  padding: 0 7%;
   box-sizing: border-box;
 }
 .topright>div>div:hover{

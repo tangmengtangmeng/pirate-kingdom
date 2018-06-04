@@ -155,6 +155,8 @@ template {
 
 /*global css*/
 #app {
+  font-family: Windlass,Georgia,"serif";
+  font-variant: small-caps;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background:#000; /*不支持背景色渐变的情况*/

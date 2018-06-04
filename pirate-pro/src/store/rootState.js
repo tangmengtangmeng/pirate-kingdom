@@ -6,7 +6,7 @@ const state = {
 	// 全局变量
 	show: false,
 	locale: "zh-ch",
-	username: "login",
+	username: "Login",
 	showheader: true,
 	showfooter: true,
 	showbigpopup: false,
