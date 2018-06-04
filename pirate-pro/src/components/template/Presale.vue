@@ -15,9 +15,14 @@
         <ul class="prebtn" :style="{'height':btnheight}">
           <li v-for="n in 3"><div @click="confirmbuycard(n)" :style="{'height':divheight}"></div></li>
         </ul>
-        <div class="sale" v-show="showpopup">
+        <div class="sale" v-show="showbigpopup">
           <div class="shadow">
             <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
+          </div>
+        </div>
+        <div class="alert" v-show="showsmallpopup">
+          <div class="shadow">
+            <smallPopup :smallpopup-msg="alertmsg"></smallPopup>
           </div>
         </div>
       </div>
@@ -39,6 +44,7 @@ export default {
       btnheight: "",
       divheight: "",
       buymsg: {},
+      alertmsg: this.$store.state.alertmsg,
     }
   },
   methods: {
@@ -127,8 +133,11 @@ export default {
         username:this.$store.state.username
       }
     },
-    showpopup () {
+    showbigpopup () {
       return this.$store.state.showbigpopup
+    },
+    showsmallpopup () {
+      return this.$store.state.showsmallpopup
     }
   },
   watch: {
@@ -141,7 +150,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.sale{
+.sale,.alert{
   box-sizing: border-box;
   width: 100%;
   height: 100%;

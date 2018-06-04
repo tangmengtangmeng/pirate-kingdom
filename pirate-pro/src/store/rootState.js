@@ -10,6 +10,16 @@ const state = {
 	showheader: true,
 	showfooter: true,
 	showbigpopup: false,
+	showsmallpopup: false,
+	alertmsg: {
+		login: "",
+		login2: "",
+		setname: "",
+		changename: "",
+		toolong: "",
+		existed: "",
+		networkerror: "",
+	},
 	myaccount: "",
 	captain: [
 		{

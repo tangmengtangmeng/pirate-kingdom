@@ -25,11 +25,26 @@ const mutations = {
 		state.showheader = false;
 		state.showfooter = false;
 	},
-	showbigpopup (state,params) {
-		state.showbigpopup = state.showbigpopup?false:true;
+	showbigpopup (state) {
+		state.showbigpopup = true;
+	},
+	showsmallpopup (state) {
+		state.showsmallpopup = true;
 	},
 	closebigpopup (state) {
-		state.showbigpopup = state.showbigpopup?false:true;
+		state.showbigpopup = false;
 	},
+	closesmallpopup (state) {
+		state.showsmallpopup = false;
+	},
+	clearsmallpopup (state) {
+		state.alertmsg.login = "";
+		state.alertmsg.login2 = "";
+		state.alertmsg.setname = "";
+		state.alertmsg.changename = "";
+		state.alertmsg.toolong = "";
+		state.alertmsg.existed = "";
+		state.alertmsg.networkerror = "";
+	}
 }
 export default mutations

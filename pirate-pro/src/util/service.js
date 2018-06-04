@@ -111,10 +111,13 @@ service.login = function(){
 		axios.post(url, {token: tokenstr}).then(function(result){
 			console.log("成功",result);
 			if(!result.data.data.name){
-				alert("点击用户名设置账户昵称");
+				
 				store.state.username = tokenstr.slice(0,5);
 				console.log("用户名",store.state.username);
 			}else{
+				// alert("点击用户名设置账户昵称");
+				store.state.showsmallpopup = true;
+				store.state.alertmsg.setname = "登录成功,点击用户名设置昵称.";
 				store.state.username = result.data.data.name.slice(0,5);
 				console.log("我的昵称是",result.data.data.name);
 			}
@@ -122,14 +125,19 @@ service.login = function(){
 			console.log("失败",err);
 		})
 	}else{
-		alert("请先登录metamask");
+		// alert("请先登录metamask");
+		store.state.showsmallpopup = true;
+		store.state.alertmsg.login = "请先登录metamask.";
 	}
 
 }
 
 service.buycard = function(i){
-	if(store.state.username.indexOf("login")>-1){
-		alert("请先登录metamask和海盗官网");
+	if(store.state.username.indexOf("Login")>-1){
+		// alert("请先登录metamask和海盗官网");
+		store.state.showsmallpopup = true;
+		store.state.alertmsg.login2 = "请先登录metamask和海盗官网.";
+		
 	}else{
 		//购买卡牌
 		
@@ -176,14 +184,22 @@ service.setnickname = function(nameObj){
 		  axios.post(url, postData).then(function (response) {
 			console.log("设置用户名",response);
 			if(response.data.state == 200){
-				alert("修改用户名成功")
+				// alert("修改用户名成功")
+				store.state.showsmallpopup = true;
+				store.state.alertmsg.changename = "修改用户名成功.";
 				store.state.username = username.slice(0,5);
 			}else if(response.data.state == 10003){
-				alert("设置昵称过长")
+				// alert("设置昵称过长")
+				store.state.showsmallpopup = true;
+				store.state.alertmsg.toolong = "设置昵称过长.";
 			}else if(response.data.state == 10004){
-				alert("该昵称已经存在")
+				// alert("该昵称已经存在")
+				store.state.showsmallpopup = true;
+				store.state.alertmsg.existed = "该昵称已经存在.";
 			}else if(response.data.state == 500){
-				alert("服务器内部错误")
+				// alert("服务器内部错误")
+				store.state.showsmallpopup = true;
+				store.state.alertmsg.networkerror = "服务器内部错误.";
 			}
 			
 		  }).catch(function (error) {

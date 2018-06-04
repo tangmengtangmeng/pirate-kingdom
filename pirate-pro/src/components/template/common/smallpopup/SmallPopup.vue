@@ -1,0 +1,95 @@
+<template>
+  <div :style="{'height':popupheight,'top':popuptop}" class="smallpopup">
+  	<div class="close" @click="closepopup"></div>
+  	<div class="popup-content">
+		<div class="alert-login" v-show="smallpopupMsg.login"><p class="colorb">{{smallpopupMsg.login?smallpopupMsg.login:""}}</p></div>
+		<div class="alert-login" v-show="smallpopupMsg.setname"><p class="colorb">{{smallpopupMsg.setname?smallpopupMsg.setname:""}}</p></div>
+		<div class="alert-login" v-show="smallpopupMsg.login2"><p class="colorb">{{smallpopupMsg.login2?smallpopupMsg.login2:""}}</p></div>
+		<div class="alert-login" v-show="smallpopupMsg.changename"><p class="colorb">{{smallpopupMsg.changename?smallpopupMsg.changename:""}}</p></div>
+		<div class="alert-login" v-show="smallpopupMsg.toolong"><p class="colorb">{{smallpopupMsg.toolong?smallpopupMsg.toolong:""}}</p></div>
+		<div class="alert-login" v-show="smallpopupMsg.existed"><p class="colorb">{{smallpopupMsg.existed?smallpopupMsg.existed:""}}</p></div>
+		<div class="alert-login" v-show="smallpopupMsg.networkerror"><p class="colorb">{{smallpopupMsg.networkerror?smallpopupMsg.networkerror:""}}</p></div>
+  	</div>	  	
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'smallPopup',
+  props:["smallpopupMsg"],
+  data () {
+    return {
+      popupheight: "",
+      popuptop: "",
+      
+    }
+  },
+  methods: {
+  	closepopup: function () {
+  		this.$store.dispatch("closesmallpopup");
+  		this.$store.dispatch("clearsmallpopup");
+  	},
+  },
+  created () {
+  	
+  },
+  mounted () {
+    var val = document.documentElement.clientWidth;
+    var val2 = document.documentElement.clientHeight;
+    if(val > 1680){
+      this.popupheight = "25%";
+      this.popuptop = "40%";
+    }else{
+      this.popupheight = ((val)/ 1920 * 1080)* 0.25 + "px";
+      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + "px";
+    }
+    var _this = this;
+    window.addEventListener("resize",function(){
+        console.log("缩放")
+        var val = document.documentElement.clientWidth;
+        var val2 = document.documentElement.clientHeight;
+        if(val > 1680){
+          _this.popupheight = "25%";
+          _this.popuptop = "40%";
+        }else{
+          _this.popupheight = ((val)/ 1920 * 1080)* 0.25 + "px";
+          _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + "px";
+        }
+    })
+
+    
+  },
+  computed: {
+    
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+	.smallpopup{
+		width: 19%;
+		margin: 0 40%;
+		color: white;
+		position: relative;
+		background: url("/static/image/smallpopup1.png") center center no-repeat;
+		background-size: 100% 100%;
+	}
+	.close{
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 8.5%;
+		height: 11%;
+	}
+	.popup-content{
+		width: 100%;
+		height: 37%;
+		position: relative;
+    	top: 63%;
+    	padding: 7% 10%;
+    	box-sizing: border-box;
+	}
+	
+</style>
+
