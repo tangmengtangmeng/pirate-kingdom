@@ -18,12 +18,14 @@
   	</div>
 	<div v-show="bigpopupBuymsg.confirmbuycard" class="confirmbuycard">
 		<div class="known"></div>
-		<div class="price"></div>
+		<div class="price"><div>{{confirm_price}}ETH</div></div>
 		<div class="cancelbtn" @click="closepopup"></div>
 		<div class="nextbtn" @click="buycard"></div>
 	</div>
 	<div v-show="bigpopupBuymsg.myassets" class="myassets">
-		
+		<div class="captain1"><div><div>{{mycaptain1}}</div></div></div>
+		<div class="captain2"><div><div>{{mycaptain2}}</div></div></div>
+		<div class="captain3"><div><div>{{mycaptain3}}</div></div></div>
 	</div>
 	<div v-show="bigpopupBuymsg.setnickname" class="setnickname">
 		<input class="inputname" type="text" maxlength="16" v-bind:placeholder="alertplaceholder" ref="inputname" @focus="clearplace"/>
@@ -44,7 +46,9 @@ export default {
       showbuypopup: "",
       showconfirmpopup: "",
       alertplaceholder: "",
-      
+      mycaptain1: this.$store.state.mycaptain1,
+      mycaptain2: this.$store.state.mycaptain2,
+      mycaptain3: this.$store.state.mycaptain3,
     }
   },
   methods: {
@@ -101,11 +105,17 @@ export default {
           _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + "px";
         }
     })
-
-    
   },
   computed: {
-    
+    confirm_price () {
+    	if(this.bigpopupBuymsg.player){
+    		var index = parseInt(this.bigpopupBuymsg.player - 1);
+    		return this.$store.state.captain[index].price;
+    	}else{
+    		return this.$store.state.captain[0].price;
+    	}
+    	
+    }
   }
 }
 </script>
@@ -279,6 +289,16 @@ export default {
 		background-size: 100% 100%;
 		position: relative;
 		top: 20%;
+		display: table;
+	}
+	.price>div{
+		width: 100%;
+		height: 100%;
+		display: table-cell;
+		font-size: 26px;
+		color: #fff;
+		text-align: center;
+		vertical-align: middle;
 	}
 	.cancelbtn,.nextbtn{
 		width: 23.6%;
@@ -299,6 +319,41 @@ export default {
 		height: 100%;
 		background: url("/static/image/bigpopup3.png") center center no-repeat;
 		background-size: 100% 100%;
+	}
+	.captain1,.captain2,.captain3{
+		width: 29%;
+		height:61.5%;
+		float: left;
+		background-color: red;
+		position: relative;
+		top: 20%;
+		left: 5%;
+		background: url("/static/image/player1.png") center -10px no-repeat;
+		background-size: 100% 100%;
+	}
+	.captain2{
+		background: url("/static/image/player2.png") center -10px no-repeat;
+		background-size: 100% 100%;
+	}
+	.captain3{
+		background: url("/static/image/player3.png") -5px -10px no-repeat;
+		background-size: 100% 100%;
+	}
+	.captain1>div,.captain2>div,.captain3>div{
+		width: 100%;
+		height: 5%;
+		position: absolute;
+		bottom: -5%;
+		display: table;
+	}
+	.captain1>div>div,.captain2>div>div,.captain3>div>div{
+		width: 100%;
+		height: 100%;
+		diaplay:table-cell;
+		vertical-align: middle;
+		text-align: center;
+		font-size: 16px;
+		color: rgb(119,93,71);
 	}
 	/*设置昵称弹窗样式*/
 	.setnickname{

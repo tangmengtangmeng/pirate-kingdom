@@ -59,6 +59,10 @@ const state = {
 			totalcount: ""
 		},
 	],
+	mycaptain1: "0",
+	mycaptain2: "0",
+	mycaptain3: "0",
+	confirm_price: "0.00",
 	//合约参数
 	CaptainGameConfig_abiarray: CaptainGameConfig.abi,
 	CaptainGameConfig_address4: "0xfb8643685a0d7aa43d6db62b76d5f7afc88c2f13",

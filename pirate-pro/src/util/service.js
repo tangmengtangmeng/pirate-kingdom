@@ -179,6 +179,8 @@ service.buycard = function(i){
 		var version = web3.version.network;
 		var CaptainSell = web3.eth.contract(store.state.CaptainSell_abiarray);
 		var CaptainSellInstance = "";
+		var CaptainToken = web3.eth.contract(store.state.CaptainToken_abiarray);
+		var CaptainTokenInstance = "";
 		let transaction = {
 		    from: store.state.myaccount,
 		    to: store.state.CaptainSell_address4, 
@@ -191,13 +193,25 @@ service.buycard = function(i){
 		}
 		if(version == 4){
 			CaptainSellInstance = CaptainSell.at(store.state.CaptainSell_address4);
+			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
 		}else{
 			CaptainSellInstance = CaptainSell.at(store.state.CaptainSell_address4);
+			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
 		}
 		CaptainSellInstance.prepurchase(i,transaction,function(error,result){
 			if(!error){
 				console.log("购买结果是：",result);
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = "交易进行中，请等待卡牌购买结果...";
+				CaptainSellInstance.getCaptainCount(i,function(error,result){
+					if(!error){
+						console.log(result);
+						store.state.cardarr[i -1].soldamount = parseInt(result.toString()) - 1;
 
+					}else{
+						console.log(error);
+					}
+				})
 			}else{
 				console.log(error);
 			}
@@ -206,26 +220,15 @@ service.buycard = function(i){
 		CaptainSellInstance.BuyToken(store.state.myaccount).watch(function(error,result){
 			if(!error){
 				console.log("购买成功后返回的结果是：",result);
-
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = "交易成功,可在我的卡牌中查看.";
+				//重新获取我的卡牌列表
+				service.getmyassets();
 			}else{
 				console.log(error);
 			}
 		})
-		//账户地址拥有的卡牌数组
-		var CaptainToken = web3.eth.contract(store.state.CaptainToken_abiarray);
-		var CaptainTokenInstance = "";
-		if(version == 4){
-			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
-		}else{
-			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
-		}
-		CaptainTokenInstance.tokensOfOwner(store.state.myaccount,function(error,result){
-			if(!error){
-				console.log("该地址拥有的卡牌数组是：",result);
-			}else{
-				console.log(error);
-			}
-		})
+		
 		//获取某种卡牌的token列表
 		CaptainTokenInstance.tokensOfCaptain(i,function(error,result){
 			if(!error){
@@ -238,6 +241,11 @@ service.buycard = function(i){
 }
 
 service.myassets = function(){
+	service.getmyassets();
+	service.showbigpopup();
+}
+
+service.getmyassets = function(){
 	//获取以太账户
 	store.state.myaccount = web3.eth.accounts[0];
 	if(!store.state.myaccount){
@@ -247,10 +255,30 @@ service.myassets = function(){
 		store.dispatch("showsmallpopup");
 		store.state.alertmsg.alert = "请先登录."
 	}else{
-		//展示我的卡牌列表
-		store.dispatch("showbigpopup");
-		store.state.buymsg.myassets = true; 
+		//账户地址拥有的卡牌数组
+		var CaptainToken = web3.eth.contract(store.state.CaptainToken_abiarray);
+		var CaptainTokenInstance = "";
+		var version = web3.version.network;
+		if(version == 4){
+			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
+		}else{
+			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
+		}
+		CaptainTokenInstance.tokensOfOwner(store.state.myaccount,function(error,result){
+			if(!error){
+				console.log("该地址拥有的卡牌数组是：",result);
+			}else{
+				console.log(error);
+			}
+		})
+		// service.showbigpopup();
 	}
+}
+
+service.showbigpopup = function(){
+	//展示我的卡牌列表
+	store.dispatch("showbigpopup");
+	store.state.buymsg.myassets = true; 
 }
 
 service.setnickname = function(){
