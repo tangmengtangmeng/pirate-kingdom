@@ -17,9 +17,14 @@
         <li><router-link to="introduction"></router-link></li>           
       </ul>
     </div>
-    <div class="myassets" v-show="showpopup">
+    <div class="myassets" v-show="showbigpopup">
       <div class="shadow">
         <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
+      </div>
+    </div>
+    <div class="alert" v-show="showsmallpopup">
+      <div class="shadow">
+        <smallPopup :smallpopup-msg="alertmsg"></smallPopup>
       </div>
     </div>
   </div>
@@ -34,7 +39,8 @@ export default {
       topheight: document.documentElement.clientWidth/1920*890 + "px",
       topnavheight: document.documentElement.clientWidth/1920*118 + "px",
       screenwidth: document.documentElement.clientWidth,
-      buymsg: {},
+      buymsg: this.$store.state.buymsg,
+      alertmsg: this.$store.state.alertmsg,
     }
   },
   methods: {
@@ -48,7 +54,7 @@ export default {
         this.service.login();
       }else{
         this.$store.dispatch("showbigpopup");
-        this.buymsg = {setnickname:true};
+        this.$store.state.buymsg.setnickname = true;
       }
     },
     quicklight: function (e) {
@@ -63,8 +69,6 @@ export default {
     },
     myassets: function () {
       this.service.myassets();
-      this.$store.dispatch("showbigpopup");
-      this.buymsg = {myassets:true};
     }
   },
   mounted:function(){
@@ -84,8 +88,11 @@ export default {
         username:this.$store.state.username
       }
     },
-    showpopup () {
+    showbigpopup () {
       return this.$store.state.showbigpopup
+    },
+    showsmallpopup () {
+      return this.$store.state.showsmallpopup
     }
   }
 }
@@ -93,7 +100,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .myassets{
+  .myassets,.alert{
     box-sizing: border-box;
     width: 100%;
     height: 100%;

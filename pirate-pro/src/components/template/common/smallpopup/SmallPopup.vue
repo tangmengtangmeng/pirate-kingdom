@@ -2,13 +2,7 @@
   <div :style="{'height':popupheight,'top':popuptop}" class="smallpopup">
   	<div class="close" @click="closepopup"></div>
   	<div class="popup-content">
-		<div class="alert-login" v-show="smallpopupMsg.login"><p class="colorb">{{smallpopupMsg.login?smallpopupMsg.login:""}}</p></div>
-		<div class="alert-login" v-show="smallpopupMsg.setname"><p class="colorb">{{smallpopupMsg.setname?smallpopupMsg.setname:""}}</p></div>
-		<div class="alert-login" v-show="smallpopupMsg.login2"><p class="colorb">{{smallpopupMsg.login2?smallpopupMsg.login2:""}}</p></div>
-		<div class="alert-login" v-show="smallpopupMsg.changename"><p class="colorb">{{smallpopupMsg.changename?smallpopupMsg.changename:""}}</p></div>
-		<div class="alert-login" v-show="smallpopupMsg.toolong"><p class="colorb">{{smallpopupMsg.toolong?smallpopupMsg.toolong:""}}</p></div>
-		<div class="alert-login" v-show="smallpopupMsg.existed"><p class="colorb">{{smallpopupMsg.existed?smallpopupMsg.existed:""}}</p></div>
-		<div class="alert-login" v-show="smallpopupMsg.networkerror"><p class="colorb">{{smallpopupMsg.networkerror?smallpopupMsg.networkerror:""}}</p></div>
+		<div class="alert-login" v-show="smallpopupMsg.alert"><p class="colorb">{{smallpopupMsg.alert?smallpopupMsg.alert:""}}</p></div>
   	</div>	  	
   </div>
 </template>

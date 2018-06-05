@@ -43,7 +43,7 @@ export default {
       playerheight: "",
       btnheight: "",
       divheight: "",
-      buymsg: {},
+      buymsg: this.$store.state.buymsg,
       alertmsg: this.$store.state.alertmsg,
     }
   },
@@ -58,25 +58,24 @@ export default {
     },
     confirmbuycard: function (i) {
       this.$store.dispatch("showbigpopup",{confirmbuycard:true,player:i});
-      this.buymsg = {confirmbuycard:true,player:i};
+      this.$store.state.buymsg.confirmbuycard = true;
+      this.$store.state.buymsg.player = i;
     },
     login: function () {
       if(this.$store.state.username.indexOf("Login") > -1){
         this.service.login();
       }else{
         this.$store.dispatch("showbigpopup");
-        this.buymsg = {setnickname:true};
+        this.$store.state.buymsg.setnickname = true;
       }
     },
     detail: function (i) {
       this.$store.dispatch("showbigpopup",{buycard:true,player:i});
-      this.buymsg = {buycard:true,player:i};
-      // this.service.buycard(i);
+      this.$store.state.buymsg.buycard = true;
+      this.$store.state.buymsg.player = i;
     },
     myassets: function () {
       this.service.myassets();
-      this.$store.dispatch("showbigpopup");
-      this.buymsg = {myassets:true};
     }
   },
   created:function(){

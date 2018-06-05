@@ -116,8 +116,8 @@ service.login = function(){
 				console.log("用户名",store.state.username);
 			}else{
 				// alert("点击用户名设置账户昵称");
-				store.state.showsmallpopup = true;
-				store.state.alertmsg.setname = "登录成功,点击用户名设置昵称.";
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = "登录成功,点击用户名设置昵称.";
 				store.state.username = result.data.data.name.slice(0,5);
 				console.log("我的昵称是",result.data.data.name);
 			}
@@ -126,8 +126,8 @@ service.login = function(){
 		})
 	}else{
 		// alert("请先登录metamask");
-		store.state.showsmallpopup = true;
-		store.state.alertmsg.login = "请先登录metamask.";
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = "请先登录metamask.";
 	}
 
 }
@@ -135,17 +135,24 @@ service.login = function(){
 service.buycard = function(i){
 	if(store.state.username.indexOf("Login")>-1){
 		// alert("请先登录metamask和海盗官网");
-		store.state.showsmallpopup = true;
-		store.state.alertmsg.login2 = "请先登录metamask和海盗官网.";
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = "请先登录metamask和海盗官网.";
 		
 	}else{
 		//购买卡牌
-		
+
 	}
 }
 
 service.myassets = function(){
-
+	if(store.state.username.indexOf("Login")>-1){
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = "请先登录metamask和海盗官网."
+	}else{
+		//展示我的卡牌列表
+		store.dispatch("showbigpopup");
+		store.state.buymsg.myassets = true; 
+	}
 }
 
 service.setnickname = function(nameObj){
@@ -185,21 +192,21 @@ service.setnickname = function(nameObj){
 			console.log("设置用户名",response);
 			if(response.data.state == 200){
 				// alert("修改用户名成功")
-				store.state.showsmallpopup = true;
-				store.state.alertmsg.changename = "修改用户名成功.";
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = "修改用户名成功.";
 				store.state.username = username.slice(0,5);
 			}else if(response.data.state == 10003){
 				// alert("设置昵称过长")
-				store.state.showsmallpopup = true;
-				store.state.alertmsg.toolong = "设置昵称过长.";
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = "设置昵称过长.";
 			}else if(response.data.state == 10004){
 				// alert("该昵称已经存在")
-				store.state.showsmallpopup = true;
-				store.state.alertmsg.existed = "该昵称已经存在.";
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = "该昵称已经存在.";
 			}else if(response.data.state == 500){
 				// alert("服务器内部错误")
-				store.state.showsmallpopup = true;
-				store.state.alertmsg.networkerror = "服务器内部错误.";
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = "服务器内部错误.";
 			}
 			
 		  }).catch(function (error) {

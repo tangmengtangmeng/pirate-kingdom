@@ -52,11 +52,13 @@ export default {
   		this.$refs.inputname.value = "";
   		this.alertplaceholder = "";
   		this.$store.dispatch("closebigpopup");
+  		this.$store.dispatch("clearbigpopup");
   	},
   	buycard: function () {
   		var i = this.bigpopupBuymsg.player;
   		this.service.buycard(i);
   		this.$store.dispatch("closebigpopup");
+  		this.$store.dispatch("clearbigpopup");
   	},
   	setnickname: function () {
   		var name = this.$refs.inputname.value;

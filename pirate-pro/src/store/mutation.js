@@ -38,13 +38,14 @@ const mutations = {
 		state.showsmallpopup = false;
 	},
 	clearsmallpopup (state) {
-		state.alertmsg.login = "";
-		state.alertmsg.login2 = "";
-		state.alertmsg.setname = "";
-		state.alertmsg.changename = "";
-		state.alertmsg.toolong = "";
-		state.alertmsg.existed = "";
-		state.alertmsg.networkerror = "";
+		state.alertmsg.alert = "";
+	},
+	clearbigpopup (state) {
+		state.buymsg.myassets = "";
+		state.buymsg.setnickname = "";
+		state.buymsg.confirmbuycard = "";
+		state.buymsg.buycard = "";
+		state.buymsg.player = "";
 	}
 }
 export default mutations

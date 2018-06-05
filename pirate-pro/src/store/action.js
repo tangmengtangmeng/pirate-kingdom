@@ -26,6 +26,9 @@ const actions = {
 	},
 	clearsmallpopup(context){
 		context.commit("clearsmallpopup");
+	},
+	clearbigpopup(context){
+		context.commit("clearbigpopup");
 	}
 }
 

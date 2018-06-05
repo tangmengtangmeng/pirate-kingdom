@@ -11,14 +11,15 @@ const state = {
 	showfooter: true,
 	showbigpopup: false,
 	showsmallpopup: false,
+	buymsg: {
+		myassets: "",
+		setnickname: "",
+		confirmbuycard: "",
+		player: "",
+		buycard: "",
+	},
 	alertmsg: {
-		login: "",
-		login2: "",
-		setname: "",
-		changename: "",
-		toolong: "",
-		existed: "",
-		networkerror: "",
+		alert: ""
 	},
 	myaccount: "",
 	captain: [
