@@ -9,42 +9,40 @@ let service = {};
 
 service.init = function(){
 	console.log("初始化海盗网站");
-	//获取角色卡牌信息
+	//初始化web3对象
+	if (typeof web3 !== 'undefined') {
+	    web3 = new Web3(web3.currentProvider);
+	} else {
+	    // set the provider you want from Web3.providers
+	    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8080"));
+	}
+	//判断以太坊的网络线路
 	var version = web3.version.network;
 	var CaptainGameConfig = web3.eth.contract(store.state.CaptainGameConfig_abiarray);
 	var CaptainGameConfigInstance = "";
-	//判断以太坊的网络线路
 	if(version == 4){
 		CaptainGameConfigInstance = CaptainGameConfig.at(store.state.CaptainGameConfig_address4);
 	}else{
 		CaptainGameConfigInstance = CaptainGameConfig.at(store.state.CaptainGameConfig_address4);
 	}
 	console.log(store.state.CaptainGameConfig_abiarray,store.state.CaptainGameConfig_address4);
-
-	/*var i=0;
-	var inittimer = setInterval(function(){
-		++i;
-		if(i<4){*/
-			CaptainGameConfigInstance.getCardInfo(1,function(error,result){
-				// console.log(i);
-				if(!error){
-					console.log(result);
-					store.state.captain[0].color = result[0].toString();
-					store.state.captain[0].attack = result[1].toString();
-					store.state.captain[0].strength = result[2].toString();
-					store.state.captain[0].defense = result[3].toString();
-					store.state.captain[0].price = web3.fromWei(parseFloat(result[4]),"ether");
-					store.state.captain[0].unitSellable = result[5].toString();
-					store.state.captain[0].totalcount = result[6].toString();
-					console.log("价格",store.state.captain[0].price);
-				}else{
-					console.log(error);
-				}
-			})
-		/*}else{
-			clearInterval(inittimer);
+	//获取角色卡牌信息
+	CaptainGameConfigInstance.getCardInfo(1,function(error,result){
+		if(!error){
+			console.log(result);
+			store.state.captain[0].color = result[0].toString();
+			store.state.captain[0].attack = result[1].toString();
+			store.state.captain[0].strength = result[2].toString();
+			store.state.captain[0].defense = result[3].toString();
+			store.state.captain[0].price = web3.fromWei(parseFloat(result[4]),"ether");
+			store.state.captain[0].unitSellable = result[5].toString();
+			store.state.captain[0].totalcount = result[6].toString();
+			store.state.pricearr[0].price = store.state.captain[0].price;
+			store.state.cardarr[0].totalamount =  store.state.captain[0].totalcount;
+		}else{
+			console.log(error);
 		}
-	},1000)*/
+	})
 	CaptainGameConfigInstance.getCardInfo(2,function(error,result){
 		if(!error){
 			console.log(result);
@@ -55,6 +53,8 @@ service.init = function(){
 			store.state.captain[1].price = web3.fromWei(parseFloat(result[4]),"ether");
 			store.state.captain[1].unitSellable = result[5].toString();
 			store.state.captain[1].totalcount = result[6].toString();
+			store.state.pricearr[1].price = store.state.captain[1].price;
+			store.state.cardarr[1].totalamount =  store.state.captain[1].totalcount;
 		}else{
 			console.log(error);
 		}
@@ -69,11 +69,44 @@ service.init = function(){
 			store.state.captain[2].price = web3.fromWei(parseFloat(result[4]),"ether");
 			store.state.captain[2].unitSellable = result[5].toString();
 			store.state.captain[2].totalcount = result[6].toString();
+			store.state.pricearr[2].price = store.state.captain[2].price;
+			store.state.cardarr[2].totalamount =  store.state.captain[2].totalcount;
 		}else{
 			console.log(error);
 		}
 	})
-
+	//获取当前各种卡牌已卖出的数量
+	var CaptainSell = web3.eth.contract(store.state.CaptainSell_abiarray);
+	var CaptainSellInstance = "";
+	if(version == 4){
+		CaptainSellInstance = CaptainSell.at(store.state.CaptainSell_address4);
+	}else{
+		CaptainSellInstance = CaptainSell.at(store.state.CaptainSell_address4);
+	}
+	CaptainSellInstance.getCaptainCount(1,function(error,result){
+		if(!error){
+			console.log(result);
+			store.state.cardarr[0].soldamount = result.toString();
+		}else{
+			console.log(error);
+		}
+	})
+	CaptainSellInstance.getCaptainCount(2,function(error,result){
+		if(!error){
+			console.log(result);
+			store.state.cardarr[1].soldamount = result.toString();
+		}else{
+			console.log(error);
+		}
+	})
+	CaptainSellInstance.getCaptainCount(3,function(error,result){
+		if(!error){
+			console.log(result);
+			store.state.cardarr[2].soldamount = result.toString();
+		}else{
+			console.log(error);
+		}
+	})
 	//获取当前区块GAS价格
 	web3.eth.getGasPrice(function(error,result){
 		if(!error){
@@ -87,78 +120,13 @@ service.init = function(){
 }
 
 service.login = function(){
-	//初始化web3对象
-	if (typeof web3 !== 'undefined') {
-	    web3 = new Web3(web3.currentProvider);
-	} else {
-	    // set the provider you want from Web3.providers
-	    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8080"));
-	}
-
 	//获取以太账户
 	store.state.myaccount = web3.eth.accounts[0];
-	var myaccount = store.state.myaccount;
-	console.log("本地账户地址是：",myaccount);
-	
-	/*store.state.myaccount = '0x48821fde07865431ad3d3a27e5e888c02d8ba5eb';
-	var myaccount = store.state.myaccount;*/
-	
-
-	//登录海盗游戏用户
-	if(myaccount){
-		var url=configData.base_url+configData.get_username;
-		var tokenstr = myaccount.toString();
-		axios.post(url, {token: tokenstr}).then(function(result){
-			console.log("成功",result);
-			if(!result.data.data.name){
-				
-				store.state.username = tokenstr.slice(0,5);
-				console.log("用户名",store.state.username);
-			}else{
-				// alert("点击用户名设置账户昵称");
-				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = "登录成功,点击用户名设置昵称.";
-				store.state.username = result.data.data.name.slice(0,5);
-				console.log("我的昵称是",result.data.data.name);
-			}
-		}).catch(function(err){
-			console.log("失败",err);
-		})
-	}else{
-		// alert("请先登录metamask");
-		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = "请先登录metamask.";
-	}
-
-}
-
-service.buycard = function(i){
-	if(store.state.username.indexOf("Login")>-1){
-		// alert("请先登录metamask和海盗官网");
-		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = "请先登录metamask和海盗官网.";
-		
-	}else{
-		//购买卡牌
-
-	}
-}
-
-service.myassets = function(){
-	if(store.state.username.indexOf("Login")>-1){
-		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = "请先登录metamask和海盗官网."
-	}else{
-		//展示我的卡牌列表
-		store.dispatch("showbigpopup");
-		store.state.buymsg.myassets = true; 
-	}
-}
-
-service.setnickname = function(nameObj){
+	console.log("本地账户地址是：",store.state.myaccount);
+	// store.state.myaccount = '0x48821fde07865431ad3d3a27e5e888c02d8ba5eb';
 	//注册用户
 	if(document.cookie.indexOf("invite_uid") > -1){
-		console.log("cookie",document.cookie);
+		console.log("本地已有cookie",document.cookie);
 	}else{
 		var registerurl = configData.base_url+configData.register;
 		axios.post(registerurl,{token:store.state.myaccount}).then(function(response){
@@ -170,7 +138,135 @@ service.setnickname = function(nameObj){
 		var invite_uid = Math.round(Math.random()*10).toString() + Math.round(Math.random()*10).toString() + Math.round(Math.random()*10).toString() + Math.round(Math.random()*10).toString() + Math.round(Math.random()*10).toString();
 		document.cookie = "invite_uid="+invite_uid;
 	}
+	//登录海盗游戏用户
+	if(store.state.myaccount){
+		var url=configData.base_url+configData.get_username;
+		var tokenstr = store.state.myaccount.toString();
+		axios.post(url, {token: tokenstr}).then(function(result){
+			console.log("成功",result);
+			if(!result.data.data.name){
+				store.state.username = tokenstr.slice(0,5);
+				console.log("用户名",store.state.username);
+			}else{
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = "登录成功,点击用户名设置昵称.";
+				store.state.username = result.data.data.name.slice(0,5);
+				console.log("我的昵称是",result.data.data.name);
+			}
+		}).catch(function(err){
+			console.log("失败",err);
+		})
+	}else{
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = "请先登录metamask.";
+	}
+
+}
+
+service.buycard = function(i){
+	console.log(i);
+	//获取以太账户
+	store.state.myaccount = web3.eth.accounts[0];
+	if(!store.state.myaccount){
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = "请先登录metamask.";
+	}else if(store.state.username.indexOf("Login") > -1){
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = "请先登录.";
+	}else{
+		//购买卡牌
+		//判断以太坊的网络线路
+		var version = web3.version.network;
+		var CaptainSell = web3.eth.contract(store.state.CaptainSell_abiarray);
+		var CaptainSellInstance = "";
+		let transaction = {
+		    from: store.state.myaccount,
+		    to: store.state.CaptainSell_address4, 
+		    value: web3.toWei(store.state.captain[0].price,"ether")
+		};
+		if(i == 2){
+			transaction.value = web3.toWei(store.state.captain[1].price,"ether");
+		}else if(i == 3){
+			transaction.value = web3.toWei(store.state.captain[2].price,"ether");
+		}
+		if(version == 4){
+			CaptainSellInstance = CaptainSell.at(store.state.CaptainSell_address4);
+		}else{
+			CaptainSellInstance = CaptainSell.at(store.state.CaptainSell_address4);
+		}
+		CaptainSellInstance.prepurchase(i,transaction,function(error,result){
+			if(!error){
+				console.log("购买结果是：",result);
+
+			}else{
+				console.log(error);
+			}
+		})
+		//监听购买事件
+		CaptainSellInstance.BuyToken(store.state.myaccount).watch(function(error,result){
+			if(!error){
+				console.log("购买成功后返回的结果是：",result);
+
+			}else{
+				console.log(error);
+			}
+		})
+		//账户地址拥有的卡牌数组
+		var CaptainToken = web3.eth.contract(store.state.CaptainToken_abiarray);
+		var CaptainTokenInstance = "";
+		if(version == 4){
+			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
+		}else{
+			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
+		}
+		CaptainTokenInstance.tokensOfOwner(store.state.myaccount,function(error,result){
+			if(!error){
+				console.log("该地址拥有的卡牌数组是：",result);
+			}else{
+				console.log(error);
+			}
+		})
+		//获取某种卡牌的token列表
+		CaptainTokenInstance.tokensOfCaptain(i,function(error,result){
+			if(!error){
+				console.log("该种卡牌的token列表是：",result);
+			}else{
+				console.log(error);
+			}
+		})
+	}
+}
+
+service.myassets = function(){
+	//获取以太账户
+	store.state.myaccount = web3.eth.accounts[0];
+	if(!store.state.myaccount){
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = "请先登录metamask."
+	}else if(store.state.username.indexOf("Login")>-1){
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = "请先登录."
+	}else{
+		//展示我的卡牌列表
+		store.dispatch("showbigpopup");
+		store.state.buymsg.myassets = true; 
+	}
+}
+
+service.setnickname = function(){
+	//获取以太账户
+	store.state.myaccount = web3.eth.accounts[0];
+	if(!store.state.myaccount){
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = "请先登录metamask."
+		return;
+	}
 	//设置新的用户昵称
+	store.dispatch("showbigpopup");
+    store.state.buymsg.setnickname = true;
+}
+
+service.changenickname = function(nameObj){
 	var username = nameObj.name.toString();
 	var tokenstr = store.state.myaccount;
 	var newsignature = web3.toHex("new"+username);
@@ -191,20 +287,16 @@ service.setnickname = function(nameObj){
 		  axios.post(url, postData).then(function (response) {
 			console.log("设置用户名",response);
 			if(response.data.state == 200){
-				// alert("修改用户名成功")
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "修改用户名成功.";
 				store.state.username = username.slice(0,5);
 			}else if(response.data.state == 10003){
-				// alert("设置昵称过长")
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "设置昵称过长.";
 			}else if(response.data.state == 10004){
-				// alert("该昵称已经存在")
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "该昵称已经存在.";
 			}else if(response.data.state == 500){
-				// alert("服务器内部错误")
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "服务器内部错误.";
 			}
@@ -215,5 +307,9 @@ service.setnickname = function(nameObj){
 		}
 	});
 }
+
+
+
+
 
 export default service

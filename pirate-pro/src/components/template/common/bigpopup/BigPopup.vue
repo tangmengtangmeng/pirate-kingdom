@@ -28,7 +28,7 @@
 	<div v-show="bigpopupBuymsg.setnickname" class="setnickname">
 		<input class="inputname" type="text" maxlength="16" v-bind:placeholder="alertplaceholder" ref="inputname" @focus="clearplace"/>
 		<div class="cancelbtn" @click="closepopup"></div>
-		<div class="nextbtn" @click="setnickname"></div>
+		<div class="nextbtn" @click="changenickname"></div>
 	</div>	  	
   </div>
 </template>
@@ -60,12 +60,12 @@ export default {
   		this.$store.dispatch("closebigpopup");
   		this.$store.dispatch("clearbigpopup");
   	},
-  	setnickname: function () {
+  	changenickname: function () {
   		var name = this.$refs.inputname.value;
-  		console.log("设置新用户名是：",name);
+  		console.log("设置新昵称名是：",name);
   		if(name){
   			var data = {name:name}
-	  		this.service.setnickname(data);
+	  		this.service.changenickname(data);
 	  		this.closepopup();
   		}else{
   			this.alertplaceholder = "请输入新的昵称";
@@ -248,6 +248,9 @@ export default {
 	    color: rgb(254,238,0);
 	    text-align: center;
 	    display: table;
+	}
+	.btn:hover{
+		cursor: pointer;
 	}
 	.btn>div{
 		display: table-cell;

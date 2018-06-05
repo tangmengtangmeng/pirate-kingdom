@@ -53,8 +53,7 @@ export default {
       if(this.$store.state.username.indexOf("Login") > -1){
         this.service.login();
       }else{
-        this.$store.dispatch("showbigpopup");
-        this.$store.state.buymsg.setnickname = true;
+        this.service.setnickname();
       }
     },
     quicklight: function (e) {

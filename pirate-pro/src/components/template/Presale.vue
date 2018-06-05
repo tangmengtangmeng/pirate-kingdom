@@ -10,10 +10,13 @@
         </div>
         <div class="pretitle" :style="{'height':titleheight}"></div>
         <ul class="preplayer" :style="{'height':playerheight}">
-          <li v-for="n in 3"><div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail(n)"><div></div></div></li>
+          <li v-for="(carditem,index) in carditems">
+            <div class="soldamount">{{carditem.soldamount}}/{{carditem.totalamount}}</div>
+            <div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail(index + 1)"><div></div></div>
+          </li>
         </ul>
         <ul class="prebtn" :style="{'height':btnheight}">
-          <li v-for="n in 3"><div @click="confirmbuycard(n)" :style="{'height':divheight}"></div></li>
+          <li v-for="(btnitem,index) in btnitems"><div @click="confirmbuycard(index + 1)" :style="{'height':divheight}"><div>{{btnitem.price}}ETH</div></div></li>
         </ul>
         <div class="sale" v-show="showbigpopup">
           <div class="shadow">
@@ -45,6 +48,8 @@ export default {
       divheight: "",
       buymsg: this.$store.state.buymsg,
       alertmsg: this.$store.state.alertmsg,
+      btnitems: this.$store.state.pricearr,
+      carditems: this.$store.state.cardarr,
     }
   },
   methods: {
@@ -65,8 +70,7 @@ export default {
       if(this.$store.state.username.indexOf("Login") > -1){
         this.service.login();
       }else{
-        this.$store.dispatch("showbigpopup");
-        this.$store.state.buymsg.setnickname = true;
+        this.service.setnickname();
       }
     },
     detail: function (i) {
@@ -266,26 +270,38 @@ export default {
   width: 100%;
   height: 45.2%;
   margin:0 auto;
+  text-align: center;
+  font-size: 24px;
+  color: rgb(254,238,0);
+  display: table;
+  padding-top: 5%;
+  box-sizing: border-box;
+}
+.prebtn>li>div>div{
+  display: table-cell;
+  vertical-align: middle;
+  position: relative;
+  left: -3%;
 }
 .prebtn>li>div:hover{
   cursor: pointer;
 }
-.prebtn li:nth-child(1) div{
+.prebtn li:nth-child(1)>div{
   background:url("/static/image/player1b.png");
   background-size: 100% 100%; 
 }
-.prebtn li:nth-child(2) div{
+.prebtn li:nth-child(2)>div{
   background:url("/static/image/player2b.png");
   background-size: 100% 100%; 
 }
-.prebtn li:nth-child(3) div{
+.prebtn li:nth-child(3)>div{
   background:url("/static/image/player3b.png");
   background-size: 100% 100%; 
 }
 .preplayer li div{
   width: 70%;
   height: 77%;
-  margin: 25% 9%;
+  margin: 16% 9%;
   position: relative;
   top: 2.7%;
   left: 2.4%;
@@ -323,5 +339,14 @@ export default {
   background:linear-gradient(0deg,rgba(250,220,150,0),rgba(250,220,150,0.3),rgba(250,220,150,0));
   transform: rotate(45deg);
   transition: all .5s linear;
+}
+.preplayer li div.soldamount{
+  width: 70%;
+  height: 5%;
+  margin: 0 9%;
+  top: 9%;
+  text-align: center;
+  font-size:16px;
+  color: #fff;
 }
 </style>

@@ -7,10 +7,13 @@ const state = {
 	show: false,
 	locale: "zh-ch",
 	username: "Login",
+	myaccount: "",
 	showheader: true,
 	showfooter: true,
 	showbigpopup: false,
 	showsmallpopup: false,
+	pricearr: [{price:"0.00"},{price:"0.00"},{price:"0.00"}],
+	cardarr: [{soldamount:"0",totalamount:"30"},{soldamount:"0",totalamount:"30"},{soldamount:"0",totalamount:"30"}],
 	buymsg: {
 		myassets: "",
 		setnickname: "",
@@ -21,7 +24,6 @@ const state = {
 	alertmsg: {
 		alert: ""
 	},
-	myaccount: "",
 	captain: [
 		{
 			name: "JACK",
@@ -30,7 +32,7 @@ const state = {
 			attack: "",
 			strength: "",
 			defense: "",
-			price: "",
+			price: "0.00",
 			unitSellable: "",
 			totalcount: ""
 		},
@@ -41,7 +43,7 @@ const state = {
 			attack: "",
 			strength: "",
 			defense: "",
-			price: "",
+			price: "0.00",
 			unitSellable: "",
 			totalcount: ""
 		},
@@ -52,17 +54,18 @@ const state = {
 			attack: "",
 			strength: "",
 			defense: "",
-			price: "",
+			price: "0.00",
 			unitSellable: "",
 			totalcount: ""
 		},
 	],
 	//合约参数
 	CaptainGameConfig_abiarray: CaptainGameConfig.abi,
-	CaptainGameConfig_address4: "0x7c84f484967fec9ad949a624dfd3eca64f554b3a",
-	
-	
-
+	CaptainGameConfig_address4: "0xfb8643685a0d7aa43d6db62b76d5f7afc88c2f13",
+	CaptainSell_abiarray: CaptainSell.abi,
+	CaptainSell_address4: "0xce85fb0091d7583f7fd2512e6e620d99f43e642e",
+	CaptainToken_abiarray: CaptainToken.abi,
+	CaptainToken_address4: "0xecde6184af55cd0103e4d8681d85230aca5f354d",
 }
 
 export default state

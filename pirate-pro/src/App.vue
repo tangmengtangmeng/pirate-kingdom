@@ -32,12 +32,10 @@ export default {
     if(this.$route.path.indexOf("presale")>-1){
       this.$store.dispatch("hideheader");
     }
-
-    //初始化APP获取卡牌信息
-    this.service.init();
   },
   created:function(){
-
+    //初始化APP获取卡牌信息
+    this.service.init();
   },
   mounted:function(){
      

@@ -28,6 +28,9 @@ function prepurchase(uint32 _captainId) external payable 购买卡牌
 监听事件：
 BuyToken(_captainId, price,address(this),msg.sender);
 
+该卡牌已经出售多少张
+function getCaptainCount(uint32 _captainId) external view returns (uint256)  
+
 三、Captain卡牌数据
 CaptainToken: 0xecde6184af55cd0103e4d8681d85230aca5f354d
 
@@ -36,3 +39,4 @@ function tokensOfOwner(address _owner) external view returns (uint256[])
 
 获取某个卡牌的token列表
 function tokensOfCaptain(uint256 _captainId) public view returns(uint256[] captainTokens)
+
