@@ -71,10 +71,12 @@ export default {
 	}
 	.close{
 		position: absolute;
-		right: 0;
-		top: 0;
+		right: -3%;
+		top: -3%;
 		width: 8.5%;
 		height: 11%;
+    background:url("/static/image/closebtn.png") center center no-repeat; 
+    background-size: contain;
 	}
 	.popup-content{
 		width: 100%;

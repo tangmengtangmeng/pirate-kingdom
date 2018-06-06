@@ -28,17 +28,34 @@ export default {
     console.log("i18n语种--",document.documentElement.clientWidth);
     this.$store.dispatch("initLang");
     console.log("i18n语种++",this.$i18n.locale);
-    //单独拿出预售页的路由显示
-    if(this.$route.path.indexOf("presale")>-1){
-      this.$store.dispatch("hideheader");
-    }
+    
   },
   created:function(){
     //初始化APP获取卡牌信息
     this.service.init();
+    var _this = this;
+    window.addEventListener("beforeunload",function(){
+    	if(web3.eth.accounts[0]){
+    		sessionStorage.setItem("F5","t");
+    	}else{
+    		sessionStorage.setItem("F5","f");
+    	}
+
+    })
   },
   mounted:function(){
-     
+    //单独拿出预售页的路由显示
+    if(this.$route.path.indexOf("presale")>-1){
+     	this.$store.dispatch("hideheader");
+    }
+  },
+  updated:function(){
+
+  },
+  destroyed:function(){
+  	window.removeEventListener("beforeunload");
+  	sessionStorage.setItem("F5",false);
+  	this.$store.state.username = "Login";
   },
   computed: {
     showheader () {

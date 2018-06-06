@@ -8,7 +8,12 @@ import CaptainGameConfig from './contracts/CaptainGameConfig'
 let service = {};
 
 service.init = function(){
-	console.log("初始化海盗网站");
+
+	console.log("初始化海盗网站:",document.cookie);
+	console.log("初始化海盗网站：",sessionStorage.getItem("昵称"));
+	console.log("初始化海盗网站：",sessionStorage.getItem("我的以太坊账户"));
+	console.log("初始化海盗网站：",sessionStorage.getItem("F5"));
+
 	//初始化web3对象
 	if (typeof web3 !== 'undefined') {
 	    web3 = new Web3(web3.currentProvider);
@@ -16,6 +21,7 @@ service.init = function(){
 	    // set the provider you want from Web3.providers
 	    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8080"));
 	}
+
 	//判断以太坊的网络线路
 	var version = web3.version.network;
 	var CaptainGameConfig = web3.eth.contract(store.state.CaptainGameConfig_abiarray);
@@ -25,7 +31,11 @@ service.init = function(){
 	}else{
 		CaptainGameConfigInstance = CaptainGameConfig.at(store.state.CaptainGameConfig_address4);
 	}
-	console.log(store.state.CaptainGameConfig_abiarray,store.state.CaptainGameConfig_address4);
+	console.log("以太坊初始化后metamask账户的值是：",web3.eth.accounts[0]);
+	if(web3.eth.accounts[0]){
+		sessionStorage.setItem("我的以太坊账户",web3.eth.accounts[0]);
+	}
+	
 	//获取角色卡牌信息
 	CaptainGameConfigInstance.getCardInfo(1,function(error,result){
 		if(!error){
@@ -116,14 +126,46 @@ service.init = function(){
 			console.log(error)
 		}
 	})
+
+	//判断用户是否已经登录过
+	service.confirmlogin();
+
+	//如果登录了metamask就获取用户卡牌数量
+	service.getmycards();
+}
+
+service.confirmlogin = function(){
+    //判断用户是否已经登录过
+	if(sessionStorage.getItem("昵称")){
+		console.log("用户已经登录过",sessionStorage.getItem("昵称"));
+		if(web3.eth.accounts[0]){
+			store.state.username = sessionStorage.getItem("昵称");
+			console.log("9999999999",sessionStorage.getItem("F5"));
+		}else{
+			if(sessionStorage.getItem("F5") != "f"){
+				store.state.username = sessionStorage.getItem("昵称");
+				console.log("9999999999",sessionStorage.getItem("F5"));
+			}else{
+				store.state.username = "Login";
+				// sessionStorage.setItem("F5",false);
+				console.log("9999999999",sessionStorage.getItem("F5"));//
+			}
+			
+		}
 		
+	}
 }
 
 service.login = function(){
 	//获取以太账户
-	store.state.myaccount = web3.eth.accounts[0];
-	console.log("本地账户地址是：",store.state.myaccount);
-	// store.state.myaccount = '0x48821fde07865431ad3d3a27e5e888c02d8ba5eb';
+	if(web3.eth.accounts[0]){
+		store.state.myaccount = web3.eth.accounts[0];
+		sessionStorage.setItem("我的以太坊账户",store.state.myaccount);
+		console.log("本地以太账户地址是：",store.state.myaccount);//0xf3e01b7b5961d6ffa0ef6521556e3aa7141622b0
+	}else{
+		store.state.myaccount = "";
+	}
+	
 	//注册用户
 	if(document.cookie.indexOf("invite_uid") > -1){
 		console.log("本地已有cookie",document.cookie);
@@ -140,6 +182,7 @@ service.login = function(){
 	}
 	//登录海盗游戏用户
 	if(store.state.myaccount){
+		sessionStorage.setItem("我的以太坊账户",store.state.myaccount);
 		var url=configData.base_url+configData.get_username;
 		var tokenstr = store.state.myaccount.toString();
 		axios.post(url, {token: tokenstr}).then(function(result){
@@ -153,14 +196,17 @@ service.login = function(){
 				store.state.username = result.data.data.name.slice(0,5);
 				console.log("我的昵称是",result.data.data.name);
 			}
+			sessionStorage.setItem("昵称",store.state.username);
+			console.log("我的昵称在缓存中：",sessionStorage.getItem("昵称"));
 		}).catch(function(err){
 			console.log("失败",err);
 		})
 	}else{
 		store.dispatch("showsmallpopup");
 		store.state.alertmsg.alert = "请先登录metamask.";
+		store.state.username = "Login";
+		sessionStorage.setItem("F5","f");
 	}
-
 }
 
 service.buycard = function(i){
@@ -170,6 +216,8 @@ service.buycard = function(i){
 	if(!store.state.myaccount){
 		store.dispatch("showsmallpopup");
 		store.state.alertmsg.alert = "请先登录metamask.";
+		store.state.username = "Login";
+		sessionStorage.setItem("F5","f");
 	}else if(store.state.username.indexOf("Login") > -1){
 		store.dispatch("showsmallpopup");
 		store.state.alertmsg.alert = "请先登录.";
@@ -203,15 +251,6 @@ service.buycard = function(i){
 				console.log("购买结果是：",result);
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "交易进行中，请等待卡牌购买结果...";
-				CaptainSellInstance.getCaptainCount(i,function(error,result){
-					if(!error){
-						console.log(result);
-						store.state.cardarr[i -1].soldamount = parseInt(result.toString()) - 1;
-
-					}else{
-						console.log(error);
-					}
-				})
 			}else{
 				console.log(error);
 			}
@@ -222,6 +261,16 @@ service.buycard = function(i){
 				console.log("购买成功后返回的结果是：",result);
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "交易成功,可在我的卡牌中查看.";
+				//刷新卡牌卖出数量
+				CaptainSellInstance.getCaptainCount(i,function(error,result){
+					if(!error){
+						console.log(result);
+						store.state.cardarr[i -1].soldamount = parseInt(result.toString());
+
+					}else{
+						console.log(error);
+					}
+				})
 				//重新获取我的卡牌列表
 				service.getmyassets();
 			}else{
@@ -241,38 +290,70 @@ service.buycard = function(i){
 }
 
 service.myassets = function(){
-	service.getmyassets();
-	service.showbigpopup();
+
+	if(store.state.username.indexOf("Login")>-1){
+		if(!web3.eth.accounts[0]){
+			store.dispatch("showsmallpopup");
+			store.state.alertmsg.alert = "请先登录metamask."
+			store.state.username = "Login";
+			sessionStorage.setItem("F5","f");
+		}else{
+			store.dispatch("showsmallpopup");
+			store.state.alertmsg.alert = "请先登录."
+		}
+	}else{
+		if(!web3.eth.accounts[0]){
+			store.dispatch("showsmallpopup");
+			store.state.alertmsg.alert = "请先登录metamask."
+			store.state.username = "Login";
+			sessionStorage.setItem("F5","f");
+			return;
+		}
+		//账户地址拥有的卡牌数
+		service.showbigpopup();
+		service.getmycards();
+	}
 }
 
-service.getmyassets = function(){
-	//获取以太账户
-	store.state.myaccount = web3.eth.accounts[0];
-	if(!store.state.myaccount){
-		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = "请先登录metamask."
-	}else if(store.state.username.indexOf("Login")>-1){
-		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = "请先登录."
+service.getmycards = function(){
+	
+	if(web3.eth.accounts[0]){
+		store.state.myaccount = web3.eth.accounts[0];
 	}else{
-		//账户地址拥有的卡牌数组
-		var CaptainToken = web3.eth.contract(store.state.CaptainToken_abiarray);
-		var CaptainTokenInstance = "";
-		var version = web3.version.network;
-		if(version == 4){
-			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
+		if(sessionStorage.getItem("我的以太坊账户")){
+			store.state.myaccount = sessionStorage.getItem("我的以太坊账户");
 		}else{
-			CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
+			store.state.myaccount = sessionStorage.getItem("我的以太坊账户");
 		}
-		CaptainTokenInstance.tokensOfOwner(store.state.myaccount,function(error,result){
-			if(!error){
-				console.log("该地址拥有的卡牌数组是：",result);
-			}else{
-				console.log(error);
-			}
-		})
-		// service.showbigpopup();
 	}
+	
+	//账户地址拥有的卡牌数组
+	var CaptainToken = web3.eth.contract(store.state.CaptainToken_abiarray);
+	var CaptainTokenInstance = "";
+	var version = web3.version.network;
+	if(version == 4){
+		CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
+	}else{
+		CaptainTokenInstance = CaptainToken.at(store.state.CaptainToken_address4);
+	}
+	CaptainTokenInstance.tokensOfOwner(store.state.myaccount,function(error,result){
+		if(!error){
+			console.log("该地址拥有的卡牌数组是：",result);
+			store.dispatch("clearmycaptain");
+			for(var i=0;i<result[1].length;i++){
+				if(result[1][i].toString() == 1){
+					store.state.mycaptain1.push("1");
+				}else if(result[1][i].toString() == 2){
+					store.state.mycaptain2.push("1");
+				}else if(result[1][i].toString() == 3){
+					store.state.mycaptain3.push("1");
+				}
+				console.log(store.state.mycaptain1,store.state.mycaptain2,store.state.mycaptain3)
+			}
+		}else{
+			console.log(error);
+		}
+	})
 }
 
 service.showbigpopup = function(){
@@ -287,6 +368,8 @@ service.setnickname = function(){
 	if(!store.state.myaccount){
 		store.dispatch("showsmallpopup");
 		store.state.alertmsg.alert = "请先登录metamask."
+		store.state.username = "Login";
+		sessionStorage.setItem("F5","f");
 		return;
 	}
 	//设置新的用户昵称
@@ -318,6 +401,8 @@ service.changenickname = function(nameObj){
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "修改用户名成功.";
 				store.state.username = username.slice(0,5);
+				sessionStorage.setItem("昵称",store.state.username);
+				console.log("我的昵称在缓存中：",sessionStorage.getItem("昵称"));
 			}else if(response.data.state == 10003){
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "设置昵称过长.";

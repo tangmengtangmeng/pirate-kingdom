@@ -23,9 +23,9 @@
 		<div class="nextbtn" @click="buycard"></div>
 	</div>
 	<div v-show="bigpopupBuymsg.myassets" class="myassets">
-		<div class="captain1"><div><div>{{mycaptain1}}</div></div></div>
-		<div class="captain2"><div><div>{{mycaptain2}}</div></div></div>
-		<div class="captain3"><div><div>{{mycaptain3}}</div></div></div>
+		<div class="captain1" v-bind:class="{'hidemycard':!mycaptain1.length}"><div><div>{{mycaptain1.length}}</div></div></div>
+		<div class="captain2" v-bind:class="{'hidemycard':!mycaptain2.length}"><div><div>{{mycaptain2.length}}</div></div></div>
+		<div class="captain3" v-bind:class="{'hidemycard':!mycaptain3.length}"><div><div>{{mycaptain3.length}}</div></div></div>
 	</div>
 	<div v-show="bigpopupBuymsg.setnickname" class="setnickname">
 		<input class="inputname" type="text" maxlength="16" v-bind:placeholder="alertplaceholder" ref="inputname" @focus="clearplace"/>
@@ -46,9 +46,7 @@ export default {
       showbuypopup: "",
       showconfirmpopup: "",
       alertplaceholder: "",
-      mycaptain1: this.$store.state.mycaptain1,
-      mycaptain2: this.$store.state.mycaptain2,
-      mycaptain3: this.$store.state.mycaptain3,
+      
     }
   },
   methods: {
@@ -57,6 +55,7 @@ export default {
   		this.alertplaceholder = "";
   		this.$store.dispatch("closebigpopup");
   		this.$store.dispatch("clearbigpopup");
+  		
   	},
   	buycard: function () {
   		var i = this.bigpopupBuymsg.player;
@@ -115,13 +114,25 @@ export default {
     		return this.$store.state.captain[0].price;
     	}
     	
-    }
+    },
+    mycaptain1 () {
+    	return this.$store.state.mycaptain1;
+    },
+    mycaptain2 () {
+    	return this.$store.state.mycaptain2;
+    },
+    mycaptain3 () {
+    	return this.$store.state.mycaptain3;
+    },
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+	.hidemycard{
+		visibility: hidden;
+	}
 	.bigpopup{
 		width: 42%;
 		margin: 0 29%;

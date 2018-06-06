@@ -7,7 +7,8 @@ const mutations = {
 		//判断浏览器设置的默认语言ie\opera,firefox\chrome
 		console.log("IE浏览器默认语言",navigator.browserLanguage);
 		console.log("google浏览器默认语言",navigator.language);
-		if(navigator.language.indexOf("en") > -1 || navigator.browserLanguage.indexOf("en") > -1){
+		var browserLang = navigator.browserLanguage || navigator.language;
+		if(browserLang.indexOf("en") > -1){
 			state.locale = "en";
 			i18n.locale = "en";
 			console.log("浏览器初始化后改变语种",state.locale,i18n.locale);
@@ -46,6 +47,11 @@ const mutations = {
 		state.buymsg.confirmbuycard = "";
 		state.buymsg.buycard = "";
 		state.buymsg.player = "";
+	},
+	clearmycaptain (state) {
+		state.mycaptain1 = [];
+		state.mycaptain2 = [];
+		state.mycaptain3 = [];
 	}
 }
 export default mutations

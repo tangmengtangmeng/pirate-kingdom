@@ -29,7 +29,10 @@ const actions = {
 	},
 	clearbigpopup(context){
 		context.commit("clearbigpopup");
-	}
+	},
+	clearmycaptain(context){
+		context.commit("clearmycaptain");
+	},
 }
 
 export default actions
