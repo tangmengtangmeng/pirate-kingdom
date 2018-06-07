@@ -68,6 +68,9 @@ export default {
       this.$store.state.buymsg.player = i;
     },
     btndown: function (i) {
+      this.$store.state.btnclicked[0] = false;
+      this.$store.state.btnclicked[1] = false;
+      this.$store.state.btnclicked[2] = false;
       this.$store.state.btnclicked[i] = true;
     },
     login: function () {

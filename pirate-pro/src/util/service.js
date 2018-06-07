@@ -406,7 +406,7 @@ service.changenickname = function(nameObj){
 		method: 'personal_sign',
 		params: [
 		address,
-			web3.toHex('magic_academy_change_name:' + username)
+			web3.toHex('pirate_change_name:' + username)
 		]
 	}, function(err, result) {
 		if(!result.error){

@@ -19,7 +19,7 @@ const configData = {
 		foot_ul4_2: 'https://www.ethereum.org/',
 		foot_ul4_3: 'https://bitguild.io/'
 	},
-	base_url: 'http://test.magicacademy.io',
+	base_url: 'http://test.pirateconquest.com',
 	test_api: '//test.magicacademy.io',
 	set_username: '/api/users/setName',
 	get_username: '/api/users/getName',

@@ -17,7 +17,7 @@
         <li><router-link to="introduction"></router-link></li>           
       </ul>
     </div>
-    <div class="myassets" v-show="showbigpopup">
+    <div class="myassets" v-show="showbigpopup" :style="{'height':appHeight}">
       <div class="shadow">
         <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
       </div>
@@ -41,7 +41,7 @@ export default {
       screenwidth: document.documentElement.clientWidth,
       buymsg: this.$store.state.buymsg,
       alertmsg: this.$store.state.alertmsg,
-
+      appHeight: "",
     }
   },
   methods: {
@@ -72,11 +72,20 @@ export default {
     }
   },
   mounted:function(){
+    //初始化阴影背景高度
+    var appHeight = document.getElementById("app").offsetHeight;
+    this.appHeight = appHeight + "px";
+    console.log("appHeight",appHeight);
+    //缩放浏览器时改变头部top
     const _this = this; 
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
       _this.topheight = parseInt(val) / 1920 * 890 + "px";
       _this.topnavheight = parseInt(val) / 1920 * 118 + "px";
+    })
+    //滚动屏幕时增加阴影背景高度
+    window.addEventListener("scroll",function(){
+      _this.appHeight = appHeight + document.documentElement.scrollTop +"px";
     })
   },
   watch: {

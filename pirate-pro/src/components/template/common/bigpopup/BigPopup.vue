@@ -2,7 +2,7 @@
   <div :style="{'height':popupheight,'top':popuptop}" class="bigpopup">
   	<div class="close" @click="closepopup"></div>
   	<div v-show="bigpopupBuymsg.buycard" class="buycard">
-			<div class="role"></div>
+			<div class="role" :class="{'role1':role1,'role2':role2,'role3':role3}"></div>
 		<div class="introduce">
 		  	<div class="name"><p class="colorb">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].name:""}}</p></div>
 		  	<div class="moredetail colorb">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].detail:""}}</div>
@@ -124,6 +124,27 @@ export default {
     mycaptain3 () {
     	return this.$store.state.mycaptain3;
     },
+    role1 () {
+    	if(this.bigpopupBuymsg.player == 1){
+    		return true
+    	}else{
+    		return false
+    	}
+    },
+    role2 () {
+    	if(this.bigpopupBuymsg.player == 2){
+    		return true
+    	}else{
+    		return false
+    	}
+    },
+    role3 () {
+    	if(this.bigpopupBuymsg.player == 3){
+    		return true
+    	}else{
+    		return false
+    	}
+    },
   }
 }
 </script>
@@ -158,6 +179,18 @@ export default {
 		position: relative;
 		top: 14.2%;
 		left: 10%;
+	}
+	.role.role1{
+		background:url("/static/image/myplayer-1.png") center center no-repeat;
+		background-size: 100% 100%;
+	}
+	.role.role2{
+		background:url("/static/image/myplayer-2.png") center center no-repeat;
+		background-size: 100% 100%;
+	}
+	.role.role3{
+		background:url("/static/image/myplayer-3.png") center center no-repeat;
+		background-size: 100% 100%;
 	}
 	.introduce{
 		width: 44.8%;
