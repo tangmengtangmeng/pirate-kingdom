@@ -270,14 +270,23 @@ service.buycard = function(i){
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "交易成功,可在我的卡牌中查看.";
 				//存储玩家购买卡牌日志
-				/*var buyurl = configData.base_url+configData.setlog;
-				var buydata = {};
+				var buyurl = configData.base_url+configData.setlog;
+				var buydata = {
+					from_address: store.state.myaccount,
+					to_address: store.state.CaptainSell_address4,
+					item_type: 1,
+					item_id: i,
+					transaction_by: 1,
+					item_num: 1,
+					ether_num: web3.fromWei(transaction.value,"ether"),
+					coin_type: 1
+				};
 				var buystr = JSON.stringify(buydata);
-				axios.post(buyurl,{type:1,data:buystr}).then(funciton(result){
+				axios.post(buyurl,{type:1,data:buystr}).then(function(result){
 					console.log(result);
 				}).catch(function(err){
 					console.log(err);
-				})*/
+				})
 				//刷新卡牌卖出数量
 				CaptainSellInstance.getCaptainCount(i,function(error,result){
 					if(!error){
@@ -365,12 +374,15 @@ service.getmycards = function(){
 				}else if(result[1][i].toString() == 3){
 					store.state.mycaptain3.push("1");
 				}
-				console.log(store.state.mycaptain1,store.state.mycaptain2,store.state.mycaptain3)
+
 			}
 		}else{
 			console.log(error);
 		}
 	})
+	console.log("我的船长1数组：",store.state.mycaptain1);
+	console.log("我的船长2数组：",store.state.mycaptain2);
+	console.log("我的船长3数组：",store.state.mycaptain3);
 }
 
 service.showbigpopup = function(){
