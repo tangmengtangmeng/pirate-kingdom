@@ -22,7 +22,7 @@
         <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
       </div>
     </div>
-    <div class="alert" v-show="showsmallpopup">
+    <div class="alert" v-show="showsmallpopup" :style="{'height':appHeight}">
       <div class="shadow">
         <smallPopup :smallpopup-msg="alertmsg"></smallPopup>
       </div>
