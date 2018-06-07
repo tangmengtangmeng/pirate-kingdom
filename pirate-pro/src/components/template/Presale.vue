@@ -16,7 +16,7 @@
           </li>
         </ul>
         <ul class="prebtn" :style="{'height':btnheight}">
-          <li v-for="(btnitem,index) in btnitems"><div @click="confirmbuycard(index + 1)" :style="{'height':divheight}"><div>{{btnitem.price}}ETH</div></div></li>
+          <li v-for="(btnitem,index) in btnitems"><div @click="confirmbuycard(index + 1)" :style="{'height':divheight}" v-bind:class="{'clickbg':clicked[index]}"><div>{{btnitem.price}}ETH</div></div></li>
         </ul>
         <div class="sale" v-show="showbigpopup">
           <div class="shadow">
@@ -50,6 +50,7 @@ export default {
       alertmsg: this.$store.state.alertmsg,
       btnitems: this.$store.state.pricearr,
       carditems: this.$store.state.cardarr,
+      clicked: [false,false,false],
     }
   },
   methods: {
@@ -65,6 +66,8 @@ export default {
       this.$store.dispatch("showbigpopup",{confirmbuycard:true,player:i});
       this.$store.state.buymsg.confirmbuycard = true;
       this.$store.state.buymsg.player = i;
+      this.clicked = [false,false,false];
+      this.clicked[i-1] = true;
     },
     login: function () {
       if(this.$store.state.username.indexOf("Login") > -1){
@@ -290,12 +293,24 @@ export default {
   background:url("/static/image/player1b.png");
   background-size: 100% 100%; 
 }
+.prebtn li:nth-child(1)>div.clickbg{
+  background:url("/static/image/player1b_click.png");
+  background-size: 100% 100%; 
+}
 .prebtn li:nth-child(2)>div{
   background:url("/static/image/player2b.png");
   background-size: 100% 100%; 
 }
+.prebtn li:nth-child(2)>div.clickbg{
+  background:url("/static/image/player2b_click.png");
+  background-size: 100% 100%; 
+}
 .prebtn li:nth-child(3)>div{
   background:url("/static/image/player3b.png");
+  background-size: 100% 100%; 
+}
+.prebtn li:nth-child(3)>div.clickbg{
+  background:url("/static/image/player3b_click.png");
   background-size: 100% 100%; 
 }
 .preplayer li div{

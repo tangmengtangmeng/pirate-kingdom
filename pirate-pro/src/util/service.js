@@ -9,10 +9,10 @@ let service = {};
 
 service.init = function(){
 
-	console.log("初始化海盗网站:",document.cookie);
-	console.log("初始化海盗网站：",sessionStorage.getItem("昵称"));
-	console.log("初始化海盗网站：",sessionStorage.getItem("我的以太坊账户"));
-	console.log("初始化海盗网站：",sessionStorage.getItem("F5"));
+	console.log("初始化海盗网站cookie:",document.cookie);
+	console.log("初始化海盗网站nicheng：",sessionStorage.getItem("昵称"));
+	console.log("初始化海盗网站yitaifang：",sessionStorage.getItem("我的以太坊账户"));
+	console.log("初始化海盗网站shuaxin：",sessionStorage.getItem("F5"));
 
 	//初始化web3对象
 	if (typeof web3 !== 'undefined') {
@@ -147,7 +147,6 @@ service.confirmlogin = function(){
 				console.log("9999999999",sessionStorage.getItem("F5"));
 			}else{
 				store.state.username = "Login";
-				// sessionStorage.setItem("F5",false);
 				console.log("9999999999",sessionStorage.getItem("F5"));//
 			}
 			
@@ -198,6 +197,15 @@ service.login = function(){
 			}
 			sessionStorage.setItem("昵称",store.state.username);
 			console.log("我的昵称在缓存中：",sessionStorage.getItem("昵称"));
+			//存储登录日志
+			var setlogurl = configData.base_url+configData.setlog;
+			var logdata = {address:store.state.myaccount};
+			var logstr = JSON.stringify(logdata);
+			axios.post(setlogurl,{type:4,data:logstr}).then(function(result){
+				console.log("登录日志存储成功",result,setlogurl);
+			}).catch(function(err){
+				console.log(err);
+			})
 		}).catch(function(err){
 			console.log("失败",err);
 		})
@@ -261,6 +269,15 @@ service.buycard = function(i){
 				console.log("购买成功后返回的结果是：",result);
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "交易成功,可在我的卡牌中查看.";
+				//存储玩家购买卡牌日志
+				/*var buyurl = configData.base_url+configData.setlog;
+				var buydata = {};
+				var buystr = JSON.stringify(buydata);
+				axios.post(buyurl,{type:1,data:buystr}).then(funciton(result){
+					console.log(result);
+				}).catch(function(err){
+					console.log(err);
+				})*/
 				//刷新卡牌卖出数量
 				CaptainSellInstance.getCaptainCount(i,function(error,result){
 					if(!error){
@@ -272,7 +289,7 @@ service.buycard = function(i){
 					}
 				})
 				//重新获取我的卡牌列表
-				service.getmyassets();
+				service.getmycards();
 			}else{
 				console.log(error);
 			}
