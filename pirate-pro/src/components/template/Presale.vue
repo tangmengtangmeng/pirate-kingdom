@@ -16,7 +16,7 @@
           </li>
         </ul>
         <ul class="prebtn" :style="{'height':btnheight}">
-          <li v-for="(btnitem,index) in btnitems"><div @click="confirmbuycard(index + 1)" :style="{'height':divheight}" v-bind:class="{'clickbg':clicked[index]}"><div>{{btnitem.price}}ETH</div></div></li>
+          <li v-for="(btnitem,index) in btnitems"><div @click="confirmbuycard(index + 1)" :style="{'height':divheight}" v-bind:class="{'clickbg':clicked[index]}" @mousedown="btndown(index)"><div>{{btnitem.price}}ETH</div></div></li>
         </ul>
         <div class="sale" v-show="showbigpopup">
           <div class="shadow">
@@ -50,7 +50,7 @@ export default {
       alertmsg: this.$store.state.alertmsg,
       btnitems: this.$store.state.pricearr,
       carditems: this.$store.state.cardarr,
-      clicked: [false,false,false],
+      clicked: this.$store.state.btnclicked,
     }
   },
   methods: {
@@ -66,8 +66,9 @@ export default {
       this.$store.dispatch("showbigpopup",{confirmbuycard:true,player:i});
       this.$store.state.buymsg.confirmbuycard = true;
       this.$store.state.buymsg.player = i;
-      this.clicked = [false,false,false];
-      this.clicked[i-1] = true;
+    },
+    btndown: function (i) {
+      this.$store.state.btnclicked[i] = true;
     },
     login: function () {
       if(this.$store.state.username.indexOf("Login") > -1){
@@ -169,7 +170,7 @@ export default {
 .shadow{
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,.4);
+  background: rgba(0,0,0,.2);
   position: absolute;
   top: 0;
   left: 0;

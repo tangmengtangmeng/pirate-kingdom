@@ -12,6 +12,7 @@ const state = {
 	showfooter: true,
 	showbigpopup: false,
 	showsmallpopup: false,
+	btnclicked: [false,false,false],
 	pricearr: [{price:"0.00"},{price:"0.00"},{price:"0.00"}],
 	cardarr: [{soldamount:"0",totalamount:"30"},{soldamount:"0",totalamount:"30"},{soldamount:"0",totalamount:"30"}],
 	buymsg: {

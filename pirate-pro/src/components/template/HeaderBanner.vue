@@ -9,7 +9,7 @@
     <div class="language"  @click="changeLocale()">{{$t("message.changeLocale")}}</div>
     <div class="startbtn" :class={hide:$store.state.show}>
       <div class="btnanimation"></div>
-      <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)" @click="buycard"></div>
+      <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)" @click="buycard" :class="{'btntitlebg1':btnlocale1,'btntitlebg2':btnlocale2}"></div>
     </div>
     <div class="topnav hide" :style="{'height':topnavheight}">
       <ul class="navul">
@@ -41,6 +41,7 @@ export default {
       screenwidth: document.documentElement.clientWidth,
       buymsg: this.$store.state.buymsg,
       alertmsg: this.$store.state.alertmsg,
+
     }
   },
   methods: {
@@ -92,6 +93,20 @@ export default {
     },
     showsmallpopup () {
       return this.$store.state.showsmallpopup
+    },
+    btnlocale1 () {
+      if(this.$store.state.locale == "en"){
+        return true
+      }else if(this.$store.state.locale == "zh-ch"){
+        return false
+      }
+    },
+    btnlocale2 () {
+      if(this.$store.state.locale == "en"){
+        return false
+      }else if(this.$store.state.locale == "zh-ch"){
+        return true
+      }
     }
   }
 }
@@ -191,8 +206,6 @@ export default {
   .btntitle{
     width: 100%;
     height: 100%;
-    background:url("/static/image/topbtntitle.png") center center no-repeat; 
-    background-size: cover;
     position: absolute;
     z-index: 3;
     animation: bigger .5s infinite alternate;
@@ -200,6 +213,14 @@ export default {
     position: relative;
     left: 0;
     transition: left .5s;
+  }
+  .btntitle.btntitlebg1{
+    background:url("/static/image/topbtntitle.png") center center no-repeat; 
+    background-size: cover;
+  }
+  .btntitle.btntitlebg2{
+    background:url("") center center no-repeat; 
+    background-size: cover;
   }
   @keyframes bigger{
     from {left: 0;}
@@ -220,19 +241,19 @@ export default {
     animation: btnlight 1.6s infinite normal;
   }
   @keyframes btnlight{
-    0% {background:repeating-linear-gradient(to left,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    30% {background:repeating-linear-gradient(to left,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    60% {background:repeating-linear-gradient(to left,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    64% {background:repeating-linear-gradient(to left,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    68% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    72% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    76% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    80% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    84% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    88% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    92% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
-    96% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5)); }
-    100% {background:repeating-linear-gradient(to left,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4)); }
+    0% {background:repeating-linear-gradient(to left top,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    30% {background:repeating-linear-gradient(to left top,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    60% {background:repeating-linear-gradient(to left top,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    64% {background:repeating-linear-gradient(to left top,rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    68% {background:repeating-linear-gradient(to left top,rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    72% {background:repeating-linear-gradient(to left top,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    76% {background:repeating-linear-gradient(to left top,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    80% {background:repeating-linear-gradient(to left top,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    84% {background:repeating-linear-gradient(to left top,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    88% {background:repeating-linear-gradient(to left top,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    92% {background:repeating-linear-gradient(to left top,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5),rgba(132,62,26,.5)); }
+    96% {background:repeating-linear-gradient(to left top,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4),rgba(132,62,26,.5)); }
+    100% {background:repeating-linear-gradient(to left top,rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(132,62,26,.5),rgba(255,155,120,.4)); }
 
   }
   .btnanimation.quicklight{

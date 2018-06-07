@@ -26,7 +26,7 @@ const mutations = {
 		state.showheader = false;
 		state.showfooter = false;
 	},
-	showbigpopup (state) {
+	showbigpopup (state,params) {
 		state.showbigpopup = true;
 	},
 	showsmallpopup (state) {
@@ -34,6 +34,9 @@ const mutations = {
 	},
 	closebigpopup (state) {
 		state.showbigpopup = false;
+		state.btnclicked[0] = false;
+		state.btnclicked[1] = false;
+		state.btnclicked[2] = false;
 	},
 	closesmallpopup (state) {
 		state.showsmallpopup = false;

@@ -11,8 +11,8 @@ const actions = {
 	hideheader(context){
 		context.commit("hideheader");
 	},
-	showbigpopup(context){
-		context.commit("showbigpopup");
+	showbigpopup(context,params){
+		context.commit("showbigpopup",params);
 	},
 	showsmallpopup(context){
 		context.commit("showsmallpopup");
