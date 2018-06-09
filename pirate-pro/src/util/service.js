@@ -3,6 +3,7 @@ import store from '../store/store'
 import CaptainSell from './contracts/CaptainSell'
 import CaptainToken from './contracts/CaptainToken'
 import CaptainGameConfig from './contracts/CaptainGameConfig'
+// import Web3 from 'web3'
 
 
 let service = {};
@@ -13,17 +14,20 @@ service.init = function(){
 	console.log("初始化海盗网站nicheng：",sessionStorage.getItem("昵称"));
 	console.log("初始化海盗网站yitaifang：",sessionStorage.getItem("我的以太坊账户"));
 	console.log("初始化海盗网站shuaxin：",sessionStorage.getItem("F5"));
+	
 
 	//初始化web3对象
 	if (typeof web3 !== 'undefined') {
 	    web3 = new Web3(web3.currentProvider);
+	    console.log("------",web3);
 	} else {
 	    // set the provider you want from Web3.providers
-	    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8080"));
+	    web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8080"));
 	}
 
 	//判断以太坊的网络线路
 	var version = web3.version.network;
+	
 	var CaptainGameConfig = web3.eth.contract(store.state.CaptainGameConfig_abiarray);
 	var CaptainGameConfigInstance = "";
 	if(version == 4){

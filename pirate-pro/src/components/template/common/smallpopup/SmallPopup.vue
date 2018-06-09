@@ -25,32 +25,36 @@ export default {
   	},
   },
   created () {
+    
   	
   },
   mounted () {
     var val = document.documentElement.clientWidth;
     var val2 = document.documentElement.clientHeight;
-    if(val > 1680){
+    /*if(val > 1680){
       this.popupheight = "25%";
       this.popuptop = "40%";
-    }else{
+    }else{*/
       this.popupheight = ((val)/ 1920 * 1080)* 0.25 + "px";
-      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + "px";
-    }
+      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + document.documentElement.scrollTop+ "px";
+    // }
     var _this = this;
     window.addEventListener("resize",function(){
-        console.log("缩放")
+        // console.log("缩放")
         var val = document.documentElement.clientWidth;
         var val2 = document.documentElement.clientHeight;
-        if(val > 1680){
+        /*if(val > 1680){
           _this.popupheight = "25%";
           _this.popuptop = "40%";
-        }else{
+        }else{*/
           _this.popupheight = ((val)/ 1920 * 1080)* 0.25 + "px";
-          _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + "px";
-        }
+          _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + document.documentElement.scrollTop+ "px";
+        // }
     })
-
+    window.addEventListener("scroll",function(){
+      // console.log("滚动");
+      _this.popuptop = (document.documentElement.clientHeight - parseInt(_this.popupheight) )/2 + document.documentElement.scrollTop + "px";
+    })
     
   },
   computed: {
@@ -66,7 +70,7 @@ export default {
 		margin: 0 40%;
 		color: white;
 		position: relative;
-		background: url("/static/image/smallpopup1.png") center center no-repeat;
+		background: url("../../../../assets/smallpopup1.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.close{
@@ -75,7 +79,7 @@ export default {
 		top: -3%;
 		width: 8.5%;
 		height: 11%;
-    background:url("/static/image/closebtn.png") center center no-repeat; 
+    background:url("../../../../assets/closebtn.png") center center no-repeat; 
     background-size: contain;
 	}
 	.popup-content{

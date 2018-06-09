@@ -43,7 +43,7 @@ export default {
 }
 .introduce{
   width: 100%;
-  background: url("/static/image/introduce.png") left top no-repeat;
+  background: url("../../assets/introduce.png") left top no-repeat;
   background-size: cover;
 }
 </style>

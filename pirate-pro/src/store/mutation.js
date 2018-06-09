@@ -26,17 +26,26 @@ const mutations = {
 		state.showheader = false;
 		state.showfooter = false;
 	},
+	showShadow (state) {
+		state.showshadow = true;
+	},
+	hideShadow (state) {
+		state.showshadow = false;
+	},
 	showbigpopup (state,params) {
 		state.showbigpopup = true;
+		state.showshadow = true;
 	},
 	showsmallpopup (state) {
 		state.showsmallpopup = true;
+		state.showshadow = true;
 	},
 	closebigpopup (state) {
 		state.showbigpopup = false;
 		state.btnclicked[0] = false;
 		state.btnclicked[1] = false;
 		state.btnclicked[2] = false;
+		state.showshadow = false;
 	},
 	closesmallpopup (state) {
 		state.showsmallpopup = false;

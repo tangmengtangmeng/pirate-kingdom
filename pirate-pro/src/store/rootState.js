@@ -4,7 +4,7 @@ import CaptainGameConfig from '../util/contracts/CaptainGameConfig'
 
 const state = {
 	// 全局变量
-	show: false,
+	showshadow: false,
 	locale: "zh-ch",
 	username: "Login",
 	myaccount: "",

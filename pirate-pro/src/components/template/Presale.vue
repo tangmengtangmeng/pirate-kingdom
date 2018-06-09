@@ -2,13 +2,15 @@
     <div class="tab-presale">
       <div class="addbox" v-show="!showheader.showheader" :style="{'height':addheight}"></div>
       <div class="players" :style="{'height':playersheight}">
+        <div class="shadow" :style="{'height':playersheight}" v-show="showshadow || showsmallpopup"></div>
         <div class="topright">
           <div class="row">
             <div class="col-40" @click="login"><p class="text-left">{{username.username}}</p></div>
             <div class="col-60"><p class="text-right" @click="myassets">My Assets</p></div>
           </div>
         </div>
-        <div class="pretitle" :style="{'height':titleheight}"></div>
+        <div class="pretitle hide" :style="{'height':titleheight}"></div>
+        <div class="pretitle2"></div>
         <ul class="preplayer" :style="{'height':playerheight}">
           <li v-for="(carditem,index) in carditems">
             <div class="soldamount">{{carditem.soldamount}}/{{carditem.totalamount}}</div>
@@ -19,17 +21,17 @@
           <li v-for="(btnitem,index) in btnitems"><div @click="confirmbuycard(index + 1)" :style="{'height':divheight}" v-bind:class="{'clickbg':clicked[index]}" @mousedown="btndown(index)"><div>{{btnitem.price}}ETH</div></div></li>
         </ul>
         <div class="sale" v-show="showbigpopup">
-          <div class="shadow">
-            <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
-          </div>
+          <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
         </div>
         <div class="alert" v-show="showsmallpopup">
-          <div class="shadow">
-            <smallPopup :smallpopup-msg="alertmsg"></smallPopup>
-          </div>
+          <smallPopup :smallpopup-msg="alertmsg"></smallPopup>
         </div>
       </div>
       <div class="addbox" v-show="!showfooter.showfooter" :style="{'height':addheight}"></div>
+      <div class="introduce-pots" :style="{'height':potsheight}">
+        <div class="shadow" :style="{'height':potsheight}" v-show="showshadow"></div>
+        <div class="pots-title"></div>
+      </div>
     </div>
 </template>
 
@@ -51,6 +53,8 @@ export default {
       btnitems: this.$store.state.pricearr,
       carditems: this.$store.state.cardarr,
       clicked: this.$store.state.btnclicked,
+      potsheight: "",
+      
     }
   },
   methods: {
@@ -93,38 +97,42 @@ export default {
     console.log("预售栏目的高度是：",this.playersheight);
   },
   mounted:function(){
-    if(document.documentElement.clientWidth > 1680){
+
+    /*if(document.documentElement.clientWidth > 1680){
       this.addheight = 0;
       this.playersheight = "100%";
       this.titleheight = "24.5%";
       this.playerheight = "63.3%";
       this.btnheight = "12%";
       this.divheight = "76%";
-    }else{
-      this.addheight = ((document.documentElement.clientHeight) - (document.documentElement.clientWidth)/ 1920 * 1080)/2 + "px";
-      this.playersheight = (document.documentElement.clientWidth)/ 1920 * 1080 + "px";
-    }
+    }else{*/
+      this.addheight = ((document.documentElement.clientHeight) - (document.documentElement.clientWidth)/ 1920 * 800)/2 + "px";
+      this.playersheight = (document.documentElement.clientWidth)/ 1920 * 800 + "px";
+      this.potsheight = (document.documentElement.clientWidth) /1920 * 800 + "px";
+    // }
 
     var _this = this;
     window.addEventListener("resize",function(){
         console.log("缩放");
         var val = document.documentElement.clientWidth;
         var val2 = document.documentElement.clientHeight;
-        if(document.documentElement.clientWidth > 1680){
+        /*if(document.documentElement.clientWidth > 1680){
           _this.addheight = 0;
           _this.playersheight = "100%";
           _this.titleheight = "24.5%";
           _this.playerheight = "63.3%";
           _this.btnheight = "12%";
           _this.divheight = "76%";
-        }else{
-          _this.addheight = ((document.documentElement.clientHeight) - (document.documentElement.clientWidth)/ 1920 * 1080)/2 + "px";
-          _this.playersheight = (document.documentElement.clientWidth)/ 1920 * 1080 + "px";
-          _this.titleheight = "22.2%";
-          _this.playerheight = "57.4%";
-          _this.btnheight = "20%";
-          _this.divheight = "45.2%";
-        }
+        }else{*/
+          _this.addheight = ((document.documentElement.clientHeight) - (document.documentElement.clientWidth)/ 1920 * 800)/2 + "px";
+          _this.playersheight = (document.documentElement.clientWidth)/ 1920 * 800 + "px";
+          _this.titleheight = "13.75%";
+          _this.playerheight = "68%";
+          _this.btnheight = "18.25%";
+          _this.divheight = "62%";
+          _this.potsheight = document.documentElement.clientWidth /1920 * 800 + "px";
+        // }
+        
     })
   },
   computed: {
@@ -148,7 +156,10 @@ export default {
     },
     showsmallpopup () {
       return this.$store.state.showsmallpopup
-    }
+    },
+    showshadow () {
+      return this.$store.state.showshadow
+    },
   },
   watch: {
     screenwidth () {
@@ -170,16 +181,6 @@ export default {
   bottom: 0;
   z-index: 5;
 }
-.shadow{
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,.2);
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 10;
-}
 .tab-presale{
   width: 100%;
   height: auto;
@@ -188,19 +189,19 @@ export default {
 }
 @media all and (min-width: 1680px){
   .tab-presale{
-    height: 100%;
+    /*height: 100%;*/
   }
 }
 .players{
   width: 100%;
-  background: url("/static/image/presale.png") center center no-repeat;
+  background: url("../../assets/presale.png") center center no-repeat;
   background-size: 100% 100%;
 }
 .pretitle{
   width: 46.9%;
   height: 22.2%;
   margin: 0 auto;
-  background:url("/static/image/pretitle.png") center center no-repeat;
+  background:url("../../assets/pretitle.png") center center no-repeat;
   background-size: 100% 100%; 
 }
 .topright{
@@ -208,7 +209,7 @@ export default {
   min-width: 156px;
   height: 5.6%;
   float: right;
-  background:url("/static/image/moresetting.png") center center no-repeat;
+  background:url("../../assets/moresetting.png") center center no-repeat;
   background-size: 100%;
   margin-top: 1.3%;
   margin-right: 5.2%;
@@ -244,8 +245,8 @@ export default {
   }
 }
 .preplayer,.prebtn{
-  width:64%;
-  height: 57.4%;
+  width:60%;
+  height: 68%;
   margin: 0 auto; 
 }
 .preplayer li,.prebtn li{
@@ -253,35 +254,35 @@ export default {
   float: left;
 }
 .preplayer li:nth-child(1){
-  width: 33%;
-  background:url("/static/image/player1.png");
+  width: 32%;
+  background:url("../../assets/player1.png") center 12px no-repeat;
   background-size: 100% 100%; 
 }
 .preplayer li:nth-child(2){
-  width: 34%;
-  background:url("/static/image/player2.png");
+  width: 34.6%;
+  background:url("../../assets/player2.png") center 12px no-repeat;
   background-size: 100% 100%; 
 }
 .preplayer li:nth-child(3){
   width: 33%;
-  background:url("/static/image/player3.png");
+  background:url("../../assets/player3.png") center 12px no-repeat;
   background-size: 100% 100%; 
 }
 .prebtn{
-  height: 20%;
+  height: 18%;
 }
 .prebtn>li{
   width: 33.33%;
 }
 .prebtn>li>div{
   width: 100%;
-  height: 45.2%;
+  height: 62%;
   margin:0 auto;
   text-align: center;
   font-size: 24px;
   color: rgb(254,238,0);
   display: table;
-  padding-top: 5%;
+  padding-top: 3%;
   box-sizing: border-box;
 }
 .prebtn>li>div>div{
@@ -294,47 +295,45 @@ export default {
   cursor: pointer;
 }
 .prebtn li:nth-child(1)>div{
-  background:url("/static/image/player1b.png");
+  background:url("../../assets/player1b.png");
   background-size: 100% 100%; 
 }
 .prebtn li:nth-child(1)>div.clickbg{
-  background:url("/static/image/player1b_click.png");
+  background:url("../../assets/player1b_click.png");
   background-size: 100% 100%; 
 }
 .prebtn li:nth-child(2)>div{
-  background:url("/static/image/player2b.png");
+  background:url("../../assets/player2b.png");
   background-size: 100% 100%; 
 }
 .prebtn li:nth-child(2)>div.clickbg{
-  background:url("/static/image/player2b_click.png");
+  background:url("../../assets/player2b_click.png");
   background-size: 100% 100%; 
 }
 .prebtn li:nth-child(3)>div{
-  background:url("/static/image/player3b.png");
+  background:url("../../assets/player3b.png");
   background-size: 100% 100%; 
 }
 .prebtn li:nth-child(3)>div.clickbg{
-  background:url("/static/image/player3b_click.png");
+  background:url("../../assets/player3b_click.png");
   background-size: 100% 100%; 
 }
 .preplayer li div{
-  width: 70%;
-  height: 77%;
-  margin: 16% 9%;
+  width: 80%;
+  height: 88%;
+  margin: 5% 5%;
   position: relative;
-  top: 2.7%;
+  top: -2.7%;
   left: 2.4%;
   z-index: 2;
   background:transparent;
   overflow: hidden; 
 }
 .preplayer li:nth-child(2) div{
-  top: 2.2%;
   left: 5%;
 }
 .preplayer li:nth-child(3) div{
-  top: 2.3%;
-  left: 9%;
+  left: 7%;
 }
 .preplayer li div div{
   width: 200%;
@@ -361,11 +360,35 @@ export default {
 }
 .preplayer li div.soldamount{
   width: 70%;
-  height: 5%;
+  height: 10%;
   margin: 0 9%;
-  top: 9%;
+  top: -2%;
   text-align: center;
   font-size:16px;
   color: #fff;
+  padding-top: 5%;
+  box-sizing: border-box;
+}
+.introduce-pots{
+  width: 100%;
+  background:url("../../assets/pots.png") center center no-repeat;
+  background-size: 100% 100%;
+}
+.pots-title{
+  width: 52.6%;
+  height: 18.75%;
+  margin: 0 auto;
+  position: relative;
+  left: 0;
+  top: 0;
+  background:url("../../assets/pots-title.png") center center no-repeat;
+  background-size: cover; 
+}
+.pretitle2{
+  width: 36.5%;
+  height: 13.75%;
+  margin: 0 auto;
+  background:url("../../assets/pretitle2.png") center center no-repeat;
+  background-size: 100%; 
 }
 </style>

@@ -11,7 +11,7 @@ export default new Router({
     {
 		path: '/',
 		name: 'HomePage',  
-		component:Introduction
+		component:Presale
     },
     {
 		path: '/presale',

@@ -29,14 +29,21 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      // 'web3': resolve('static/web3.min.js'),
     }
   },
+  plugins: [
+    /*new webpack.ProvidePlugin({
+      web3: 'web3'
+    })*/
+  ],
   module: {
     rules: [
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
+        
       },
       {
         test: /\.js$/,

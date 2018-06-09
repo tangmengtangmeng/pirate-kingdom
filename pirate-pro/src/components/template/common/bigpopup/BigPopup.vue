@@ -84,25 +84,30 @@ export default {
   mounted () {
     var val = document.documentElement.clientWidth;
     var val2 = document.documentElement.clientHeight;
-    if(val > 1680){
+    /*if(val > 1680){
       this.popupheight = "58%";
       this.popuptop = "21%";
-    }else{
+    }else{*/
       this.popupheight = ((val)/ 1920 * 1080)* 0.58 + "px";
-      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + "px";
-    }
+      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + document.documentElement.scrollTop + "px";
+    // }
     var _this = this;
     window.addEventListener("resize",function(){
-        console.log("缩放")
+        // console.log("缩放")
         var val = document.documentElement.clientWidth;
         var val2 = document.documentElement.clientHeight;
-        if(val > 1680){
-          _this.popupheight = "58%";
-          _this.popuptop = "21%";
-        }else{
+        // if(val > 1680){
+          // _this.popupheight = "58%";
+          // _this.popuptop = "21%";
+        // }else{
           _this.popupheight = ((val)/ 1920 * 1080)* 0.58 + "px";
-          _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + "px";
-        }
+          _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + document.documentElement.scrollTop + "px";
+        // }
+    })
+
+    window.addEventListener("scroll",function(){
+      // console.log("滚动");
+      _this.popuptop = (document.documentElement.clientHeight - parseInt(_this.popupheight) )/2 + document.documentElement.scrollTop + "px";
     })
   },
   computed: {
@@ -158,7 +163,7 @@ export default {
 		width: 42%;
 		margin: 0 29%;
 		color: white;
-		position: relative;
+		position: absolute;
 	}
 	.close{
 		position: absolute;
@@ -170,26 +175,26 @@ export default {
 	.buycard{
 		width: 100%;
 		height: 100%;
-		background: url("/static/image/bigpopup.png") center center no-repeat;
+		background: url("../../../../assets/bigpopup.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.role{
 		width: 34.4%;
-		height: 71.4%;
+		height: 67.4%;
 		position: relative;
 		top: 14.2%;
 		left: 10%;
 	}
 	.role.role1{
-		background:url("/static/image/myplayer-1.png") center center no-repeat;
+		background:url("../../../../assets/player1.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.role.role2{
-		background:url("/static/image/myplayer-2.png") center center no-repeat;
-		background-size: 100% 100%;
+		background:url("../../../../assets/player2.png") center center no-repeat;
+		background-size: 107% 100%;
 	}
 	.role.role3{
-		background:url("/static/image/myplayer-3.png") center center no-repeat;
+		background:url("../../../../assets/player3.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.introduce{
@@ -257,35 +262,35 @@ export default {
 		vertical-align: middle;
 	}
 	.ability>.row:nth-child(1)>.col-80{
-		background: url("/static/image/ability1.png") left top no-repeat;
+		background: url("../../../../assets/ability1.png") left top no-repeat;
 		background-size: auto 100%;
 	}
 	.ability>.row:nth-child(1)>.col-20{
 		left: -40.5%;
 	}
 	.ability>.row:nth-child(2)>.col-80{
-		background: url("/static/image/ability2.png") left top no-repeat;
+		background: url("../../../../assets/ability2.png") left top no-repeat;
 		background-size: auto 100%;
 	}
 	.ability>.row:nth-child(2)>.col-20{
 		left: -37%;
 	}
 	.ability>.row:nth-child(3)>.col-80{
-		background: url("/static/image/ability3.png") left top no-repeat;
+		background: url("../../../../assets/ability3.png") left top no-repeat;
 		background-size: auto 100%;
 	}
 	.ability>.row:nth-child(3)>.col-20{
 		left: -26%;
 	}
 	.ability>.row:nth-child(4)>.col-80{
-		background: url("/static/image/ability4.png") left top no-repeat;
+		background: url("../../../../assets/ability4.png") left top no-repeat;
 		background-size: auto 100%;
 	}
 	.ability>.row:nth-child(4)>.col-20{
 		left: -51%;
 	}
 	.ability>.row:nth-child(5){
-		background: url("/static/image/ability5.png") left top no-repeat;
+		background: url("../../../../assets/ability5.png") left top no-repeat;
 		background-size: auto 81%;
 	}
 	.ability>.row:nth-child(5)>.col-20{
@@ -314,7 +319,7 @@ export default {
 	.confirmbuycard{
 		width: 100%;
 		height: 100%;
-		background: url("/static/image/bigpopup2.png") center center no-repeat;
+		background: url("../../../../assets/bigpopup2.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.known{
@@ -329,7 +334,7 @@ export default {
 		width: 21.7%;
 		height: 10.5%;
 		margin: 0 auto;
-		background:url("/static/image/price1.png") center center no-repeat; 
+		background:url("../../../../assets/price1.png") center center no-repeat; 
 		background-size: 100% 100%;
 		position: relative;
 		top: 20%;
@@ -361,33 +366,33 @@ export default {
 	.myassets{
 		width: 100%;
 		height: 100%;
-		background: url("/static/image/bigpopup3.png") center center no-repeat;
+		background: url("../../../../assets/bigpopup3.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.captain1,.captain2,.captain3{
 		width: 29%;
-		height:61.5%;
+		height:56%;
 		float: left;
 		background-color: red;
 		position: relative;
 		top: 20%;
 		left: 5%;
-		background: url("/static/image/player1.png") center -10px no-repeat;
+		background: url("../../../../assets/player1.png") center 0 no-repeat;
 		background-size: 100% 100%;
 	}
 	.captain2{
-		background: url("/static/image/player2.png") center -10px no-repeat;
-		background-size: 100% 100%;
+		background: url("../../../../assets/player2.png") center 0 no-repeat;
+		background-size: 107% 100%;
 	}
 	.captain3{
-		background: url("/static/image/player3.png") -5px -10px no-repeat;
+		background: url("../../../../assets/player3.png") -5px 0 no-repeat;
 		background-size: 100% 100%;
 	}
 	.captain1>div,.captain2>div,.captain3>div{
 		width: 100%;
 		height: 5%;
 		position: absolute;
-		bottom: -5%;
+		bottom: -7%;
 		display: table;
 	}
 	.captain1>div>div,.captain2>div>div,.captain3>div>div{
@@ -403,7 +408,7 @@ export default {
 	.setnickname{
 		width: 100%;
 		height: 100%;
-		background: url("/static/image/bigpopup4.png") center center no-repeat;
+		background: url("../../../../assets/bigpopup4.png") center center no-repeat;
 		background-size: 100% 100%;
 	}
 	.inputname{

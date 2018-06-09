@@ -1,5 +1,6 @@
 <template>
   <div class="header-banner" :style="{'height':topheight}">
+    <div class="shadow" :style="{'height':topheight}" v-show="showshadow || showsmallpopup"></div>
     <div class="topright">
       <div class="row">
         <div class="col-40" @click="login"><p class="text-left">{{username.username}}</p></div>
@@ -7,25 +8,22 @@
       </div>
     </div>
     <div class="language"  @click="changeLocale()">{{$t("message.changeLocale")}}</div>
-    <div class="startbtn" :class={hide:$store.state.show}>
+    <div class="startbtn hide">
       <div class="btnanimation"></div>
       <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)" @click="buycard" :class="{'btntitlebg1':btnlocale1,'btntitlebg2':btnlocale2}"></div>
     </div>
-    <div class="topnav hide" :style="{'height':topnavheight}">
+    <div class="topnav hidden" :style="{'height':topnavheight}">
       <ul class="navul">
         <li><router-link to="presale"></router-link></li>
         <li><router-link to="introduction"></router-link></li>           
       </ul>
     </div>
-    <div class="myassets" v-show="showbigpopup" :style="{'height':appHeight}">
-      <div class="shadow">
-        <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
-      </div>
+    <div class="logo"></div>
+    <div class="myassets" v-show="showbigpopup">
+      <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
     </div>
-    <div class="alert" v-show="showsmallpopup" :style="{'height':appHeight}">
-      <div class="shadow">
-        <smallPopup :smallpopup-msg="alertmsg"></smallPopup>
-      </div>
+    <div class="alert" v-show="showsmallpopup">
+      <smallPopup :smallpopup-msg="alertmsg"></smallPopup>
     </div>
   </div>
 </template>
@@ -36,12 +34,12 @@ export default {
   // props:['lang'],
   data () {
     return {
-      topheight: document.documentElement.clientWidth/1920*890 + "px",
+      topheight: document.documentElement.clientWidth/1920*1090 + "px",
       topnavheight: document.documentElement.clientWidth/1920*118 + "px",
       screenwidth: document.documentElement.clientWidth,
       buymsg: this.$store.state.buymsg,
       alertmsg: this.$store.state.alertmsg,
-      appHeight: "",
+
     }
   },
   methods: {
@@ -72,21 +70,15 @@ export default {
     }
   },
   mounted:function(){
-    //初始化阴影背景高度
-    var appHeight = document.getElementById("app").offsetHeight;
-    this.appHeight = appHeight + "px";
-    console.log("appHeight",appHeight);
+    
     //缩放浏览器时改变头部top
     const _this = this; 
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
-      _this.topheight = parseInt(val) / 1920 * 890 + "px";
+      _this.topheight = parseInt(val) / 1920 * 1090 + "px";
       _this.topnavheight = parseInt(val) / 1920 * 118 + "px";
     })
-    //滚动屏幕时增加阴影背景高度
-    window.addEventListener("scroll",function(){
-      _this.appHeight = appHeight + document.documentElement.scrollTop +"px";
-    })
+    
   },
   watch: {
     
@@ -116,7 +108,10 @@ export default {
       }else if(this.$store.state.locale == "zh-ch"){
         return true
       }
-    }
+    },
+    showshadow () {
+      return this.$store.state.showshadow
+    },
   }
 }
 </script>
@@ -133,24 +128,20 @@ export default {
     bottom: 0;
     z-index: 5;
   }
-  .shadow{
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,.4);
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 10;
-  }
-  .hide{
-    visibility: hidden;
-  }
   .header-banner{
     width: 100%;
-    color: #fff;
-    background:url("/static/image/topbanner.png") center center no-repeat;
+    color: #000;
+    background:url("../../assets/topbanner.png") center center no-repeat;
     background-size: 100% 100%;
+  }
+  .logo{
+    width: 34.5%;
+    height: 50%;
+    background:url("../../assets/logo.png") center center no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+    position: relative;
+    top: 39%; 
   }
   .language{
     width: 15.89%;
@@ -167,7 +158,7 @@ export default {
     min-width: 156px;
     height: 5.6%;
     float: right;
-    background:url("/static/image/moresetting.png") center center no-repeat;
+    background:url("../../assets/moresetting.png") center center no-repeat;
     background-size: 100%;
     margin-top: 1.3%;
     margin-right: 5.2%;
@@ -208,7 +199,7 @@ export default {
     margin: 0 auto;
     position: relative;
     top: 69.74%;
-    background: url("/static/image/topbtn.png") center center no-repeat;
+    background: url("../../assets/topbtn.png") center center no-repeat;
     background-size: 100% 100%;
     z-index: 0;
   }
@@ -224,7 +215,7 @@ export default {
     transition: left .5s;
   }
   .btntitle.btntitlebg1{
-    background:url("/static/image/topbtntitle.png") center center no-repeat; 
+    background:url("../../assets/topbtntitle.png") center center no-repeat; 
     background-size: cover;
   }
   .btntitle.btntitlebg2{
@@ -289,7 +280,7 @@ export default {
   .topnav{ 
     width:76.88%;
     margin: 0 auto;   
-    background: url("/static/image/topnav.png") left top no-repeat;
+    background: url("../../assets/topnav.png") left top no-repeat;
     background-size: 100% 100%;
     position: relative;
     top: 81%;

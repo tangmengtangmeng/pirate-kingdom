@@ -1,19 +1,20 @@
 <template>
   <div class="footer-bar" :style="{'height':footerHeight}">
+    <div class="shadow" :style="{'height':footerHeight}" v-show="showshadow || showsmallpopup"></div>
     <div class="topfooter">
       <ul class="list1">
         <li></li>
-        <li v-for="(item,index) in items1"><a v-bind:href="item.href">{{item.title}}</a></li>
+        <li v-for="(item,index) in items1"><a v-bind:href="item.href" target="_Blank">{{item.title}}</a></li>
       </ul>
       <ul class="list2">
         <li></li>
-        <li v-for="(item,index) in items2"><a v-bind:href="item.href">{{item.title}}</a></li>
+        <li v-for="(item,index) in items2"><a v-bind:href="item.href" target="_Blank">{{item.title}}</a></li>
       </ul>
       <ul class="list3">
-        <li v-for="(item,index) in items3"><a v-bind:href="item.href">{{item.title}}</a></li>
+        <li v-for="(item,index) in items3"><a v-bind:href="item.href" target="_Blank">{{item.title}}</a></li>
       </ul>
       <ul class="list4">
-        <li v-for="(item,index) in items4"><a v-bind:href="item.href">{{item.title}}</a></li>
+        <li v-for="(item,index) in items4"><a v-bind:href="item.href" target="_Blank">{{item.title}}</a></li>
       </ul>
     </div>
     <div class="botfooter"></div>
@@ -47,6 +48,14 @@ export default {
     })
 
   },
+  computed: {
+    showshadow () {
+      return this.$store.state.showshadow
+    },
+    showsmallpopup () {
+      return this.$store.state.showsmallpopup
+    },
+  },
   watch: {
     footerHeight () {
       
@@ -59,7 +68,7 @@ export default {
 <style scoped>
 .footer-bar{
   width: 100%;
-  background:url("/static/image/footer.png") center center no-repeat;
+  background:url("../../assets/footer.png") center center no-repeat;
   background-size: cover;
 }
 .topfooter{
@@ -129,7 +138,7 @@ ul>li>a{
 .list1 li:nth-child(1){
   height: 30.8%;
   padding-left: 0;
-  background:url("/static/image/footer1-1.png") center center no-repeat;
+  background:url("../../assets/footer1-1.png") center center no-repeat;
 }
 .list1 li:nth-child(2){
   height: 10.8%;
@@ -157,7 +166,7 @@ ul>li>a{
 }
 .list2 li:nth-child(1){
   height: 30.8%;
-  background:url("/static/image/footer2-1.png") center center no-repeat;
+  background:url("../../assets/footer2-1.png") center center no-repeat;
 }
 .list2 li:nth-child(2){
   height: 10.8%;
@@ -174,12 +183,12 @@ ul>li>a{
 }
 .list3 li:nth-child(1){
   height: 35.8%;
-  background:url("/static/image/footer3-1.png") center center no-repeat;
+  background:url("../../assets/footer3-1.png") center center no-repeat;
   padding-left: 24%;
 }
 .list3 li:nth-child(2){
   height: 18.8%;
-  background:url("/static/image/footer3-2.png") center center no-repeat;
+  background:url("../../assets/footer3-2.png") center center no-repeat;
   padding-left: 24%;
 }
 .list4{
@@ -189,17 +198,17 @@ ul>li>a{
 }
 .list4 li:nth-child(1){
   height: 35.8%;
-  background:url("/static/image/footer4-1.png") center center no-repeat;
+  background:url("../../assets/footer4-1.png") center center no-repeat;
   padding-left: 30%;
 }
 .list4 li:nth-child(2){
   height: 33.8%;
-  background:url("/static/image/footer4-2.png") center center no-repeat;
+  background:url("../../assets/footer4-2.png") center center no-repeat;
   padding-left: 30%;
 }
 .list4 li:nth-child(3){
   height: 28.5%;
-  background:url("/static/image/footer4-3.png") center center no-repeat;
+  background:url("../../assets/footer4-3.png") center center no-repeat;
   padding-left: 30%;
 }
 .list1 li:nth-child(1),.list2 li:nth-child(1){
@@ -214,7 +223,7 @@ ul>li>a{
 .botfooter{
   width: 100%;
   height: 27.77%;
-  background:url("/static/image/footer5.png") center center no-repeat;
+  background:url("../../assets/footer5.png") center center no-repeat;
   background-size: contain; 
 }
 </style>

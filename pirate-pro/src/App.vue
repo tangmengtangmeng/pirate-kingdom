@@ -45,9 +45,9 @@ export default {
   },
   mounted:function(){
     //单独拿出预售页的路由显示
-    if(this.$route.path.indexOf("presale")>-1){
+    /*if(this.$route.path.indexOf("presale")>-1){
      	this.$store.dispatch("hideheader");
-    }
+    }*/
   },
   updated:function(){
 

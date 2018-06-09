@@ -11,18 +11,26 @@ const actions = {
 	hideheader(context){
 		context.commit("hideheader");
 	},
+	showshadow(context){
+		context.commit("showShadow");
+	},
+	hideshadow(context){
+		context.commit("hideShadow");
+	},
 	showbigpopup(context,params){
 		context.commit("showbigpopup",params);
 	},
 	showsmallpopup(context){
 		context.commit("showsmallpopup");
 		context.commit("closebigpopup");
+		context.commit("showShadow");
 	},
 	closebigpopup(context){
 		context.commit("closebigpopup");
 	},
 	closesmallpopup(context){
 		context.commit("closesmallpopup");
+		context.commit("hideShadow");
 	},
 	clearsmallpopup(context){
 		context.commit("clearsmallpopup");

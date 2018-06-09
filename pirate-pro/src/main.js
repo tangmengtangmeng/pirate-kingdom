@@ -14,16 +14,20 @@ import service from "./util/service"
 import configData from "./util/configData"
 import bigPopup from './components/template/common/bigpopup/index.js'
 import smallPopup from './components/template/common/smallPopup/index.js'
+// import web3Min from './util/web3.min'
+// import Web3min from 'web3'
 
 
 Vue.prototype.configData = configData;
 Vue.prototype.service = service ;
+// Vue.prototype.Web3 = Web3min;
 
 Vue.config.productionTip = false
 
 Vue.use(VueI18n)
 Vue.use(bigPopup)
 Vue.use(smallPopup)
+
 
 const i18n = new VueI18n({
   locale: store.state.locale ,
@@ -36,6 +40,7 @@ const i18n = new VueI18n({
 
 window.i18n = i18n 
 window.axios = axios
+// window.web3 = web3
 
 
 
