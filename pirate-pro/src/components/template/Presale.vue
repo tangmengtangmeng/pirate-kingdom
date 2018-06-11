@@ -161,6 +161,9 @@ export default {
       return this.$store.state.showshadow
     },
   },
+  destroyed () {
+    window.removeEventListener("resize");
+  },
   watch: {
     screenwidth () {
       

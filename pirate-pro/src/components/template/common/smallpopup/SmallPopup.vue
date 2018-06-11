@@ -61,7 +61,11 @@ export default {
     enable () {
       return this.$store.state.enableclose
     }
-  }
+  },
+  destroyed () {
+    window.removeEventListener("resize");
+    window.removeEventListener("scroll");
+  },
 }
 </script>
 

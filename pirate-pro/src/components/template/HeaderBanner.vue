@@ -80,6 +80,9 @@ export default {
     })
     
   },
+  destroyed () {
+    window.removeEventListener("resize");
+  },
   watch: {
     
   },

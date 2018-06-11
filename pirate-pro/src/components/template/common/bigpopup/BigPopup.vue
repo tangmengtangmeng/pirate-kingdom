@@ -151,7 +151,11 @@ export default {
     		return false
     	}
     },
-  }
+  },
+  destroyed () {
+  	window.removeEventListener("resize");
+  	window.removeEventListener("scroll");
+  },
 }
 </script>
 

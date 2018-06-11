@@ -244,6 +244,11 @@ service.buycard = function(i){
 		store.state.alertmsg.alert = "请先安装metamask."
 	}
 	console.log(i);
+
+	if(store.state.cardarr[i-1].soldamount == store.state.cardarr[i-1].totalamount){
+		alert("cannotbuy!!");
+		return;
+	}
 	//获取以太账户
 	store.state.myaccount = web3.eth.accounts[0];
 	if(!store.state.myaccount){
@@ -317,7 +322,9 @@ service.buycard = function(i){
 					if(!error){
 						console.log(result);
 						store.state.cardarr[i -1].soldamount = parseInt(result.toString());
-
+						if(store.state.cardarr[i -1].soldamount == store.state.captain[i].totalcount){
+							alert("cannotbuy!!")
+						}
 					}else{
 						console.log(error);
 					}
