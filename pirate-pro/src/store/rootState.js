@@ -16,7 +16,7 @@ const state = {
 	enableclose: true,
 	btnclicked: [false,false,false],
 	pricearr: [{price:"0.00"},{price:"0.00"},{price:"0.00"}],
-	cardarr: [{soldamount:"0",totalamount:"30"},{soldamount:"0",totalamount:"30"},{soldamount:"0",totalamount:"30"}],
+	cardarr: [{soldamount:"30",totalamount:"30"},{soldamount:"30",totalamount:"30"},{soldamount:"30",totalamount:"30"}],
 	buymsg: {
 		myassets: "",
 		setnickname: "",
@@ -37,7 +37,7 @@ const state = {
 			defense: "",
 			price: "0.00",
 			unitSellable: "",
-			totalcount: ""
+			totalcount: "30"
 		},
 		{
 			name: "JOANNA",
@@ -48,7 +48,7 @@ const state = {
 			defense: "",
 			price: "0.00",
 			unitSellable: "",
-			totalcount: ""
+			totalcount: "30"
 		},
 		{
 			name: "CLOB",
@@ -59,7 +59,7 @@ const state = {
 			defense: "",
 			price: "0.00",
 			unitSellable: "",
-			totalcount: ""
+			totalcount: "30"
 		},
 	],
 	mycaptain1: [],

@@ -10,10 +10,10 @@ let service = {};
 
 service.init = function(){
 	
-	console.log("初始化海盗网站cookie:",document.cookie);
-	console.log("初始化海盗网站nicheng：",sessionStorage.getItem("昵称"));
-	console.log("初始化海盗网站yitaifang：",sessionStorage.getItem("我的以太坊账户"));
-	console.log("初始化海盗网站shuaxin：",sessionStorage.getItem("F5"));
+	console.log("初始化海盗网站==cookie:",document.cookie);
+	console.log("初始化海盗网站==昵称：",sessionStorage.getItem("昵称"));
+	console.log("初始化海盗网站==以太坊：",sessionStorage.getItem("我的以太坊账户"));
+	console.log("初始化海盗网站==刷新：",sessionStorage.getItem("F5"));
 	console.log("用户已经设置过语种：",sessionStorage.getItem("lang"));
 	
 	//初始化web3对象
@@ -39,7 +39,7 @@ service.init = function(){
 	}else{
 		CaptainGameConfigInstance = CaptainGameConfig.at(store.state.CaptainGameConfig_address4);
 	}
-	console.log("以太坊初始化后metamask账户的值是：",web3.eth.accounts[0]);
+	console.log("以太坊初始化后metamask账户：",web3.eth.accounts[0]);
 	if(web3.eth.accounts[0]){
 		sessionStorage.setItem("我的以太坊账户",web3.eth.accounts[0]);
 	}
@@ -104,7 +104,7 @@ service.init = function(){
 	CaptainSellInstance.getCaptainCount(1,function(error,result){
 		if(!error){
 			console.log(result);
-			store.state.cardarr[0].soldamount = store.state.captain[0].totalcount - result.toString();
+			store.state.cardarr[0].soldamount = store.state.cardarr[0].totalamount - result.toString();
 		}else{
 			console.log(error);
 		}
