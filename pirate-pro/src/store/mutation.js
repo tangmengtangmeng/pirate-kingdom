@@ -2,12 +2,19 @@ const mutations = {
 	change (state) {
 		state.locale = state.locale == "zh-ch" ? "en" : "zh-ch" ;
 		i18n.locale = state.locale ;
+		sessionStorage.setItem("lang",state.locale);
 	},
 	initLang (state) {
 		//判断浏览器设置的默认语言ie\opera,firefox\chrome
 		console.log("IE浏览器默认语言",navigator.browserLanguage);
 		console.log("google浏览器默认语言",navigator.language);
 		var browserLang = navigator.browserLanguage || navigator.language;
+		if(sessionStorage.getItem("lang")){
+			state.locale = sessionStorage.getItem("lang");
+			i18n.locale = sessionStorage.getItem("lang");
+			console.log("用户已经设置过语种：",sessionStorage.getItem("lang"));
+			return;
+		}
 		if(browserLang.indexOf("en") > -1){
 			state.locale = "en";
 			i18n.locale = "en";
@@ -36,9 +43,13 @@ const mutations = {
 		state.showbigpopup = true;
 		state.showshadow = true;
 	},
-	showsmallpopup (state) {
+	showsmallpopup (state,params) {
 		state.showsmallpopup = true;
 		state.showshadow = true;
+		if(params){
+			state.enableclose = params.enable;
+		}
+		
 	},
 	closebigpopup (state) {
 		state.showbigpopup = false;

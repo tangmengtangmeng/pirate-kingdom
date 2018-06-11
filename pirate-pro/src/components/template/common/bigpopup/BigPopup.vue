@@ -84,12 +84,13 @@ export default {
   mounted () {
     var val = document.documentElement.clientWidth;
     var val2 = document.documentElement.clientHeight;
+    var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
     /*if(val > 1680){
       this.popupheight = "58%";
       this.popuptop = "21%";
     }else{*/
       this.popupheight = ((val)/ 1920 * 1080)* 0.58 + "px";
-      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + document.documentElement.scrollTop + "px";
+      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + scrolltop + "px";
     // }
     var _this = this;
     window.addEventListener("resize",function(){

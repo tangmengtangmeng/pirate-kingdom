@@ -3,12 +3,12 @@
       <div class="addbox" v-show="!showheader.showheader" :style="{'height':addheight}"></div>
       <div class="players" :style="{'height':playersheight}">
         <div class="shadow" :style="{'height':playersheight}" v-show="showshadow || showsmallpopup"></div>
-        <div class="topright">
+        <!-- <div class="topright">
           <div class="row">
             <div class="col-40" @click="login"><p class="text-left">{{username.username}}</p></div>
             <div class="col-60"><p class="text-right" @click="myassets">My Assets</p></div>
           </div>
-        </div>
+        </div> -->
         <div class="pretitle hide" :style="{'height':titleheight}"></div>
         <div class="pretitle2"></div>
         <ul class="preplayer" :style="{'height':playerheight}">

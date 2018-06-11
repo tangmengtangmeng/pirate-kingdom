@@ -20,8 +20,8 @@ const actions = {
 	showbigpopup(context,params){
 		context.commit("showbigpopup",params);
 	},
-	showsmallpopup(context){
-		context.commit("showsmallpopup");
+	showsmallpopup(context,params){
+		context.commit("showsmallpopup",params);
 		context.commit("closebigpopup");
 		context.commit("showShadow");
 	},

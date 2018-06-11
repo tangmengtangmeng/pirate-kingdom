@@ -1,6 +1,6 @@
 <template>
   <div :style="{'height':popupheight,'top':popuptop}" class="smallpopup">
-  	<div class="close" @click="closepopup"></div>
+  	<div class="close" @click="enable?closepopup():''"></div>
   	<div class="popup-content">
 		<div class="alert-login" v-show="smallpopupMsg.alert"><p class="colorb">{{smallpopupMsg.alert?smallpopupMsg.alert:""}}</p></div>
   	</div>	  	
@@ -58,7 +58,9 @@ export default {
     
   },
   computed: {
-    
+    enable () {
+      return this.$store.state.enableclose
+    }
   }
 }
 </script>

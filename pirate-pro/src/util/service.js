@@ -9,18 +9,22 @@ import CaptainGameConfig from './contracts/CaptainGameConfig'
 let service = {};
 
 service.init = function(){
-
+	
 	console.log("初始化海盗网站cookie:",document.cookie);
 	console.log("初始化海盗网站nicheng：",sessionStorage.getItem("昵称"));
 	console.log("初始化海盗网站yitaifang：",sessionStorage.getItem("我的以太坊账户"));
 	console.log("初始化海盗网站shuaxin：",sessionStorage.getItem("F5"));
+	console.log("用户已经设置过语种：",sessionStorage.getItem("lang"));
 	
-
 	//初始化web3对象
 	if (typeof web3 !== 'undefined') {
 	    web3 = new Web3(web3.currentProvider);
-	    console.log("------",web3);
+	    
 	} else {
+		//判断是否在支持metamask的google浏览器上运行
+	    if(typeof web3 == 'undefined'){
+			return;
+		}
 	    // set the provider you want from Web3.providers
 	    web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8080"));
 	}
@@ -160,6 +164,16 @@ service.confirmlogin = function(){
 }
 
 service.login = function(){
+	//判断是否在支持metamask的google浏览器上运行
+    if(typeof web3 == 'undefined'){
+		store.dispatch("showsmallpopup",{enable:true});
+		store.state.alertmsg.alert = "请先安装metamask."
+		/*window.onscroll = function(){
+			console.log("000",document.getElementsByClassName("smallpopup")[0].style.top);//(document.documentElement.clientHeight - parseInt(((document.documentElement.clientWidth)/ 1920 * 1080)* 0.25) )/2 
+			document.getElementsByClassName("smallpopup")[0].style.top = document.documentElement.scrollTop +"px";
+		}*/
+		return;
+	}
 	//获取以太账户
 	if(web3.eth.accounts[0]){
 		store.state.myaccount = web3.eth.accounts[0];
@@ -191,12 +205,14 @@ service.login = function(){
 		axios.post(url, {token: tokenstr}).then(function(result){
 			console.log("成功",result);
 			if(!result.data.data.name){
-				store.state.username = tokenstr.slice(0,5);
+				store.state.username = tokenstr;
+				store.state.titlename = tokenstr;
 				console.log("用户名",store.state.username);
 			}else{
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "登录成功,点击用户名设置昵称.";
-				store.state.username = result.data.data.name.slice(0,5);
+				store.state.username = result.data.data.name;
+				store.state.titlename = result.data.data.name;
 				console.log("我的昵称是",result.data.data.name);
 			}
 			sessionStorage.setItem("昵称",store.state.username);
@@ -222,6 +238,11 @@ service.login = function(){
 }
 
 service.buycard = function(i){
+	//判断是否在支持metamask的google浏览器上运行
+    if(typeof web3 == 'undefined'){
+		store.dispatch("showsmallpopup",{enable:true});
+		store.state.alertmsg.alert = "请先安装metamask."
+	}
 	console.log(i);
 	//获取以太账户
 	store.state.myaccount = web3.eth.accounts[0];
@@ -320,6 +341,12 @@ service.buycard = function(i){
 }
 
 service.myassets = function(){
+	//判断是否在支持metamask的google浏览器上运行
+    if(typeof web3 == 'undefined'){
+		store.dispatch("showsmallpopup",{enable:true});
+		store.state.alertmsg.alert = "请先安装metamask."
+		return;
+	}
 
 	if(store.state.username.indexOf("Login")>-1){
 		if(!web3.eth.accounts[0]){
@@ -433,9 +460,10 @@ service.changenickname = function(nameObj){
 			if(response.data.state == 200){
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "修改用户名成功.";
-				store.state.username = username.slice(0,5);
+				store.state.username = username;
 				sessionStorage.setItem("昵称",store.state.username);
-				console.log("我的昵称在缓存中：",sessionStorage.getItem("昵称"));
+				store.state.titlename = username;
+				console.log("我的昵称在缓存中：",sessionStorage.getItem("昵称"),store.state.titlename);
 			}else if(response.data.state == 10003){
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "设置昵称过长.";

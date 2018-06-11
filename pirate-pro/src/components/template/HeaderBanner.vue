@@ -3,7 +3,7 @@
     <div class="shadow" :style="{'height':topheight}" v-show="showshadow || showsmallpopup"></div>
     <div class="topright">
       <div class="row">
-        <div class="col-40" @click="login"><p class="text-left">{{username.username}}</p></div>
+        <div class="col-40" @click="login"><p class="text-left" v-bind:title="mytitlename">{{username.username}}</p></div>
         <div class="col-60"><p class="text-right"  @click="myassets">My Assets</p></div>
       </div>
     </div>
@@ -39,7 +39,7 @@ export default {
       screenwidth: document.documentElement.clientWidth,
       buymsg: this.$store.state.buymsg,
       alertmsg: this.$store.state.alertmsg,
-
+      
     }
   },
   methods: {
@@ -112,6 +112,9 @@ export default {
     showshadow () {
       return this.$store.state.showshadow
     },
+    mytitlename () {
+      return this.$store.state.titlename
+    }, 
   }
 }
 </script>
@@ -138,7 +141,7 @@ export default {
     width: 34.5%;
     height: 50%;
     background:url("../../assets/logo.png") center center no-repeat;
-    background-size: cover;
+    background-size: contain;
     margin: 0 auto;
     position: relative;
     top: 39%; 
@@ -177,6 +180,9 @@ export default {
     width: 100%;
     font-size: 13px;
     color: rgb(149,139,114);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   @media all and (min-width: 1200px){
     .topright>div>div>p{
