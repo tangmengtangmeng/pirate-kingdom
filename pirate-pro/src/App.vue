@@ -37,6 +37,7 @@ export default {
     window.addEventListener("beforeunload",function(){
     	if(web3.eth.accounts[0]){
     		sessionStorage.setItem("F5","t");
+        sessionStorage.setItem("我的以太坊账户",web3.eth.accounts[0]);
     	}else{
     		sessionStorage.setItem("F5","f");
     	}
@@ -56,6 +57,7 @@ export default {
   	window.removeEventListener("beforeunload");
   	sessionStorage.setItem("F5",false);
   	this.$store.state.username = "Login";
+
   },
   computed: {
     showheader () {

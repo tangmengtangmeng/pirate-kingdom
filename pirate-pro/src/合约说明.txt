@@ -44,3 +44,12 @@ tokenlist , captainlist
 
 获取某个卡牌的token列表
 function tokensOfCaptain(uint256 _captainId) public view returns(uint256[] captainTokens)
+
+
+
+星云链：
+Captain: n1m7NsoxUKr45oh49jz5QNYRTFYvGbWd3Mx
+
+getCaptain(captainId)  获取卡牌的详细信息
+
+PrePurchase(captainId) 购买

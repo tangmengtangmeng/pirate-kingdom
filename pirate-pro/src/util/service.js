@@ -104,7 +104,7 @@ service.init = function(){
 	CaptainSellInstance.getCaptainCount(1,function(error,result){
 		if(!error){
 			console.log(result);
-			store.state.cardarr[0].soldamount = result.toString();
+			store.state.cardarr[0].soldamount = store.state.captain[0].totalcount - result.toString();
 		}else{
 			console.log(error);
 		}
@@ -112,7 +112,7 @@ service.init = function(){
 	CaptainSellInstance.getCaptainCount(2,function(error,result){
 		if(!error){
 			console.log(result);
-			store.state.cardarr[1].soldamount = result.toString();
+			store.state.cardarr[1].soldamount = store.state.captain[1].totalcount - result.toString();
 		}else{
 			console.log(error);
 		}
@@ -120,7 +120,7 @@ service.init = function(){
 	CaptainSellInstance.getCaptainCount(3,function(error,result){
 		if(!error){
 			console.log(result);
-			store.state.cardarr[2].soldamount = result.toString();
+			store.state.cardarr[2].soldamount = store.state.captain[2].totalcount - result.toString();
 		}else{
 			console.log(error);
 		}
@@ -146,6 +146,7 @@ service.confirmlogin = function(){
     //判断用户是否已经登录过
 	if(sessionStorage.getItem("昵称")){
 		console.log("用户已经登录过",sessionStorage.getItem("昵称"));
+		store.state.titlename = sessionStorage.getItem("昵称");
 		if(web3.eth.accounts[0]){
 			store.state.username = sessionStorage.getItem("昵称");
 			console.log("9999999999",sessionStorage.getItem("F5"));
@@ -155,11 +156,21 @@ service.confirmlogin = function(){
 				console.log("9999999999",sessionStorage.getItem("F5"));
 			}else{
 				store.state.username = "Login";
-				console.log("9999999999",sessionStorage.getItem("F5"));//
+				console.log("9999999999",sessionStorage.getItem("F5"));
 			}
 			
 		}
 		
+	}else{
+		if(web3.eth.accounts[0]){
+			store.state.username = web3.eth.accounts[0];
+			store.dispatch("showsmallpopup",{enable:true});
+			store.state.alertmsg.alert = "点击用户名设置昵称."
+		}else if(sessionStorage.getItem("我的以太坊账户")){
+			store.state.username = sessionStorage.getItem("我的以太坊账户");
+			store.dispatch("showsmallpopup",{enable:true});
+			store.state.alertmsg.alert = "点击用户名设置昵称."
+		}
 	}
 }
 
@@ -236,7 +247,8 @@ service.login = function(){
 		sessionStorage.setItem("F5","f");
 	}
 }
-
+//添加参数控制提示弹窗次数
+var j = 1;
 service.buycard = function(i){
 	//判断是否在支持metamask的google浏览器上运行
     if(typeof web3 == 'undefined'){
@@ -245,7 +257,7 @@ service.buycard = function(i){
 	}
 	console.log(i);
 
-	if(store.state.cardarr[i-1].soldamount == store.state.cardarr[i-1].totalamount){
+	if(store.state.cardarr[i-1].soldamount == 0){
 		alert("cannotbuy!!");
 		return;
 	}
@@ -256,11 +268,18 @@ service.buycard = function(i){
 		store.state.alertmsg.alert = "请先登录metamask.";
 		store.state.username = "Login";
 		sessionStorage.setItem("F5","f");
-	}else if(store.state.username.indexOf("Login") > -1){
-		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = "请先登录.";
 	}else{
 		//购买卡牌
+		store.state.username = store.state.myaccount;
+		if(!sessionStorage.getItem("昵称")){
+			if(j == 1){
+				console.log("判断是否第一次登录购买：",j);
+				++j;
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = "点击用户名设置昵称.";
+				return;
+			}
+		}
 		//判断以太坊的网络线路
 		var version = web3.version.network;
 		var CaptainSell = web3.eth.contract(store.state.CaptainSell_abiarray);
@@ -294,35 +313,44 @@ service.buycard = function(i){
 			}
 		})
 		//监听购买事件
+		var n=1;
 		CaptainSellInstance.BuyToken(store.state.myaccount).watch(function(error,result){
 			if(!error){
 				console.log("购买成功后返回的结果是：",result);
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = "交易成功,可在我的卡牌中查看.";
-				//存储玩家购买卡牌日志
-				var buyurl = configData.base_url+configData.setlog;
-				var buydata = {
-					from_address: store.state.myaccount,
-					to_address: store.state.CaptainSell_address4,
-					item_type: 1,
-					item_id: i,
-					transaction_by: 1,
-					item_num: 1,
-					ether_num: web3.fromWei(transaction.value,"ether"),
-					coin_type: 1
-				};
-				var buystr = JSON.stringify(buydata);
-				axios.post(buyurl,{type:1,data:buystr}).then(function(result){
-					console.log(result);
-				}).catch(function(err){
-					console.log(err);
-				})
+				if(n==1){
+					console.log("购买日志存储次数：",n);
+					//存储玩家购买卡牌日志
+					var buyurl = configData.base_url+configData.setlog;
+					var buydata = {
+						transaction_id: result.transactionHash,
+						from_address: store.state.myaccount,
+						to_address: store.state.CaptainSell_address4,
+						item_type: 1,
+						item_id: i,
+						transaction_by: 1,
+						item_num: 1,
+						ether_num: web3.fromWei(transaction.value,"ether"),
+						coin_type: 1
+					};
+					var buystr = JSON.stringify(buydata);
+					axios.post(buyurl,{type:1,data:buystr}).then(function(result){
+						console.log(result);
+						++n;
+					}).catch(function(err){
+						console.log(err);
+					})
+				}else{
+					console.log("购买日志存储次数：",n);
+				}
+				
 				//刷新卡牌卖出数量
 				CaptainSellInstance.getCaptainCount(i,function(error,result){
 					if(!error){
 						console.log(result);
-						store.state.cardarr[i -1].soldamount = parseInt(result.toString());
-						if(store.state.cardarr[i -1].soldamount == store.state.captain[i].totalcount){
+						store.state.cardarr[i -1].soldamount = store.state.captain[i].totalcount - parseInt(result.toString());
+						if(store.state.cardarr[i -1].soldamount == 0){
 							alert("cannotbuy!!")
 						}
 					}else{
@@ -406,7 +434,7 @@ service.getmycards = function(){
 			store.dispatch("clearmycaptain");
 			for(var i=0;i<result[1].length;i++){
 				if(result[1][i].toString() == 1){
-					store.state.mycaptain1.push("1");
+					// store.state.mycaptain1.push("1");
 				}else if(result[1][i].toString() == 2){
 					store.state.mycaptain2.push("1");
 				}else if(result[1][i].toString() == 3){

@@ -96,6 +96,8 @@ export default {
     	padding: 7% 10%;
     	box-sizing: border-box;
 	}
-	
+	.colorb {
+    text-align: center;
+  }
 </style>
 
