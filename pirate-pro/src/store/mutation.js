@@ -1,6 +1,6 @@
 const mutations = {
-	change (state) {
-		state.locale = state.locale == "zh-ch" ? "en" : "zh-ch" ;
+	change (state,params) {
+		state.locale = params.lan ;
 		i18n.locale = state.locale ;
 		sessionStorage.setItem("lang",state.locale);
 	},

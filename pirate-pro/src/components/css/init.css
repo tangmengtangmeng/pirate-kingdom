@@ -229,3 +229,6 @@ template {
   position: absolute;
   z-index: 3;
 }
+.width100{
+  width: 100%;
+}

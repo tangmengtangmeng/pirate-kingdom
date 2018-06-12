@@ -31,12 +31,13 @@ export default {
   mounted () {
     var val = document.documentElement.clientWidth;
     var val2 = document.documentElement.clientHeight;
+    var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
     /*if(val > 1680){
       this.popupheight = "25%";
       this.popuptop = "40%";
     }else{*/
       this.popupheight = ((val)/ 1920 * 1080)* 0.25 + "px";
-      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + document.documentElement.scrollTop+ "px";
+      this.popuptop = (val2 - parseInt(this.popupheight) )/2 + scrolltop + "px";
     // }
     var _this = this;
     window.addEventListener("resize",function(){
@@ -48,12 +49,13 @@ export default {
           _this.popuptop = "40%";
         }else{*/
           _this.popupheight = ((val)/ 1920 * 1080)* 0.25 + "px";
-          _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + document.documentElement.scrollTop+ "px";
+          _this.popuptop = (val2 - parseInt(_this.popupheight) )/2 + scrolltop + "px";
         // }
     })
     window.addEventListener("scroll",function(){
       // console.log("滚动");
-      _this.popuptop = (document.documentElement.clientHeight - parseInt(_this.popupheight) )/2 + document.documentElement.scrollTop + "px";
+      var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+      _this.popuptop = (document.documentElement.clientHeight - parseInt(_this.popupheight) )/2 + scrolltop + "px";
     })
     
   },
@@ -88,6 +90,9 @@ export default {
     background:url("../../../../assets/closebtn.png") center center no-repeat; 
     background-size: contain;
 	}
+  .close:hover{
+    cursor: pointer;
+  }
 	.popup-content{
 		width: 100%;
 		height: 37%;

@@ -1,7 +1,7 @@
 <template>
   <div class="footer-bar" :style="{'height':footerHeight}">
     <div class="shadow" :style="{'height':footerHeight}" v-show="showshadow || showsmallpopup"></div>
-    <div class="topfooter">
+    <!-- <div class="topfooter">
       <ul class="list1">
         <li></li>
         <li v-for="(item,index) in items1"><a v-bind:href="item.href" target="_Blank">{{item.title}}</a></li>
@@ -17,7 +17,12 @@
         <li v-for="(item,index) in items4"><a v-bind:href="item.href" target="_Blank">{{item.title}}</a></li>
       </ul>
     </div>
-    <div class="botfooter"></div>
+    <div class="botfooter"></div> -->
+    <a class="faq" v-bind:href="items1[2].href" target="_Blank">FAQ</a>
+    <a class="twitter" v-bind:href="items3[1].href" target="_Blank"></a>
+    <a class="facebook" v-bind:href="items3[0].href" target="_Blank"></a>
+    <a class="bitguild" v-bind:href="items4[2].href" target="_Blank"></a>
+    <p class="copyright">All rights reserved. 2018 Pirate Conquest</p>
   </div>
 </template>
 
@@ -27,7 +32,7 @@ export default {
   data () {
     return {
       msg: 'FooterBar',
-      footerHeight: document.documentElement.clientWidth / 1920 * 360 + "px",
+      footerHeight: document.documentElement.clientWidth / 1920 * 390 + "px",
       items1: [{title:"Home",href:this.configData.foot_ul1.foot_ul1_1},{title:"How it works",href:this.configData.foot_ul1.foot_ul1_2},{title:"FAQ",href:this.configData.foot_ul1.foot_ul1_3},{title:"TOS",href:this.configData.foot_ul1.foot_ul1_4},{title:"Pravacy Policy",href:this.configData.foot_ul1.foot_ul1_5}],
       items2: [{title:"Marketplace",href:this.configData.foot_ul2.foot_ul2_1},{title:"My Contacts",href:this.configData.foot_ul2.foot_ul2_2}],
       items3: [{title:"FACEBOOK",href:this.configData.foot_ul3.foot_ul3_1},{title:"TWITTER",href:this.configData.foot_ul3.foot_ul3_2}],
@@ -43,8 +48,8 @@ export default {
     var _this = this;
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
-      console.log("footerHeight",val/1920*360);
-      _this.footerHeight = val / 1920 * 360 + "px";
+      console.log("footerHeight",val/1920*390);
+      _this.footerHeight = val / 1920 * 390 + "px";
     })
 
   },
@@ -70,6 +75,9 @@ export default {
   width: 100%;
   background:url("../../assets/footer.png") center center no-repeat;
   background-size: cover;
+  border-top: 1px solid transparent;
+  position: relative;
+  top: -1px;
 }
 .topfooter{
   width: 100%;
@@ -225,5 +233,39 @@ ul>li>a{
   height: 27.77%;
   background:url("../../assets/footer5.png") center center no-repeat;
   background-size: contain; 
+}
+.faq,.twitter,.facebook,.bitguild{
+  display: block;
+  float: left;
+  margin-top: 1%;
+}
+.faq:hover,.twitter:hover,.facebook:hover,.bitguild:hover{
+  cursor: pointer;
+}
+.faq{
+  font-size: 13px;
+  font-weight: 700;
+  color: rgb(81,86,96);
+  margin-left: 46.5%;
+  margin-top: 1.2%;
+}
+.twitter,.facebook,.bitguild{
+  width: 1.3%;
+  height: 6.5%;
+  margin-left: 0.5%;
+}
+.facebook{
+  margin-left: 0.7%;
+}
+.bitguild{
+
+}
+.copyright{
+  width: 100%;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgb(81,86,96);
+  text-align: center;
+  margin-top: 3%;
 }
 </style>

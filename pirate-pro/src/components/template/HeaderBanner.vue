@@ -3,11 +3,14 @@
     <div class="shadow" :style="{'height':topheight}" v-show="showshadow || showsmallpopup"></div>
     <div class="topright">
       <div class="row">
+        <div class="col-50" @click="changeLocale('zh-ch')"></div><div class="col-50" @click="changeLocale('en')"></div>
+      </div>
+      <div class="row">
         <div class="col-40" @click="login"><p class="text-left" v-bind:title="mytitlename">{{username.username}}</p></div>
         <div class="col-60"><p class="text-right"  @click="myassets">My Assets</p></div>
       </div>
     </div>
-    <div class="language"  @click="changeLocale()">{{$t("message.changeLocale")}}</div>
+    <!-- <div class="language"  @click="changeLocale()">{{$t("message.changeLocale")}}</div> -->
     <div class="startbtn hide">
       <div class="btnanimation"></div>
       <div class="btntitle" @mouseover="quicklight($event)" @mouseout="normallight($event)" @click="buycard" :class="{'btntitlebg1':btnlocale1,'btntitlebg2':btnlocale2}"></div>
@@ -34,7 +37,7 @@ export default {
   // props:['lang'],
   data () {
     return {
-      topheight: document.documentElement.clientWidth/1920*1090 + "px",
+      topheight: document.documentElement.clientWidth/1920*975 + "px",
       topnavheight: document.documentElement.clientWidth/1920*118 + "px",
       screenwidth: document.documentElement.clientWidth,
       buymsg: this.$store.state.buymsg,
@@ -43,9 +46,9 @@ export default {
     }
   },
   methods: {
-    changeLocale: function () {
+    changeLocale: function (lan) {
       console.log(this.$i18n.locale,this.$store.state.locale);
-      this.$store.dispatch("change");
+      this.$store.dispatch("change",{"lan":lan});
       console.log(this.$i18n.locale,this.$store.state.locale);
     },
     login: function () {
@@ -75,7 +78,7 @@ export default {
     const _this = this; 
     window.addEventListener("resize",function(){
       var val = document.documentElement.clientWidth;
-      _this.topheight = parseInt(val) / 1920 * 1090 + "px";
+      _this.topheight = parseInt(val) / 1920 * 975 + "px";
       _this.topnavheight = parseInt(val) / 1920 * 118 + "px";
     })
     
@@ -141,13 +144,13 @@ export default {
     background-size: 100% 100%;
   }
   .logo{
-    width: 34.5%;
-    height: 50%;
+    width: 30%;
+    height: 44.6%;
     background:url("../../assets/logo.png") center center no-repeat;
     background-size: contain;
     margin: 0 auto;
     position: relative;
-    top: 39%; 
+    top: 43%; 
   }
   .language{
     width: 15.89%;
@@ -160,23 +163,35 @@ export default {
     cursor: pointer;
   }
   .topright{
-    width: 11.2%;
+    width: 16.75%;
     min-width: 156px;
-    height: 5.6%;
+    height: 5.1%;
     float: right;
     background:url("../../assets/moresetting.png") center center no-repeat;
     background-size: 100%;
-    margin-top: 1.3%;
-    margin-right: 5.2%;
+    margin-top: 4%;
+    margin-right: 9%;
   }
-  .topright>div{
-    width: 81.4%;
+  .topright>div:nth-child(1){
+    width: 31%;
+    height: 100%;
+    float: left;
+  }
+  .topright>div:nth-child(1)>.col-50{
+    height: 100%;
+  }
+  .topright>div:nth-child(1)>.col-50:hover{
+    cursor: pointer;
+  }
+  .topright>div:nth-child(2){
+    width: 56%;
     min-width: 126px;
     height:100%;
-    padding: 0 7%;
+    padding: 0 5%;
     box-sizing: border-box;
+    margin-left: 33%;
   }
-  .topright>div>div:hover{
+  .topright>div:nth-child(2)>div:hover{
     cursor: pointer;
   }
   .topright>div>div>p{

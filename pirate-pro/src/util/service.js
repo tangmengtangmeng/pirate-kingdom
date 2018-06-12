@@ -262,7 +262,10 @@ service.buycard = function(i){
 		return;
 	}
 	//获取以太账户
-	store.state.myaccount = web3.eth.accounts[0];
+	if(typeof web3 !== 'undefined'){
+		store.state.myaccount = web3.eth.accounts[0];
+	}
+	
 	if(!store.state.myaccount){
 		store.dispatch("showsmallpopup");
 		store.state.alertmsg.alert = "请先登录metamask.";

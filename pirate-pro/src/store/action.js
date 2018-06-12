@@ -1,6 +1,6 @@
 const actions = {
-	change(context){
-		context.commit("change");
+	change(context,params){
+		context.commit("change",params);
 	},
 	initLang(context){
 		context.commit("initLang");

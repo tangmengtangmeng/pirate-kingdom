@@ -11,6 +11,7 @@
         </div> -->
         <div class="pretitle hide" :style="{'height':titleheight}"></div>
         <div class="pretitle2"></div>
+        <div class="pretitle3">These 3 epic pirates will only be sold in Pre-Sale, don't miss out!</div>
         <ul class="preplayer" :style="{'height':playerheight}">
           <li v-for="(carditem,index) in carditems">
             <div class="soldamount">{{carditem.soldamount}}/{{carditem.totalamount}}</div>
@@ -31,6 +32,16 @@
       <div class="introduce-pots" :style="{'height':potsheight}">
         <div class="shadow" :style="{'height':potsheight}" v-show="showshadow"></div>
         <div class="pots-title"></div>
+        <div class="pot1">upgrade boat and craft weapons  to win the everyday prize!</div>
+        <div class="pot2">Who owns the 9 pirates can be the King of  Pirates and plunder from the market!</div>
+        <div class="pot3">Alliance who wins in the Honor  Battle can get prize and divide it based on everyone's contribution!</div>
+      </div>
+      <div class="roadmap" :style="{'height':mapheight}">
+        <div class="shadow" :style="{'height':mapheight}" v-show="showshadow"></div>
+        <div class="maptitle"></div>
+        <div class="width100"><div class="date1">06-15</div><div class="date2">07-19</div><div class="date3">08-09</div></div>
+        <div class="maptop"><div class="maptop1">Crew Recruitment</div><div class="maptop2">Raise the Anchor</div><div class="maptop3">Eye of the Storm</div></div>
+        <div class="mapbottom"><div class="mapbottom1">Live</div><div class="mapbottom2">Dev</div><div class="mapbottom3">Dev</div></div>
       </div>
     </div>
 </template>
@@ -54,7 +65,7 @@ export default {
       carditems: this.$store.state.cardarr,
       clicked: this.$store.state.btnclicked,
       potsheight: "",
-      
+      mapheight: "",
     }
   },
   methods: {
@@ -107,8 +118,9 @@ export default {
       this.divheight = "76%";
     }else{*/
       this.addheight = ((document.documentElement.clientHeight) - (document.documentElement.clientWidth)/ 1920 * 800)/2 + "px";
-      this.playersheight = (document.documentElement.clientWidth)/ 1920 * 800 + "px";
-      this.potsheight = (document.documentElement.clientWidth) /1920 * 800 + "px";
+      this.playersheight = (document.documentElement.clientWidth)/ 1920 * 825 + "px";
+      this.potsheight = (document.documentElement.clientWidth) /1920 * 860 + "px";
+      this.mapheight = (document.documentElement.clientWidth) /1920 * 715 + "px";
     // }
 
     var _this = this;
@@ -125,12 +137,13 @@ export default {
           _this.divheight = "76%";
         }else{*/
           _this.addheight = ((document.documentElement.clientHeight) - (document.documentElement.clientWidth)/ 1920 * 800)/2 + "px";
-          _this.playersheight = (document.documentElement.clientWidth)/ 1920 * 800 + "px";
-          _this.titleheight = "13.75%";
-          _this.playerheight = "68%";
-          _this.btnheight = "18.25%";
+          _this.playersheight = (document.documentElement.clientWidth)/ 1920 * 825 + "px";
+          _this.titleheight = "9.44%";
+          _this.playerheight = "70%";
+          _this.btnheight = "14.5%";
           _this.divheight = "62%";
-          _this.potsheight = document.documentElement.clientWidth /1920 * 800 + "px";
+          _this.potsheight = document.documentElement.clientWidth /1920 * 860 + "px";
+          _this.mapheight = (document.documentElement.clientWidth) /1920 * 715 + "px";
         // }
         
     })
@@ -249,7 +262,7 @@ export default {
 }
 .preplayer,.prebtn{
   width:60%;
-  height: 68%;
+  height: 70%;
   margin: 0 auto; 
 }
 .preplayer li,.prebtn li{
@@ -257,29 +270,31 @@ export default {
   float: left;
 }
 .preplayer li:nth-child(1){
-  width: 32%;
-  background:url("../../assets/player1.png") center 12px no-repeat;
+  width: 33.8%;
+  background:url("../../assets/player1.png") center center no-repeat;
   background-size: 100% 100%; 
 }
 .preplayer li:nth-child(2){
-  width: 34.6%;
-  background:url("../../assets/player2.png") center 12px no-repeat;
+  width: 33%;
+  background:url("../../assets/player2.png") center center no-repeat;
   background-size: 100% 100%; 
 }
 .preplayer li:nth-child(3){
   width: 33%;
-  background:url("../../assets/player3.png") center 12px no-repeat;
+  background:url("../../assets/player3.png") center -3px no-repeat;
   background-size: 100% 100%; 
 }
 .prebtn{
-  height: 18%;
+  height: 14.5%;
 }
 .prebtn>li{
   width: 33.33%;
+  padding-left: 1.8%;
+  box-sizing: border-box;
 }
 .prebtn>li>div{
   width: 100%;
-  height: 62%;
+  height: 80%;
   margin:0 auto;
   text-align: center;
   font-size: 24px;
@@ -292,7 +307,7 @@ export default {
   display: table-cell;
   vertical-align: middle;
   position: relative;
-  left: -3%;
+  left: -4%;
 }
 .prebtn>li>div:hover{
   cursor: pointer;
@@ -323,8 +338,8 @@ export default {
 }
 .preplayer li div{
   width: 80%;
-  height: 88%;
-  margin: 5% 5%;
+  height: 83%;
+  margin: 5% 7%;
   position: relative;
   top: -2.7%;
   left: 2.4%;
@@ -332,11 +347,8 @@ export default {
   background:transparent;
   overflow: hidden; 
 }
-.preplayer li:nth-child(2) div{
-  left: 5%;
-}
-.preplayer li:nth-child(3) div{
-  left: 7%;
+.preplayer li div:hover{
+  cursor: pointer;
 }
 .preplayer li div div{
   width: 200%;
@@ -367,8 +379,8 @@ export default {
   margin: 0 9%;
   top: -2%;
   text-align: center;
-  font-size:16px;
-  color: #fff;
+  font-size:19px;
+  color: rgb(255,186,123);
   padding-top: 5%;
   box-sizing: border-box;
 }
@@ -378,20 +390,134 @@ export default {
   background-size: 100% 100%;
 }
 .pots-title{
-  width: 52.6%;
-  height: 18.75%;
+  width: 100%;
+  height: 23.3%;
   margin: 0 auto;
+  background: url("../../assets/pots-title.png") center center no-repeat;
+  background-size: 100%;
+}
+.pot1,.pot2,.pot3{
   position: relative;
-  left: 0;
-  top: 0;
-  background:url("../../assets/pots-title.png") center center no-repeat;
-  background-size: cover; 
+  text-align: center;
+  font-weight: 600;
+  line-height: 15px;
+}
+.pot1{
+  width: 13%;
+  height: 20.8%;
+  font-size: 12px;
+  color: rgb(120,107,99);
+  top: 54%;
+  left: 21.8%;
+}
+.pot2{
+  width: 18.2%;
+  height: 11.6%;
+  font-size:12px;
+  color: rgb(69,102,120);
+  top: -16%;
+  left: 39%;
+}
+.pot3{
+  width: 15.9%;
+  height: 23.3%;
+  font-size: 12px;
+  color: rgb(114,48,39);
+  top: 23%;
+  left: 60.5%;
 }
 .pretitle2{
-  width: 36.5%;
-  height: 13.75%;
+  width: 34.4%;
+  height: 9.44%;
   margin: 0 auto;
   background:url("../../assets/pretitle2.png") center center no-repeat;
   background-size: 100%; 
+}
+.pretitle3{
+  width: 34.4%;
+  height: auto;
+  color: rgb(211,193,135);
+  font-size: 15px;
+  margin: 0 auto;
+  padding-left: 2.5%;
+  padding-bottom: 1%;
+}
+.roadmap{
+  width: 100%;
+  background:url("../../assets/roadmap.png") center center no-repeat;
+  background-size: 100% 100%; 
+}
+.roadmap .maptitle{
+  width: 100%;
+  height: 21.7%;
+  background:url("../../assets/maptitle.png") center center no-repeat;
+  background-size: 100%; 
+}
+.width100{
+  height: 11.6%;
+}
+.date1,.date2,.date3{
+  width: 17.34%;
+  height: 100%;
+  font-size: 20px;
+  font-weight: 900;
+  float: left;
+  box-sizing: border-box;
+  padding-top: 1%;
+}
+.date1{
+  color: rgb(175,100,0);
+  margin-left: 27%;
+}
+.date2,.date3{
+  color: rgb(10,106,132);
+  margin-left: 1%;
+}
+.maptop{
+  width: 100%;
+  height: 7%;
+}
+.maptop1,.maptop2,.maptop3{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  width: 17.5%;
+  height: 100%;
+  float: left;
+  text-align: center;
+  padding-top: 1%;
+}
+.maptop1{
+  margin-left: 20.3%;
+  background:url("../../assets/maptop1.png") center center no-repeat;
+  background-size: 100%; 
+}
+.maptop2,.maptop3{
+  margin-left: 1%;
+  background:url("../../assets/maptop2.png") center center no-repeat;
+  background-size: 100%;
+}
+.mapbottom{
+  width: 100%;
+  height: 7.7%;
+  margin-top: 15%;
+}
+.mapbottom1,.mapbottom2,.mapbottom3{
+  width: 17.5%;
+  height: 100%;
+  float: left;
+  text-align: center;
+  padding-top: 0.8%;
+  box-sizing: border-box;
+}
+.mapbottom1{
+  margin-left: 20.5%;
+  background:url("../../assets/mapbottom1.png") center center no-repeat;
+  background-size: 100%; 
+}
+.mapbottom2,.mapbottom3{
+  margin-left: 1%;
+  background:url("../../assets/mapbottom2.png") center center no-repeat;
+  background-size: 100%;
 }
 </style>
