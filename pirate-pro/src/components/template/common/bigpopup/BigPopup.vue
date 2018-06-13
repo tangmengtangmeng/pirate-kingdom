@@ -4,20 +4,17 @@
   	<div v-show="bigpopupBuymsg.buycard" class="buycard">
 			<div class="role" :class="{'role1':role1,'role2':role2,'role3':role3}"></div>
 		<div class="introduce">
-		  	<div class="name"><p class="colorb">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].name:""}}</p></div>
-		  	<div class="moredetail colorb">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].detail:""}}</div>
+		  	<div class="name"><p class="colorb">{{bigpopupBuymsg.buycard?((bigpopupBuymsg.player == 1)?$t('message.name1'):((bigpopupBuymsg.player == 2)?$t('message.name2'):$t('message.name3'))):""}}</p></div>
+		  	<div class="moredetail colorb">{{bigpopupBuymsg.buycard?((bigpopupBuymsg.player == 1)?$t('message.detail1'):((bigpopupBuymsg.player == 2)?$t('message.detail2'):$t('message.detail3'))):""}}</div>
 		  	<div class="ability">
-		  		<div class="row"><div class="col-80"></div><div class="col-20"><p>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].color:""}}</p></div></div>
 		  		<div class="row"><div class="col-80"></div><div class="col-20"><p>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].attack:""}}</p></div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20"><p>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].strength:""}}</p></div></div>
-		  		<div class="row"><div class="col-80"></div><div class="col-20"></div></div>
 		  		<div class="row"><div class="col-80"></div><div class="col-20"><p>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].defense:""}}</p></div></div>
 		  	</div>
 		  	<div class="btn" @click="buycard"><div>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].price:""}}ETH</div></div>
 		</div>
   	</div>
 	<div v-show="bigpopupBuymsg.confirmbuycard" class="confirmbuycard">
-		<div class="known"></div>
+		<div class="known">{{bigpopupBuymsg.player == 1?$t("message.confirm1"):(bigpopupBuymsg.player == 2?$t("message.confirm2"):$t("message.confirm3"))}}<br/>{{$t("message.confirmbuy")}}</div>
 		<div class="price"><div>{{confirm_price}}ETH</div></div>
 		<div class="cancelbtn" @click="closepopup"></div>
 		<div class="nextbtn" @click="buycard"></div>
@@ -120,7 +117,7 @@ export default {
     		var index = parseInt(this.bigpopupBuymsg.player - 1);
     		return this.$store.state.captain[index].price;
     	}else{
-    		return this.$store.state.captain[0].price;
+    		return "-";
     	}
     	
     },
@@ -170,7 +167,7 @@ export default {
 	.bigpopup{
 		width: 42%;
 		margin: 0 29%;
-		color: white;
+		color: rgb(76,38,2);
 		position: absolute;
 	}
 	.close{
@@ -223,11 +220,93 @@ export default {
 	}
 	.moredetail{
 		width: 100%;
-		height: 21.3%;
+		height: 4em;
+		font-size:1em;
 		position: absolute;
 		top: 8.5%;
 		padding: 0 13.7%;
 		box-sizing: border-box;
+		overflow: hidden;
+		word-break: break-all;
+		line-height: 1em;
+	}
+	.moredetail::after{
+		content: "...";
+		color: rgb(76,38,2);
+		position: absolute;
+    	bottom: 0;
+    	right: 10%;
+	}
+	
+	@media all and (min-width: 1080px){
+		.moredetail{
+			height: 3.4em;
+			font-size:0.9em;
+			line-height: 0.9em;
+		}
+		.moredetail::after{
+	    	bottom: 2%;
+		}
+	}
+	@media all and (min-width: 1150px){
+		.moredetail{
+			height: 3.75em;
+			font-size:0.95em;
+			line-height: 0.95em;
+		}
+		.moredetail::after{
+	    	bottom: 2%;
+		}
+	}
+	@media all and (min-width: 1270px){
+		.moredetail{
+			height: 4em;
+			font-size:1em;
+			line-height: 1em;
+		}
+		.moredetail::after{
+	    	bottom: 2%;
+		}
+	}
+	@media all and (min-width: 1350px){
+		.moredetail{
+			height: 4.4em;
+			font-size:1.1em;
+			line-height: 1.1em;
+		}
+		.moredetail::after{
+	    	bottom: 2%;
+		}
+	}
+	@media all and (min-width: 1400px){
+		.moredetail{
+			height: 4.4em;
+			font-size:1.1em;
+			line-height: 1.1em;
+		}
+		.moredetail::after{
+	    	bottom: 1%;
+		}
+	}
+	@media all and (min-width: 1520px){
+		.moredetail{
+			height: 4.6em;
+			font-size:1.15em;
+			line-height: 1.15em;
+		}
+		.moredetail::after{
+	    	bottom: 1%;
+		}
+	}
+	@media all and (min-width: 1660px){
+		.moredetail{
+			height: 4.8em;
+			font-size:1.2em;
+			line-height: 1.2em;
+		}
+		.moredetail::after{
+	    	bottom: 1%;
+		}
 	}
 	.ability{
 		width: 100%;
@@ -272,7 +351,7 @@ export default {
 		display: table-cell;
 		vertical-align: middle;
 	}
-	.ability>.row:nth-child(1)>.col-80{
+	/*.ability>.row:nth-child(1)>.col-80{
 		background: url("../../../../assets/ability1.png") left top no-repeat;
 		background-size: auto 100%;
 	}
@@ -307,7 +386,7 @@ export default {
 	.ability>.row:nth-child(5)>.col-20{
 		left: -13%;
 		top: -12%;
-	}
+	}*/
 	.btn{
 		width: 60.3%;
 		height: 18%;

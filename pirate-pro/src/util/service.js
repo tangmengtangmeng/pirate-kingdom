@@ -3,10 +3,15 @@ import store from '../store/store'
 import CaptainSell from './contracts/CaptainSell'
 import CaptainToken from './contracts/CaptainToken'
 import CaptainGameConfig from './contracts/CaptainGameConfig'
-// import Web3 from 'web3'
+
 
 
 let service = {};
+
+//添加参数控制改昵称提示弹窗次数
+if(!localStorage.getItem("j")){
+	localStorage.setItem("j","1");
+}
 
 service.init = function(){
 	
@@ -164,21 +169,35 @@ service.confirmlogin = function(){
 	}else{
 		if(web3.eth.accounts[0]){
 			store.state.username = web3.eth.accounts[0];
-			store.dispatch("showsmallpopup",{enable:true});
-			store.state.alertmsg.alert = "点击用户名设置昵称."
+			var j = localStorage.getItem("j");
+			if(j==1){
+				store.dispatch("showsmallpopup",{enable:true});
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
+				localStorage.setItem("j","2");
+			}
 		}else if(sessionStorage.getItem("我的以太坊账户")){
 			store.state.username = sessionStorage.getItem("我的以太坊账户");
-			store.dispatch("showsmallpopup",{enable:true});
-			store.state.alertmsg.alert = "点击用户名设置昵称."
+			var j = localStorage.getItem("j");
+			if(j==1){
+				store.dispatch("showsmallpopup",{enable:true});
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
+				localStorage.setItem("j","2");
+			}
+			
 		}
 	}
 }
 
 service.login = function(){
+	var j = localStorage.getItem("j");
+	if(j==1){
+		++j;
+		localStorage.setItem("j",j);
+	}
 	//判断是否在支持metamask的google浏览器上运行
     if(typeof web3 == 'undefined'){
 		store.dispatch("showsmallpopup",{enable:true});
-		store.state.alertmsg.alert = "请先安装metamask."
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
 		/*window.onscroll = function(){
 			console.log("000",document.getElementsByClassName("smallpopup")[0].style.top);//(document.documentElement.clientHeight - parseInt(((document.documentElement.clientWidth)/ 1920 * 1080)* 0.25) )/2 
 			document.getElementsByClassName("smallpopup")[0].style.top = document.documentElement.scrollTop +"px";
@@ -221,7 +240,7 @@ service.login = function(){
 				console.log("用户名",store.state.username);
 			}else{
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = "登录成功,点击用户名设置昵称.";
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
 				store.state.username = result.data.data.name;
 				store.state.titlename = result.data.data.name;
 				console.log("我的昵称是",result.data.data.name);
@@ -242,18 +261,17 @@ service.login = function(){
 		})
 	}else{
 		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = "请先登录metamask.";
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
 		store.state.username = "Login";
 		sessionStorage.setItem("F5","f");
 	}
 }
-//添加参数控制提示弹窗次数
-var j = 1;
+
 service.buycard = function(i){
 	//判断是否在支持metamask的google浏览器上运行
     if(typeof web3 == 'undefined'){
 		store.dispatch("showsmallpopup",{enable:true});
-		store.state.alertmsg.alert = "请先安装metamask."
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
 	}
 	console.log(i);
 
@@ -268,18 +286,20 @@ service.buycard = function(i){
 	
 	if(!store.state.myaccount){
 		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = "请先登录metamask.";
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
 		store.state.username = "Login";
 		sessionStorage.setItem("F5","f");
 	}else{
 		//购买卡牌
 		store.state.username = store.state.myaccount;
+		var j = localStorage.getItem("j");
 		if(!sessionStorage.getItem("昵称")){
 			if(j == 1){
 				console.log("判断是否第一次登录购买：",j);
 				++j;
+				localStorage.setItem("j",j);
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = "点击用户名设置昵称.";
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
 				return;
 			}
 		}
@@ -310,7 +330,7 @@ service.buycard = function(i){
 			if(!error){
 				console.log("购买结果是：",result);
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = "交易进行中，请等待卡牌购买结果...";
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.waitbuy;
 			}else{
 				console.log(error);
 			}
@@ -321,7 +341,7 @@ service.buycard = function(i){
 			if(!error){
 				console.log("购买成功后返回的结果是：",result);
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = "交易成功,可在我的卡牌中查看.";
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.successbuy;
 				if(n==1){
 					console.log("购买日志存储次数：",n);
 					//存储玩家购买卡牌日志
@@ -382,24 +402,24 @@ service.myassets = function(){
 	//判断是否在支持metamask的google浏览器上运行
     if(typeof web3 == 'undefined'){
 		store.dispatch("showsmallpopup",{enable:true});
-		store.state.alertmsg.alert = "请先安装metamask."
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
 		return;
 	}
 
 	if(store.state.username.indexOf("Login")>-1){
 		if(!web3.eth.accounts[0]){
 			store.dispatch("showsmallpopup");
-			store.state.alertmsg.alert = "请先登录metamask."
+			store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
 			store.state.username = "Login";
 			sessionStorage.setItem("F5","f");
 		}else{
 			store.dispatch("showsmallpopup");
-			store.state.alertmsg.alert = "请先登录."
+			store.state.alertmsg.alert = i18n.messages[i18n.locale].message.beforelog;
 		}
 	}else{
 		if(!web3.eth.accounts[0]){
 			store.dispatch("showsmallpopup");
-			store.state.alertmsg.alert = "请先登录metamask."
+			store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
 			store.state.username = "Login";
 			sessionStorage.setItem("F5","f");
 			return;
@@ -461,11 +481,16 @@ service.showbigpopup = function(){
 }
 
 service.setnickname = function(){
+	var j = localStorage.getItem("j");
+	if(j==1){
+		++j;
+		localStorage.setItem("j",j);
+	}
 	//获取以太账户
 	store.state.myaccount = web3.eth.accounts[0];
 	if(!store.state.myaccount){
 		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = "请先登录metamask."
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
 		store.state.username = "Login";
 		sessionStorage.setItem("F5","f");
 		return;
@@ -497,20 +522,20 @@ service.changenickname = function(nameObj){
 			console.log("设置用户名",response);
 			if(response.data.state == 200){
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = "修改用户名成功.";
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.successsetname;
 				store.state.username = username;
 				sessionStorage.setItem("昵称",store.state.username);
 				store.state.titlename = username;
 				console.log("我的昵称在缓存中：",sessionStorage.getItem("昵称"),store.state.titlename);
 			}else if(response.data.state == 10003){
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = "设置昵称过长.";
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.nametoolong;
 			}else if(response.data.state == 10004){
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = "该昵称已经存在.";
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.nameexisted;
 			}else if(response.data.state == 500){
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = "服务器内部错误.";
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.servererror;
 			}
 			
 		  }).catch(function (error) {

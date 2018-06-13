@@ -1,6 +1,8 @@
 import CaptainSell from '../util/contracts/CaptainSell'
 import CaptainToken from '../util/contracts/CaptainToken'
 import CaptainGameConfig from '../util/contracts/CaptainGameConfig'
+// import i18n from '../i18n/index.js'
+
 
 const state = {
 	// 全局变量
@@ -15,8 +17,8 @@ const state = {
 	showsmallpopup: false,
 	enableclose: true,
 	btnclicked: [false,false,false],
-	pricearr: [{price:"0.00"},{price:"0.00"},{price:"0.00"}],
-	cardarr: [{soldamount:"30",totalamount:"30"},{soldamount:"30",totalamount:"30"},{soldamount:"30",totalamount:"30"}],
+	pricearr: [{price:"-"},{price:"-"},{price:"-"}],
+	cardarr: [{soldamount:"-",totalamount:"-"},{soldamount:"-",totalamount:"-"},{soldamount:"-",totalamount:"-"}],
 	buymsg: {
 		myassets: "",
 		setnickname: "",
@@ -30,45 +32,45 @@ const state = {
 	captain: [
 		{
 			name: "JACK",
-			detail: "this is Jack.",
-			color: "",
-			attack: "",
-			strength: "",
-			defense: "",
-			price: "0.00",
-			unitSellable: "",
-			totalcount: "30"
+			detail: "",
+			color: "-",
+			attack: "-",
+			strength: "-",
+			defense: "-",
+			price: "-",
+			unitSellable: "-",
+			totalcount: "-"
 		},
 		{
 			name: "JOANNA",
-			detail: "this is Joanna.",
-			color: "",
-			attack: "",
-			strength: "",
-			defense: "",
-			price: "0.00",
-			unitSellable: "",
-			totalcount: "30"
+			detail: "",
+			color: "-",
+			attack: "-",
+			strength: "-",
+			defense: "-",
+			price: "-",
+			unitSellable: "-",
+			totalcount: "-"
 		},
 		{
 			name: "CLOB",
-			detail: "this is Clob.",
-			color: "",
-			attack: "",
-			strength: "",
-			defense: "",
-			price: "0.00",
-			unitSellable: "",
-			totalcount: "30"
+			detail: "",
+			color: "-",
+			attack: "-",
+			strength: "-",
+			defense: "-",
+			price: "-",
+			unitSellable: "-",
+			totalcount: "-"
 		},
 	],
 	mycaptain1: [],
 	mycaptain2: [],
 	mycaptain3: [],
-	confirm_price: "0.00",
+	confirm_price: "-",
 	//合约参数
 	CaptainGameConfig_abiarray: CaptainGameConfig.abi,
-	CaptainGameConfig_address4: "0xfb8643685a0d7aa43d6db62b76d5f7afc88c2f13",
+	CaptainGameConfig_address4: "0xeced24856b6ca995c16c2533c1887485f45edcb3",
 	CaptainSell_abiarray: CaptainSell.abi,
 	CaptainSell_address4: "0xb5bcf6e7c205a756bbd9010202123007988df6a8",
 	CaptainToken_abiarray: CaptainToken.abi,

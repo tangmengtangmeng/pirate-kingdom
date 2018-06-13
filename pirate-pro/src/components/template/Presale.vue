@@ -14,7 +14,7 @@
         <div class="pretitle3">These 3 epic pirates will only be sold in Pre-Sale, don't miss out!</div>
         <ul class="preplayer" :style="{'height':playerheight}">
           <li v-for="(carditem,index) in carditems">
-            <div class="soldamount">{{carditem.soldamount}}/{{carditem.totalamount}}</div>
+            <div class="soldamount">{{$t("message.left")}} : {{carditem.soldamount}}/{{carditem.totalamount}}</div>
             <div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail(index + 1)"><div></div></div>
           </li>
         </ul>

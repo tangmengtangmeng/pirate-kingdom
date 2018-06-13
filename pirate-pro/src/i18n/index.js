@@ -6,6 +6,8 @@ import LangZhHK from './lang/zhHK'
 
 Vue.use(VueI18n)
 
+
+
 const messages = {
   en: {
     message: LangEn

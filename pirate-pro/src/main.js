@@ -14,13 +14,12 @@ import service from "./util/service"
 import configData from "./util/configData"
 import bigPopup from './components/template/common/bigpopup/index.js'
 import smallPopup from './components/template/common/smallPopup/index.js'
-// import web3Min from './util/web3.min'
-// import Web3min from 'web3'
+
 
 
 Vue.prototype.configData = configData;
 Vue.prototype.service = service ;
-// Vue.prototype.Web3 = Web3min;
+
 
 Vue.config.productionTip = false
 
@@ -40,7 +39,7 @@ const i18n = new VueI18n({
 
 window.i18n = i18n 
 window.axios = axios
-// window.web3 = web3
+
 
 
 
