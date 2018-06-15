@@ -1,7 +1,6 @@
 <template>
   <div class="footer-bar" :style="{'height':footerHeight}">
     <div class="shadow" :style="{'height':footerHeight}" v-show="showshadow || showsmallpopup"></div>
-    <div class="faqpopup" v-show="showFAQ" @click="closefaq"></div>
     <!-- <div class="topfooter">
       <ul class="list1">
         <li></li>
@@ -46,11 +45,10 @@ export default {
       
     },
     showfaq: function () {
-      this.showFAQ = true;
+      this.$store.state.showFAQ = true;
+      this.$store.state.showshadow = true;
     },
-    closefaq: function () {
-      this.showFAQ = false;
-    }
+    
   },
   mounted:function(){
     var _this = this;

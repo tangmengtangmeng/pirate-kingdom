@@ -510,6 +510,8 @@ service.myassets = function(){
 			for(var i=0;i<namearr.length;i++){
 				if(namearr[i].meta == web3.eth.accounts[0]){
 					store.state.username = namearr[i].name;
+				}else{
+					store.state.username = web3.eth.accounts[0];
 				}
 			}
 		}

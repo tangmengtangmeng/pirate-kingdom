@@ -30,6 +30,7 @@
     <div class="alert" v-show="showsmallpopup">
       <smallPopup :smallpopup-msg="alertmsg"></smallPopup>
     </div>
+    <div class="faq" v-show="showfaq"></div>
   </div>
 </template>
 
@@ -137,6 +138,13 @@ export default {
         return false
       }else if(this.$store.state.locale == "zh-ch"){
         return true
+      }
+    },
+    showfaq () {
+      if(this.$store.state.showFAQ){
+        return true
+      }else{
+        return false
       }
     }
   }
@@ -388,5 +396,14 @@ export default {
     height: 100%;
     display: block;
   }
-  
+  .faq{
+    width: 80%;
+    height: 80vh;
+    background-color: #fff;
+    overflow-y: scroll;
+    position: absolute;
+    left: 10%;
+    top: 0;
+    z-index: 12;
+  }
 </style>
