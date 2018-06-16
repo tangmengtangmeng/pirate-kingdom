@@ -204,17 +204,20 @@ service.confirmlogin = function(){
 				service.login();
 				localStorage.setItem("j","2");
 			}
-		}else if(sessionStorage.getItem("我的以太坊账户")){
-			store.state.username = sessionStorage.getItem("我的以太坊账户");
-			var j = localStorage.getItem("j");
-			if(j==1){
-				store.dispatch("showsmallpopup",{enable:true});
-				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
-				service.login();
-				localStorage.setItem("j","2");
-			}
-			
-		}
+		}else{
+			if(sessionStorage.getItem("我的以太坊账户")){
+				store.state.username = sessionStorage.getItem("我的以太坊账户");
+				var j = localStorage.getItem("j");
+				if(j==1){
+					store.dispatch("showsmallpopup",{enable:true});
+					store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
+					service.login();
+					localStorage.setItem("j","2");
+				}
+		   }else{
+		   		store.state.username = "Login";
+		   }
+		} 
 	}
 }
 
