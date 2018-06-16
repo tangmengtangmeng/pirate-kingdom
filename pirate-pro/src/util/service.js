@@ -161,6 +161,7 @@ service.init = function(){
 }
 
 service.confirmlogin = function(){
+	console.log("11")
     //判断用户是否已经登录过
 	if(localStorage.getItem("昵称")){
 		console.log("用户已经登录过",localStorage.getItem("昵称"));
@@ -175,23 +176,22 @@ service.confirmlogin = function(){
 			}
 			console.log("强制刷新",sessionStorage.getItem("F5"));
 		}else{
+			console.log("11")
 			if(sessionStorage.getItem("F5") != "f"){
 				var arr = JSON.parse(localStorage.getItem("昵称"));
 				var ethaccount = sessionStorage.getItem("我的以太坊账户");
-
 				for(var i=0;i<arr.length;i++){
 					if(arr[i].meta == ethaccount){
 						store.state.username = arr[i].name;
 						console.log("F5刷新：",sessionStorage.getItem("F5"));
 					}else{
-						store.state.username = ethaccount;
+						store.state.username = ethaccount?ethaccount:"Login";
 					}
 				}
 			}else{
 				store.state.username = "Login";
 				console.log("网页刷新",sessionStorage.getItem("F5"));
 			}
-			
 		}
 		
 	}else{
