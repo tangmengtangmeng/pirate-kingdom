@@ -391,6 +391,30 @@ service.buycard = function(i){
 		CaptainSellInstance.BuyToken(store.state.myaccount).watch(function(error,result){
 			if(!error){
 				console.log("购买成功后返回的结果是：",result);
+				var id = result.args.tokenId.toString();
+				//刷新卡牌卖出数量
+				CaptainSellInstance.getCaptainCount(id,function(error,result){
+					if(!error){
+						console.log("售出该种卡牌数量：",result);
+						if(id == 3){
+							id = 0;
+						}else if(id == 5){
+							id = 1;
+						}else{
+							id = 2;
+						}
+						if(store.state.cardarr[id].totalcount == result.toString()){
+							store.state.disabledbtn[id] = true;
+						}
+					}else{
+						console.log(error);
+					}
+				})
+				for(var n=0;n<store.state.cardarr.length;n++){
+					if(store.state.cardarr[n].soldamount == 0){
+						store.state.disabledbtn[n] = true;
+					}
+				}
 				if(localStorage.getItem("购买哈希")){
 					if(localStorage.getItem("购买哈希").indexOf(result.transactionHash) == -1 ){
 						return;
@@ -402,19 +426,7 @@ service.buycard = function(i){
 						console.log("购买成功，存储日志！",localStorage.getItem("购买哈希"));
 						store.dispatch("showsmallpopup");
 						store.state.alertmsg.alert = i18n.messages[i18n.locale].message.successbuy;
-						//刷新卡牌卖出数量
-						if(i==3){
-							store.state.cardarr[0].soldamount -= 1;
-						}else if(i==5){
-							store.state.cardarr[1].soldamount -= 1;
-						}else if(i==6){
-							store.state.cardarr[2].soldamount -= 1;
-						}
-						for(var n=0;n<store.state.cardarr.length;n++){
-							if(store.state.cardarr[n].soldamount == 0){
-								store.state.disabledbtn[n] = true;
-							}
-						}
+						
 						//重新获取我的卡牌列表
 						service.getmycards();
 						//存储玩家购买卡牌日志
