@@ -405,18 +405,15 @@ service.buycard = function(i){
 							id = 2;
 						}
 						store.state.cardarr[id].soldamount = store.state.cardarr[id].totalamount - result.toString();
-						if(store.state.cardarr[id].totalamount == result.toString()){
+						//判断是否可以购买
+						if(store.state.cardarr[id].soldamount == 0){
 							store.state.disabledbtn[id] = true;
 						}
 					}else{
 						console.log(error);
 					}
 				})
-				for(var n=0;n<store.state.cardarr.length;n++){
-					if(store.state.cardarr[n].soldamount == 0){
-						store.state.disabledbtn[n] = true;
-					}
-				}
+				
 				if(localStorage.getItem("购买哈希")){
 					if(localStorage.getItem("购买哈希").indexOf(result.transactionHash) == -1 ){
 						return;
@@ -453,24 +450,6 @@ service.buycard = function(i){
 					}
 				}
 				
-				//判断是否可以购买
-				CaptainSellInstance.getCaptainCount(i,function(error,result){
-					if(!error){
-						console.log("售出结果ii",result);
-						if(i==3){
-							i=1;
-						}else if(i==5){
-							i=2;
-						}else if(i==6){
-							i=3;
-						}
-						if(store.state.cardarr[i-1].totalcount == result.toString()){
-							store.state.disabledbtn[i-1] = true;
-						}
-					}else{
-						console.log(error);
-					}
-				})
 			}else{
 				console.log(error);
 			}
