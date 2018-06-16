@@ -392,10 +392,11 @@ service.buycard = function(i){
 			if(!error){
 				console.log("购买成功后返回的结果是：",result);
 				var id = result.args.tokenId.toString();
+				console.log("id",id);
 				//刷新卡牌卖出数量
 				CaptainSellInstance.getCaptainCount(id,function(error,result){
 					if(!error){
-						console.log("售出该种卡牌数量：",result);
+						console.log("售出该种卡牌数量：",result,id);
 						if(id == 3){
 							id = 0;
 						}else if(id == 5){
@@ -403,7 +404,8 @@ service.buycard = function(i){
 						}else{
 							id = 2;
 						}
-						if(store.state.cardarr[id].totalcount == result.toString()){
+						store.state.cardarr[id].soldamount = store.state.cardarr[id].totalamount - result.toString();
+						if(store.state.cardarr[id].totalamount == result.toString()){
 							store.state.disabledbtn[id] = true;
 						}
 					}else{
