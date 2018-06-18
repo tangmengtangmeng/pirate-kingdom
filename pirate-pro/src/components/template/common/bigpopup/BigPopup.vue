@@ -4,21 +4,21 @@
   	<div v-show="bigpopupBuymsg.buycard" class="buycard">
 			<div class="role" :class="{'role1':role1,'role2':role2,'role3':role3}"></div>
 		<div class="introduce">
-		  	<div class="name"><p class="colorb">{{bigpopupBuymsg.buycard?((bigpopupBuymsg.player == 1)?$t('message.name1'):((bigpopupBuymsg.player == 2)?$t('message.name2'):$t('message.name3'))):""}}</p></div>
-		  	<div class="moredetail colorb">{{bigpopupBuymsg.buycard?((bigpopupBuymsg.player == 1)?$t('message.detail1'):((bigpopupBuymsg.player == 2)?$t('message.detail2'):$t('message.detail3'))):""}}</div>
+		  	<div class="name"><p class="colorb">{{bigpopupBuymsg.buycard?((bigpopupBuymsg.player == 1)?$store.state.captain[0].name:((bigpopupBuymsg.player == 2)?$store.state.captain[1].name:$store.state.captain[2].name)):""}}</p></div>
+		  	<div class="moredetail colorb">{{bigpopupBuymsg.buycard?((bigpopupBuymsg.player == 1)?$t('message.game_text_story3'):((bigpopupBuymsg.player == 2)?$t('message.game_text_story5'):$t('message.game_text_story6'))):""}}</div>
 		  	<div class="ability">
-		  		<div class="row"><div class="col-30">{{$t("message.attack")}}</div><div class="col-30 colorw">{{bigpopupBuymsg.buycard?($store.state.captain[bigpopupBuymsg.player - 1].attack1+" - "+$store.state.captain[bigpopupBuymsg.player - 1].attack2):""}}</div></div>
-		  		<div class="row"><div class="col-30">{{$t("message.defense")}}</div><div class="col-30 colorw">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].defense:""}}</div></div>
+		  		<div class="row"><div class="col-30">{{$t("message.game_text_attack")}}</div><div class="col-30 colorw">{{bigpopupBuymsg.buycard?($store.state.captain[bigpopupBuymsg.player - 1].attack1+" - "+$store.state.captain[bigpopupBuymsg.player - 1].attack2):""}}</div></div>
+		  		<div class="row"><div class="col-30">{{$t("message.game_text_defense")}}</div><div class="col-30 colorw">{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].defense:""}}</div></div>
 		  	</div>
 		  	<div class="btn bold" @click="buycard" v-bind:class="{'disabled':disabledbtn}"><div>{{bigpopupBuymsg.buycard?$store.state.captain[bigpopupBuymsg.player - 1].price:""}} ETH</div></div>
 		</div>
   	</div>
 	<div v-show="bigpopupBuymsg.confirmbuycard" class="confirmbuycard">
 		<div class="confirmtitle"><div class="ghost"></div><div>{{$t("message.game_title_confirmpurchase")}}</div></div>
-		<div class="known">{{bigpopupBuymsg.player == 1?$t("message.confirm1"):(bigpopupBuymsg.player == 2?$t("message.confirm2"):$t("message.confirm3"))}}<br/>{{$t("message.confirmbuy")}}</div>
+		<div class="known">{{$t("message.game_text_confirmpurchase")}}"CAPTAIN {{bigpopupBuymsg.player == 1?$store.state.captain[0].name:(bigpopupBuymsg.player == 2?$store.state.captain[1].name:$store.state.captain[2].name)}}"<br/>{{$t("message.game_hint_blockchain")}}</div>
 		<div class="price"><div>{{confirm_price}} ETH</div></div>
-		<div class="cancelbtn bold" @click="closepopup"><p>{{$t("message.cancel")}}</p></div>
-		<div class="nextbtn bold" @click="buycard"><p>{{$t("message.ok")}}</p></div>
+		<div class="cancelbtn bold" @click="closepopup"><p>{{$t("message.general_button_cancel")}}</p></div>
+		<div class="nextbtn bold" @click="buycard"><p>{{$t("message.general_button_ok")}}</p></div>
 	</div>
 	<div v-show="bigpopupBuymsg.myassets" class="myassets">
 		<div class="myassetstitle"><div class="ghost"></div><div>{{$t("message.game_title_myassets")}}</div></div>
@@ -29,8 +29,8 @@
 	<div v-show="bigpopupBuymsg.setnickname" class="setnickname">
 		<div class="setnicktitle"><div class="ghost"></div><div>{{$t("message.game_text_setname")}}</div></div>
 		<input class="inputname" type="text" maxlength="16" v-bind:placeholder="alertplaceholder" ref="inputname" @focus="clearplace"/>
-		<div class="cancelbtn bold" @click="closepopup"><p>{{$t("message.cancel")}}</p></div>
-		<div class="nextbtn bold" @click="changenickname"><p>{{$t("message.ok")}}</p></div>
+		<div class="cancelbtn bold" @click="closepopup"><p>{{$t("message.general_button_cancel")}}</p></div>
+		<div class="nextbtn bold" @click="changenickname"><p>{{$t("message.general_button_ok")}}</p></div>
 	</div>	  	
   </div>
 </template>

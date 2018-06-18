@@ -17,7 +17,6 @@ if(!localStorage.getItem("j")){
 var arrhash = [];
 
 
-
 service.init = function(){
 	
 	console.log("初始化海盗网站==cookie:",document.cookie);
@@ -200,7 +199,7 @@ service.confirmlogin = function(){
 			var j = localStorage.getItem("j");
 			if(j==1){
 				store.dispatch("showsmallpopup",{enable:true});
-				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_logged;
 				service.login();
 				localStorage.setItem("j","2");
 			}
@@ -210,7 +209,7 @@ service.confirmlogin = function(){
 				var j = localStorage.getItem("j");
 				if(j==1){
 					store.dispatch("showsmallpopup",{enable:true});
-					store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
+					store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_logged;
 					service.login();
 					localStorage.setItem("j","2");
 				}
@@ -230,7 +229,7 @@ service.login = function(){
 	//判断是否在支持metamask的google浏览器上运行
     if(typeof web3 == 'undefined'){
 		store.dispatch("showsmallpopup",{enable:true});
-		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
 		return;
 	}
 	//获取以太账户
@@ -268,7 +267,7 @@ service.login = function(){
 				console.log("用户名是：",store.state.username);
 			}else{
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_logged;
 				store.state.username = result.data.data.name;
 				console.log("我的昵称是：",result.data.data.name);
 			}
@@ -298,7 +297,7 @@ service.login = function(){
 		})
 	}else{
 		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
 		store.state.username = "Login";
 		sessionStorage.setItem("F5","f");
 	}
@@ -316,7 +315,7 @@ service.buycard = function(i){
 	//判断是否在支持metamask的google浏览器上运行
     if(typeof web3 == 'undefined'){
 		store.dispatch("showsmallpopup",{enable:true});
-		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
 	}
 	
 	
@@ -327,7 +326,7 @@ service.buycard = function(i){
 
 	if(!store.state.myaccount){
 		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
 		store.state.username = "Login";
 		sessionStorage.setItem("F5","f");
 	}else{
@@ -347,7 +346,7 @@ service.buycard = function(i){
 				++j;
 				localStorage.setItem("j",j);
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.loggedin;
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_logged;
 				return;
 			}
 		}
@@ -385,7 +384,7 @@ service.buycard = function(i){
 				localStorage.setItem("购买哈希",JSON.stringify(arrhash));
 				console.log("购买哈希",localStorage.getItem("购买哈希"));
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.waitbuy;
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_tradeprocessing;
 			}else{
 				console.log(error);
 			}
@@ -427,7 +426,7 @@ service.buycard = function(i){
 						localStorage.setItem("购买哈希",JSON.stringify(newarrhash));
 						console.log("购买成功，存储日志！",localStorage.getItem("购买哈希"));
 						store.dispatch("showsmallpopup");
-						store.state.alertmsg.alert = i18n.messages[i18n.locale].message.successbuy;
+						store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_tradedone;
 						
 						//重新获取我的卡牌列表
 						service.getmycards();
@@ -473,20 +472,20 @@ service.myassets = function(){
 	//判断是否在支持metamask的google浏览器上运行
     if(typeof web3 == 'undefined'){
 		store.dispatch("showsmallpopup",{enable:true});
-		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
 		return;
 	}
 
 	if(store.state.username.indexOf("Login")>-1){
 		if(!web3.eth.accounts[0]){
 			store.dispatch("showsmallpopup");
-			store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
+			store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
 			store.state.username = "Login";
 			sessionStorage.setItem("F5","f");
 			return;
 		}else{
 			// store.dispatch("showsmallpopup");
-			// store.state.alertmsg.alert = i18n.messages[i18n.locale].message.beforelog;
+			// store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_login;
 			var arr = JSON.parse(localStorage.getItem("昵称"));
 			for(var i=0;i<arr.length;i++){
 				if(arr[i].meta == web3.eth.accounts[0]){
@@ -497,7 +496,7 @@ service.myassets = function(){
 	}else{
 		if(!web3.eth.accounts[0]){
 			store.dispatch("showsmallpopup");
-			store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
+			store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
 			store.state.username = "Login";
 			sessionStorage.setItem("F5","f");
 			return;
@@ -577,7 +576,7 @@ service.setnickname = function(){
 	store.state.myaccount = web3.eth.accounts[0];
 	if(!store.state.myaccount){
 		store.dispatch("showsmallpopup");
-		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.logmetamask;
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
 		store.state.username = "Login";
 		sessionStorage.setItem("F5","f");
 		return;
@@ -639,10 +638,10 @@ service.changenickname = function(nameObj){
 				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.nametoolong;
 			}else if(response.data.state == 10004){
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.nameexisted;
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.game_hint_nameexist;
 			}else if(response.data.state == 500){
 				store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.servererror;
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.game_hint_nameerror;
 			}
 			
 		  }).catch(function (error) {

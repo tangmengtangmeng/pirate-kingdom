@@ -45,8 +45,8 @@ export default {
       
     },
     showfaq: function () {
-      this.$store.state.showFAQ = true;
-      this.$store.state.showshadow = true;
+      this.$store.dispatch("showfaq");
+      this.$store.dispatch("showshadow");
     },
     
   },
@@ -263,6 +263,24 @@ ul>li>a{
   color: rgb(81,86,96);
   margin-left: 46.5%;
   margin-top: 1.2%;
+}
+@media all and (max-width: 1350px){
+  .faq{
+    margin-left: 46%;
+    margin-top: 1.2%;
+  }
+}
+@media all and (max-width: 1150px){
+  .faq{
+    margin-left: 45.5%;
+    margin-top: 1.1%;
+  }
+}
+@media all and (max-width: 1050px){
+  .faq{
+    margin-left: 45%;
+    margin-top: 1%;
+  }
 }
 .twitter,.facebook,.bitguild{
   width: 1.3%;

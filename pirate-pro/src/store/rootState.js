@@ -1,7 +1,6 @@
 import CaptainSell from '../util/contracts/CaptainSell'
 import CaptainToken from '../util/contracts/CaptainToken'
 import CaptainGameConfig from '../util/contracts/CaptainGameConfig'
-// import i18n from '../i18n/index.js'
 
 
 const state = {
