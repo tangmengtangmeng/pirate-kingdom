@@ -33,8 +33,11 @@ export default {
   created:function(){
     //初始化APP获取卡牌信息
     this.service.init();
+    
     var _this = this;
     window.addEventListener("beforeunload",function(){
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
     	if(web3.eth.accounts[0]){
     		sessionStorage.setItem("F5","t");
         sessionStorage.setItem("我的以太坊账户",web3.eth.accounts[0]);
@@ -95,5 +98,8 @@ export default {
   #app,body,html{
     height: 100%;
     background: #000;
+  }
+  #app{
+    min-width: 1000px;
   }
 </style>
