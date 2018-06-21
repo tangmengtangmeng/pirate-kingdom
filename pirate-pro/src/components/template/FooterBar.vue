@@ -291,11 +291,11 @@ ul>li>a{
   cursor: pointer;
 }
 .faq{
-  font-size: 13px;
+  font-size: 1.2em;
   font-weight: 700;
   color: rgb(81,86,96);
   margin-left: 0.8%;
-  margin-top: 1.2%;
+  line-height: 14px;
 }
 .terms,.policy{
   width: auto;
@@ -305,6 +305,7 @@ ul>li>a{
   border-right: 1px solid rgb(81,86,96);
   text-align: center; 
   color: rgb(81,86,96);
+  line-height:14px;
 }
 .terms{
   border-right: 0;
@@ -326,32 +327,25 @@ ul>li>a{
   }
 }
 @media all and (max-width: 1350px){
-  .faq{
-    margin-top: 1.2%;
-  }
   .terms{
     margin-left: 33.5%;
   }
 }
 @media all and (max-width: 1150px){
-  .faq{
-    margin-top: 1.1%;
-  }
+  
   .terms{
     margin-left: 32.6%;
   }
 }
 @media all and (max-width: 1050px){
-  .faq{
-    margin-top: 1%;
-  }
+
   .terms{
     margin-left: 31.3%;
   }
 }
 .twitter,.facebook,.discord,.telegram,.wechat,.qq{
   width: 1.5%;
-  height: 17.5%;
+  height: 18px;
   margin-left: 0.6%;
 }
 .twitter{

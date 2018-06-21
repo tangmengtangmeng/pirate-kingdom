@@ -324,7 +324,8 @@ module.exports = {
         ,
         general_hint_getkittysuccess:"Транзакция выполнена!"
         ,
-        // general_hint_getkittysuccess:"получения котики"
-        // ,
+        home_button_claim: "получения"
+        ,
+        home_button_claimkitties: "получения котики"
      }
 }

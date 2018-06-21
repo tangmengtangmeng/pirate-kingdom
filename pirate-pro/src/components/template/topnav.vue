@@ -21,6 +21,7 @@
           <li class="ko" @click="changeLocale('ko')" v-show="selectlan&&!lan_ko"></li>
           <li class="ja" @click="changeLocale('ja')" v-show="selectlan&&!lan_ja"></li>
           <li class="ru" @click="changeLocale('ru')" v-show="selectlan&&!lan_ru"></li>
+          
 	    </ul>
       <div class="invite" @click="showinvite"><p>{{$t("message.home_button_invite")}}</p></div>
 		</div>
@@ -148,7 +149,8 @@ export default {
 .topnav{
 	width: 100%;
   min-width: 1000px;
-	height: 5%;
+	/*height: 5%;*/
+  height:46px;
 	position: fixed;
 	top: 0;
 	background:rgba(0,0,0,0.5); 
@@ -160,6 +162,9 @@ export default {
 	position: absolute;
 	left: 0;
 }
+.topleft .faq {
+  color:#a7a7a7;
+}
 .faq,.twitter,.facebook,.discord,.telegram,.wechat,.qq{
   display: block;
   float: left;
@@ -169,28 +174,25 @@ export default {
   cursor: pointer;
 }
 .faq{
-  font-size: 0.9em;
+  font-size: 1.2em;
   font-weight: 700;
   color: #fff;
   margin-left: 41.3%;
-  margin-top: 2.2%;
+  margin-top: 1.5%;
 }
 @media all and (max-width: 1500px){
   .faq{
     margin-left: 38%;
-    margin-top: 2.4%;
-  }
+      }
 }
 @media all and (max-width: 1300px){
   .faq{
     margin-left: 35%;
-    margin-top: 2.6%;
   }
 }
 @media all and (max-width: 1200px){
   .faq{
     margin-left: 31%;
-    margin-top: 2.8%;
   }
 }
 .twitter,.facebook,.discord,.telegram,.wechat,.qq{
@@ -276,7 +278,7 @@ export default {
   background:url("../../assets/invite.png") center center no-repeat; 
   background-size: 100%;
   position: relative;
-  top: 10%;
+  top:5px;
   right: 2%;
   color: #fff;
   font-size: 1em;
@@ -293,18 +295,20 @@ export default {
   text-align: center;
   padding-left: 14%;
 }
+.ruapp .invite p {
+  line-height:0.8;
+}
 .topright ul{
     width: 6%;
     min-width: 50px;
-    height: 73%;
-    min-height: 35px;
+    height:36px;
     float: right;
     background:url("../../assets/arrow.png") right center no-repeat;
     background-size: contain;
     border-radius: 10px;
     position: relative;
     z-index: 12;
-    top: 18%;
+    margin-top:5px;
   }
   .topright ul.open{
     border-radius: 0;
@@ -318,13 +322,11 @@ export default {
     left: -9%;
   }
   .topright ul>li:nth-child(1){
-    height: 100%;
+    height: 113%;
     background-color: transparent;
-    margin-bottom: 10%;
   }
   .enapp .topright ul>li:nth-child(1){
     background:url("../../assets/USA.png") center center no-repeat;
-    background-size: 100% 110%; 
   }
   .zhapp .topright ul>li:nth-child(1){
     background:url("../../assets/CHINA.png") center center no-repeat;

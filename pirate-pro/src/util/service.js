@@ -32,6 +32,8 @@ service.init = function(){
 	} else {
 		//判断是否在支持metamask的google浏览器上运行
 	    if(typeof web3 == 'undefined'){
+	    	store.dispatch("showsmallpopup"); //,{enable:true}
+			store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletinstall;
 			return;
 		}
 	    // set the provider you want from Web3.providers
@@ -172,7 +174,30 @@ service.init = function(){
 	service.getmycards();
 
 	//获取kitty猫 add by Anna @2018/6/20
-	service.getKitties();
+	var accountInterval = setInterval(function () {
+        if (web3.eth.accounts[0] !== store.state.myaccount) {
+          store.state.myaccount = web3.eth.accounts[0];
+          sessionStorage.setItem("我的以太坊账户", web3.eth.accounts[0]);
+          service.getKitties();
+        }
+		
+    }, 1000);
+  	store.state.myaccount = web3.eth.accounts[0]    //getAccount
+  
+  	service.getKitties();
+	
+	 //判断以太坊的网络线路
+	 web3.version.getNetwork((err, netId) => {
+	 	var version = parseInt(netId);
+		store.state.network = version;
+		if(version != 1){
+			store.dispatch("showsmallpopup"); //,{enable:true}
+			store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_notmainnet;
+		}
+	 });
+
+
+	
 
 	//注册用户
 
@@ -711,6 +736,9 @@ service.changenickname = function(nameObj){
 			}else if(response.data.state == 500){
 				store.dispatch("showsmallpopup");
 				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.game_hint_nameerror;
+			}else if(response.data.state == 10007){
+				store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.home_hint_emailexists;
 			}
 			
 		  }).catch(function (error) {
@@ -749,7 +777,7 @@ service.verifyEmail = function(m,a){
 		  	if(response.data.state == 200){
 		  		// alert("验证成功")
 		  		store.dispatch("showsmallpopup");
-				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.home_hint_verifysuccessfully;
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.home_hint_verificationsent;
 		  		localStorage.setItem("验证邮箱",emailaddress);
 		  	}else if(response.data.state == 10010){
 		  		store.dispatch("showsmallpopup");
@@ -783,15 +811,13 @@ service.getKitties = function () {
 		CaptainKittyInstance = CaptainKitty.at(store.state.CaptainKitty_address4);
 	}
 	
-	
-	if(web3.eth.accounts[0]){
+	//获取以太账户
+	if(typeof web3 !== 'undefined'){
 		store.state.myaccount = web3.eth.accounts[0];
-	}else{
-		if(sessionStorage.getItem("我的以太坊账户")){
-			store.state.myaccount = sessionStorage.getItem("我的以太坊账户");
-		}else{
-			store.state.myaccount = sessionStorage.getItem("我的以太坊账户");
-		}
+	}
+
+	if(!store.state.myaccount){
+		return;
 	}
 
 
@@ -814,6 +840,30 @@ service.getKitties = function () {
 }
 
 service.createKitties = function () {   //领取海盗猫
+
+	//判断是否在支持metamask的google浏览器上运行
+    if(typeof web3 == 'undefined'){
+		store.dispatch("showsmallpopup",{enable:true});
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
+	}
+	
+	
+	//获取以太账户
+	if(typeof web3 !== 'undefined'){
+		store.state.myaccount = web3.eth.accounts[0];
+	}
+
+	if(!store.state.myaccount){
+		store.dispatch("showsmallpopup");
+		store.state.alertmsg.alert = i18n.messages[i18n.locale].message.general_hint_walletlogout;
+		store.state.username = "Login";
+		sessionStorage.setItem("F5","f");
+		return;
+	}
+
+	if(store.state.isGetKitty || store.state.KittyCount == 0) {  //领取过 或者 没有kitty
+		return;
+	}
 	
 	var KittyCore = web3.eth.contract(store.state.KittyCore_abiarray);
 	var KittyCoreInstance = "";
@@ -832,12 +882,6 @@ service.createKitties = function () {   //领取海盗猫
 	
 	if(web3.eth.accounts[0]){
 		store.state.myaccount = web3.eth.accounts[0];
-	}else{
-		if(sessionStorage.getItem("我的以太坊账户")){
-			store.state.myaccount = sessionStorage.getItem("我的以太坊账户");
-		}else{
-			store.state.myaccount = sessionStorage.getItem("我的以太坊账户");
-		}
 	}
 
 	CaptainKittyInstance.createKitties(function(error, result){
@@ -867,7 +911,7 @@ service.getmyinfo = function(){
 	var url = configData.base_url + configData.get_myinfo;
 	var nowtime = new Date().getTime();
 	var postData;
-	var address = store.state.myaccount;
+	var address = web3.eth.accounts[0];
 	var secstr = md5(encodeURI("time="+(new Date().getTime())+"&token="+address+"&"+"09acE6EbXWdHWAjCQBqgU6GfKg7PgQza"));
 	console.log("签名：",secstr);
 	postData = {
@@ -883,6 +927,10 @@ service.getmyinfo = function(){
 			store.state.iaccount = response.data.data.token;
 			store.state.iemail = response.data.data.email;
 
+		}else{
+			// store.state.inickname = i18n.messages[i18n.locale].message.general_title_name;
+			store.state.iaccount = web3.eth.accounts[0];
+			// store.state.iemail = i18n.messages[i18n.locale].message.home_text_email;
 		}
 		
 	}).catch(function(error){

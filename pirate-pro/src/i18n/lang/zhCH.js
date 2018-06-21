@@ -63,7 +63,7 @@ module.exports = {
         ,
         home_title_roadmap:"里程碑"
         ,
-        home_title_roadmapdate1:"6月15日"
+        home_title_roadmapdate1:"6月22日"
         ,
         home_title_roadmapdate2:"七月下旬"
         ,
@@ -380,6 +380,9 @@ module.exports = {
         home_text_youcanclaim: "你可以认领： "
         ,
         general_hint_getkittysuccess: "认领成功。"
-        
+        ,
+        home_button_claim: "认领"
+        ,
+        home_button_claimkitties: "认领海盗猫"
     }
 }

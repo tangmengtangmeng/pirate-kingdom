@@ -39,7 +39,7 @@
 		<p v-show="mailerror" class="alertp">{{$t("message.home_hint_incorrectemail")}}</p>
 		<input type="text" maxlength="20" v-model="inputnickname" class="inputnickname" v-bind:placeholder="alertplaceholder" @focus="clearplace1"/><br/>
 		<input type="text" v-model="inputethaccount" class="inputethaccount" readonly="readonly"/><br/>
-		<input type="text" v-model="inputmail" class="inputemail" v-bind:readonly="!notverify"/>
+		<input type="text" v-model="inputmail" class="inputemail" v-bind:readonly="!notverify" @focus="clearplace2" v-bind:placeholder="mailplaceholder"/>
 		<div class="verifybtn" @click="verifyEmail" v-show="notverify"><p>{{$t("message.home_button_verify")}}</p></div>
 		<p v-bind:class="{'hidden':!notverify}">{{$t("message.home_text_verifyhint")}}</p>
 		<div class="savebtn" @click="changenickname"><p>{{$t("message.general_button_ok")}}</p></div>
@@ -50,7 +50,7 @@
 		<div class="known">{{$t('message.home_text_answer21')}}</div>
 		<div class="youcanclaim known">{{$t('message.home_text_youcanclaim')}} {{$store.state.KittyCount}}</div><!-- -->
 		<!-- <div class="cancelbtn bold" @click="closepopup"><p>{{$t("message.general_button_cancel")}}</p></div> -->
-		<div class="nextbtn bold btn-center" @click="createKitty"><p>{{$t("message.general_button_ok")}}</p></div>
+		<button class="nextbtn bold btn-center claim-btn" v-bind:disabled="$store.state.KittyCount == 0" @click="createKitty">{{$t("message.home_button_claim")}}</button>
 	</div>
   </div>
 </template>
@@ -67,8 +67,8 @@ export default {
       popuptop: "",
       showbuypopup: "",
       showconfirmpopup: "",
-      alertplaceholder: "",
-      mailplaceholder: "",
+      alertplaceholder: this.$t("message.general_title_name"),
+      mailplaceholder: this.$t("message.home_text_email"),
       inputnickname: "",
       inputethaccount: "",
       inputmail: "",
@@ -117,9 +117,17 @@ export default {
 		  		console.log("9999999");
 		  		this.closepopup();
   			}else{
+  				if(!this.inputmail){
+  					var data = {name:name};
+			  		this.service.changenickname(data);
+			  		console.log("9999999");
+			  		this.closepopup();
+  					return;
+  				}
   				var reg = new RegExp("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$");
 				if(!reg.test(this.inputmail)){
 					this.initerr();
+					this.notverify =true;
 					this.mailerror = true;
 					return;
 				}
@@ -135,11 +143,15 @@ export default {
   		}
   	},
   	clearplace1: function () {
-  		this.inputnickname ="";
-        
+  		
+        // this.inputnickname = "";
   	},
   	clearplace2: function () {
-  		this.inputmail="";
+  		/*if(this.hasverify || !this.notverify){
+  			return;
+  		}
+  		
+  		this.inputmail= "";*/
   	},
   	verifyEmail: function () {
   		
@@ -149,6 +161,7 @@ export default {
   		if(mail && myaccount){
 			if(!reg.test(mail)){
 				this.initerr();
+				this.notverify = true;
 				this.mailerror = true;
 				return;
 			}else{
@@ -161,12 +174,14 @@ export default {
   			this.service.verifyEmail(mail,myaccount);
   			this.closepopup();
   		}else{
-  			if(!myaccount){
+  			/*if(!myaccount){
 
   			}else if(!mail){
+  				
   				this.initerr();
+  				this.notverify = true;
   				this.mailerror = true;
-  			}
+  			}*/
   		}
   	},
   	copyid: function () {
@@ -177,9 +192,9 @@ export default {
   		this.closepopup();
   	},
   	createKitty: function () {
-  		if(!this.$store.state.isGetKitty && this.$store.state.KittyCount > 0) {  //拥有的kitty数量大于0，且未领取过
+  		//if(!this.$store.state.isGetKitty && this.$store.state.KittyCount > 0) {  //拥有的kitty数量大于0，且未领取过
   			this.service.createKitties();
-  		}
+  		//}
   		
   	}
   },
@@ -226,10 +241,16 @@ export default {
     var _this = this;
     setTimeout(function(){
     	_this.inputnickname = _this.$store.state.inickname;
-    	_this.inputethaccount = _this.$store.state.iaccount;
+    	_this.inputethaccount = _this.$store.state.iaccount?_this.$store.state.iaccount:web3.eth.accounts[0];
     	_this.inputmail = _this.$store.state.iemail;
-    	_this.notverify = !_this.$store.state.is_verify;
-        _this.hasverify = _this.$store.state.is_verify;
+    	if(_this.$store.state.is_verify){
+    		_this.notverify = false;
+        	_this.hasverify = false;
+    	}else{
+    		_this.notverify = !_this.$store.state.is_verify;
+        	_this.hasverify = _this.$store.state.is_verify;
+    	}
+    	
     	console.log("0000",_this.inputnickname);
     },2000)
     
@@ -357,7 +378,7 @@ export default {
 		margin: 0 29%;
 		color: rgb(76,38,2);
 		position: absolute;
-		z-index: 30;
+		z-index: 400;
 	}
 	
 	.close{
@@ -633,13 +654,13 @@ export default {
 	.confirmtitle{
 		width: 100%;
 		height: 26px;
-		font-size: 15px;
 		color: rgb(76,38,2);
     	position: relative;
     	top: 13%;
     	display: flex;
     	justify-content: center;
     	align-items: center;
+        font-size:22px;
 	}
 	.ghost{
 		width: 5%;
@@ -652,6 +673,7 @@ export default {
 	.ghost+div{
 		float: left;
 		display: flex;
+        margin-top:-3px;
 	}
 	.ghost,.ghost+div{
 		position: relative;
@@ -661,10 +683,10 @@ export default {
 		width: 100%;
 		height: 27.4%;
 		position: relative;
-		top: 20%;
-		padding: 0 16% 0 14%;
+		top: 18%;
+		padding: 0 14%;
 		box-sizing: border-box;
-		font-size: 12px;
+		font-size: 14px;
 		line-height: 1.3;
 	}
 	.price{
@@ -707,9 +729,6 @@ export default {
 		.known{
 			font-size: 13px;
 		}
-		.confirmtitle{
-			font-size: 16px;
-		}
 	}
 	@media all and (min-width: 1100px){
 		.cancelbtn,.nextbtn{
@@ -720,9 +739,6 @@ export default {
 		}
 		.known{
 			font-size: 14px;
-		}
-		.confirmtitle{
-			font-size: 18px;
 		}
 	}
 	@media all and (min-width: 1200px){
@@ -735,9 +751,6 @@ export default {
 		.known{
 			font-size: 15px;
 		}
-		.confirmtitle{
-			font-size: 20px;
-		}
 	}
 	@media all and (min-width: 1400px){
 		.cancelbtn,.nextbtn{
@@ -749,9 +762,6 @@ export default {
 		.known{
 			font-size: 16px;
 		}
-		.confirmtitle{
-			font-size: 22px;
-		}
 	}
 	@media all and (min-width: 1600px){
 		.price>div{
@@ -760,9 +770,6 @@ export default {
 		.known{
 			font-size: 17px;
 		}
-		.confirmtitle{
-			font-size: 24px;
-		}
 	}
 	@media all and (min-width: 1800px){
 		.price>div{
@@ -770,9 +777,6 @@ export default {
 		}
 		.known{
 			font-size: 18px;
-		}
-		.confirmtitle{
-			font-size: 26px;
 		}
 	}
 	.cancelbtn>p,.nextbtn>p{
@@ -918,12 +922,13 @@ export default {
 		top: 10px;
 		outline: none;
 		border: 0;
-		padding-left: 5.1%;
+		padding-left: 7%;
     	box-sizing: border-box;
     	font-size: 13px;
+        padding-right:5px;
 	}
 	.verifyemail .inputnickname{
-		margin-top: 20%;
+		margin-top: 14%;
 		background:url("../../../../assets/input1.png") center center no-repeat; 
 		background-size: 100% 100%;
 	}
@@ -956,19 +961,26 @@ export default {
 	}
 	.verifyemail .alertp{
 		color: rgb(223,89,0);
-		position: absolute;
-		top: 27%;
-		width: 51%;
-    	text-align: left;
-    	left: 24%;
+	    position: relative;
+	    top: 19%;
+	    width: 51%;
+	    text-align: left;
+	    left: 0;
 	}
+
+    .ruapp .verifybtn>p{
+        font-size:12px;
+    }
+/*--- XQ_css ---*/
 	.verifyemail>p{
-		color: rgb(223,89,0);
+        width: 80%;
+	    margin: 10px auto 0 auto;
+	    color: rgb(223,89,0);
 	}
 	.verifyemail>.savebtn{
 		width: 24.4%;
 		height: 10.6%;
-		margin: 3% auto;
+		margin: 2% auto;
 		background:url("../../../../assets/savebtn.png") center center no-repeat; 
 		background-size: 100% 100%;
 		display: table;
@@ -1067,8 +1079,51 @@ export default {
 	.btn-center.nextbtn {
 		transform: translateX(-50%);
     	left: 50%;
+    	padding: 0;
+	    border: 0;
+	    text-align: center;
+	    color: rgb(135,45,0);
+	    outline: none;
 	}
-
-		
+	.btn-center.nextbtn:disabled{
+		color: #ffffff;
+		cursor: default;
+		background:url("../../../../assets/cancelbtn.png") center center no-repeat;
+		background-size: contain; 
+	}
+/*---XQ CSS---*/
+    .verifyemail .inputemail {
+            padding-right:21%;
+        }
+    .jaapp .verifyemail>p {
+        font-size:14px;
+    }
+	@media screen and (max-width:1000px){
+        .known {
+            top: 15%;
+            line-height:1.2;
+        }
+        .known.youcanclaim {
+            top:33%;
+        }
+        .confirmtitle {
+            font-size:16px;
+        }
+        .verifyemail .inputnickname {
+            margin-top:13%;
+        }
+    }
+    @media screen and (max-width:1200px){
+        .verifyemail input {
+            width:66%;
+        }
+        .verifybtn {
+            width:26%;
+            height:10%;
+        }
+    }
+    .ruapp .ghost+div {
+        margin-top:-6px;
+    }
 </style>
 

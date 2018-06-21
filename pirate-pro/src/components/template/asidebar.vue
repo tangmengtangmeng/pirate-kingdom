@@ -2,9 +2,9 @@
 	<div>
 		<div :style="{'top':asidebartop,'right':asidebarright,'height':asidebarheight}" class="asidebar">
 			<div class="cat">
-				<div class="catk"></div>
-				<div class="btn"><div @click="claimKitties">CLAIM KITTIES</div></div>
-				<div class="catnumbox"><img src="../../assets/catnum.png" class="catnum"/><p>{{$store.state.CaptainKittyCount}}</p></div>
+				<div class="catk" v-if="$store.state.isGetKitty!==undefined" v-bind:class="{'dip-cat': $store.state.isGetKitty===true}"></div>
+				<div class="btn" v-if="$store.state.isGetKitty===false"><div @click="claimKitties">{{$t("message.home_button_claimkitties")}}</div></div>
+				<div class="catnumbox" v-bind:class="{'dip-cat': $store.state.isGetKitty===true}" v-if="$store.state.isGetKitty===true"><img src="../../assets/catnum.png" class="catnum"/><p>{{$store.state.CaptainKittyCount}}</p></div>
 			</div>
 			<ul :style="{'height':ulheight}">
 				<li v-bind:class="{'top1':top1}" @click="gotop1"><p>{{$t("message.home_title_presale")}}</p></li>
@@ -55,11 +55,10 @@ export default {
   		var val = document.documentElement.clientWidth;
   		var topheight = val/1920*975 + "px";
   		var asidebarheight = (val)/1920 * 436 + "px";
-  		this.asidebartop = parseInt(topheight) + parseInt(asidebarheight)*0.22 + "px";
   		this.clear();
   		this.top1 = true;
-  		document.documentElement.scrollTop =0; 
-  		document.body.scrollTop = 0;
+  		document.documentElement.scrollTop = parseInt(topheight) ; 
+  		document.body.scrollTop = parseInt(topheight) ; 
   		
   	},
   	gotop2: function(){
@@ -90,6 +89,7 @@ export default {
   		this.clear();
   	},
   	claimKitties: function(){
+  		
   		this.$store.dispatch("showbigpopup");
         this.$store.state.buymsg.claimKitties = true;
   	}
@@ -185,7 +185,9 @@ export default {
     
   },
   computed: {
-
+  	isGetKitty(){
+  		return this.$store.state.isGetKitty
+  	}
   },
   destroyed () {
     window.removeEventListener("resize");
@@ -298,4 +300,12 @@ export default {
 		position: relative;
 		left: -50%;
 	}
+
+	.cat .catnumbox.dip-cat{
+		top: -12%;
+	}
+	.cat .catk.dip-cat{
+		top: -31%;
+	}
+
 </style>

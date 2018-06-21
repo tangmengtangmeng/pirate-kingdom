@@ -262,7 +262,7 @@ module.exports = {
 		,
 		home_button_verify:"인증하기"
 		,
-		home_text_verifyhint:"이메일 인증을 완료하면, 보물상자 하나를 공짜로 얻을 수 있습니다!"
+		home_text_verifyhint:"당신의 이메일 주소를 인증하고 보물상자를 구매하면, 한 개를 무료로 또 드립니다!"
 		,
 		home_hint_incorrectemail:"유효한 이메일 주소를 입력하세요."
 		,
@@ -324,7 +324,8 @@ module.exports = {
 		,
 		general_hint_getkittysuccess:"거래가 성공적으로 완료되었습니다!"
 		,
-		/*general_hint_getkittysuccess:"고양이를 요구할"
-		,*/
+		home_button_claim: "요구할"
+		,
+		home_button_claimkitties: "고양이를 요구할"
 	}
 }

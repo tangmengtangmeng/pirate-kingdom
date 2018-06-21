@@ -11,13 +11,17 @@
           <li v-for="(carditem,index) in carditems">
             <div class="soldamount">{{$t("message.game_text_sold")}}  {{carditem.soldamount}}/{{carditem.totalamount}}</div>
             <div @mouseenter="light($event)" @mouseleave="none($event)" @click="detail(index + 1)"><div></div></div>
-            <div class="attack">{{$store.state.captain[index].attack}}</div><div class="defense">{{$store.state.captain[index].defense}}</div>
+            <div class="attack">{{$store.state.captain[index].attack1}} - {{$store.state.captain[index].attack2}}</div><div class="defense">{{$store.state.captain[index].defense}}</div>
             <div class="level" v-bind:class="{'level1':carditem.level == 1}"></div>
+            <div class="prebtn" @click="confirmbuycard(index + 1)" :style="{'height':divheight}" v-bind:class="{'clickbg':clicked[index],'disablebtn':disabledbtn[index]}" @mousedown="btndown(index)">
+              <div class="normalbtn" v-show="!disabledbtn[index]">{{btnitems[index].price}} ETH</div>
+              <div class="soldbtn" v-show="disabledbtn[index]">{{$t("message.game_text_soldout")}}</div>
+            </div>
           </li>
         </ul>
-        <ul class="prebtn" :style="{'height':btnheight}">
+        <!-- <ul class="prebtn" :style="{'height':btnheight}">
           <li v-for="(btnitem,index) in btnitems"><div @click="confirmbuycard(index + 1)" :style="{'height':divheight}" v-bind:class="{'clickbg':clicked[index],'disablebtn':disabledbtn[index]}" @mousedown="btndown(index)"><div v-show="!disabledbtn[index]">{{btnitem.price}} ETH</div><div v-show="disabledbtn[index]">{{$t("message.game_text_soldout")}}</div></div></li>
-        </ul>
+        </ul> -->
         <div class="sale" v-show="showbigpopup">
           <bigPopup :bigpopup-buymsg="buymsg"></bigPopup>
         </div>
@@ -190,8 +194,8 @@ export default {
           _this.playersheight = (val)/ 1920 * 825 + "px";
           _this.titleheight = "9.44%";
           _this.playerheight = "70%";
-          _this.btnheight = "14.5%";
-          _this.divheight = "60%";
+          _this.btnheight = "14%";
+          _this.divheight = "13%";
           _this.potsheight = val /1920 * 875 + "px";
           _this.mapheight = (val) /1920 * 715 + "px";
           _this.chestsheight = (val) /1920 * 860 + "px";
@@ -271,6 +275,7 @@ export default {
   width: 100%;
   background: url("../../assets/presale.png") center center no-repeat;
   background-size: 100% 100%;
+  min-height: 715px;
 }
 /*.pretitle{
   width: 46.9%;
@@ -319,10 +324,12 @@ export default {
     font-size: 16px;
   }
 }
-.preplayer,.prebtn{
+.preplayer{
   width:60%;
   height: 70%;
   margin: 0 auto; 
+  min-width: 1000px;
+  min-height: 500px;
 }
 .preplayer li,.prebtn li{
   height: 100%;
@@ -388,45 +395,24 @@ export default {
 .prebtn{
   height: 14.5%;
 }
-.prebtn>li{
-  width: 33.33%;
-  padding-left: 1.8%;
-  box-sizing: border-box;
-}
-.prebtn>li>div{
-  width: 60%;
-  height: 60%;
-  margin:0 auto;
+
+.preplayer li div.prebtn{
+  min-width: 190px;
+  min-height: 60px;
   text-align: center;
   font-size: 24px;
   color: rgb(254,238,0);
   display: table;
   box-sizing: border-box;
 }
-.prebtn>li>div>div{
+.preplayer li div div.normalbtn,.preplayer li div div.soldbtn{
   display: table-cell;
   vertical-align: middle;
   position: relative;
   left: -4%;
+  font-size: 24px;
 }
-.prebtn>li>div:hover{
-  cursor: pointer;
-  background:url("../../assets/player1b_click.png");
-  background-size: 100% 100%; 
-}
-.prebtn li>div{
-  background:url("../../assets/player1b.png");
-  background-size: 100% 100%; 
-}
-.prebtn li>div.disablebtn{
-  background:url("../../assets/player1b_gray.png");
-  background-size: 100% 100%;
-  color: #fff;
-}
-.prebtn li>div.clickbg{
-  background:url("../../assets/player1b_afterclick.png");
-  background-size: 100% 100%; 
-}
+
 .preplayer li div{
   width: 80%;
   height: 83%;
@@ -491,6 +477,7 @@ export default {
   }
   .prebtn>li>div{
     font-size: 20px;
+    margin-left: 18%;
   }
 }
 @media all and (max-width: 1300px){
@@ -499,6 +486,7 @@ export default {
   }
   .prebtn>li>div{
     font-size: 19px;
+    margin-left: -2%;
   }
 }
 @media all and (max-width: 1100px){
@@ -517,6 +505,37 @@ export default {
     font-size: 15px;
   }
 }
+.preplayer li div.prebtn{
+  width:60%;
+  height: 13%;
+  margin: 0 auto; 
+  top: -12.7%;
+}
+.preplayer li div div.normalbtn,.preplayer li div div.soldbtn{
+  width: 100%;
+  height: 100%;
+  transform: rotate(0);
+  left: -1.5%;
+  top: 0;
+}
+.preplayer li div div.normalbtn:hover{
+  cursor: pointer;
+  background:url("../../assets/player1b_click.png");
+  background-size: 100% 100%; 
+}
+.preplayer li div div.normalbtn{
+  background:url("../../assets/player1b.png");
+  background-size: 100% 100%; 
+}
+.preplayer li div div.soldbtn{
+  background:url("../../assets/player1b_gray.png");
+  background-size: 100% 100%;
+  color: #fff;
+}
+.preplayer li div div.soldbtn.clickbg{
+  background:url("../../assets/player1b_afterclick.png");
+  background-size: 100% 100%; 
+}
 .preplayer li div.attack,.preplayer li div.defense{
   width: 16%;
   height: 4.3%;
@@ -532,26 +551,26 @@ export default {
   width: 20%;
 }
 .preplayer li div.defense{
-  left:42%;
+  left:48%;
   min-width: 40px;
 }
 .preplayer li:nth-child(1) div.attack,.preplayer li:nth-child(1) div.defense{
-  top: -16.6%;
+  top: -16%;
 }
 .preplayer li:nth-child(2) div.attack,.preplayer li:nth-child(2) div.defense{
-  top: -16.5%;
+  top: -16%;
 }
 .preplayer li:nth-child(2) div.defense{
-  left: 40%;
+  left: 46%;
 }
 .preplayer li:nth-child(3) div.attack,.preplayer li:nth-child(3) div.defense{
-  top: -16.7%;
+  top: -16.1%;
 }
 .preplayer li:nth-child(3) div.attack{
   left: 22%;
 }
 .preplayer li:nth-child(3) div.defense{
-  left: 40%;
+  left: 46%;
 }
 @media all and (min-width: 800px){
   .preplayer li div{
@@ -559,16 +578,16 @@ export default {
   }
   .preplayer li:nth-child(1) div.attack,.preplayer li:nth-child(1) div.defense,.preplayer li:nth-child(2) div.attack,.preplayer li:nth-child(2) div.defense,
   .preplayer li:nth-child(3) div.attack,.preplayer li:nth-child(3) div.defense{
-    top: -16.6%;
+    top: -16%;
   }
   .preplayer li div.defense{
-    left:40%;
+    left:48%;
   }
   .preplayer li:nth-child(2) div.defense{
-    left:38%;
+    left:46%;
   }
   .preplayer li:nth-child(3) div.defense{
-    left:36%;
+    left:44%;
   }
 }
 @media all and (min-width: 1100px){
@@ -577,41 +596,41 @@ export default {
   }
   .preplayer li:nth-child(1) div.attack,.preplayer li:nth-child(1) div.defense,.preplayer li:nth-child(2) div.attack,.preplayer li:nth-child(2) div.defense,
   .preplayer li:nth-child(3) div.attack,.preplayer li:nth-child(3) div.defense{
-    top: -16.1%;
+    top: -16.2%;
   }
   .preplayer li div.defense{
-    left:45%;
+    left:49%;
   }
   .preplayer li:nth-child(2) div.defense{
-    left:43%;
+    left:47%;
   }
   .preplayer li:nth-child(3) div.defense{
-    left:42%;
+    left:46%;
   }
 }
 @media all and (min-width: 1250px){
   .preplayer li div.defense{
-    left:47%;
+    left:48%;
   }
   .preplayer li:nth-child(2) div.defense{
-    left:45%;
+    left:47%;
   }
   .preplayer li:nth-child(3) div.defense{
-    left:44%;
+    left:46%;
   }
 }
 @media all and (min-width: 1400px){
   .preplayer li:nth-child(1) div.attack{
-    top: -16%;
+    top: -16.5%;
   }
   .preplayer li:nth-child(1) div.defense{
-    top:-15.9%;
+    top:-16.3%;
   }
   .preplayer li:nth-child(2) div.attack,.preplayer li:nth-child(2) div.defense{
-    top: -15.8%;
+    top: -16.2%;
   }
   .preplayer li:nth-child(3) div.attack,.preplayer li:nth-child(3) div.defense{
-    top: -15.9%;
+    top: -16.2%;
   }
   .preplayer li div.defense{
     left:49%;
@@ -625,10 +644,10 @@ export default {
 }
 @media all and (min-width: 1800px){
   .preplayer li:nth-child(1) div.attack,.preplayer li:nth-child(1) div.defense{
-    top: -15.5%;
+    top: -16%;
   }
   .preplayer li:nth-child(2) div.attack,.preplayer li:nth-child(2) div.defense,.preplayer li:nth-child(3) div.attack,.preplayer li:nth-child(3) div.defense{
-    top: -15.3%;
+    top: -15.8%;
   }
 }
 .introduce-pots{
@@ -746,7 +765,7 @@ export default {
   height: auto;
   /*color: rgb(211,193,135);*/
   color: #fff;
-  font-size: 1em;
+  font-size: 16px;
   font-weight: 600;
   margin: 0 auto;
   padding-left: 0;
@@ -1088,7 +1107,7 @@ export default {
 }
 .ALLIANCES{
   width: 100%;
-  background:url("../../assets/ALLIANCES.png") center center no-repeat; 
+  background:url("../../assets/ALLIANCES.jpg") center center no-repeat; 
   background-size: 100% 100%;
   margin-top: -1px;
 }
@@ -1128,5 +1147,18 @@ export default {
   .kingp,.battlesp,.ALLIANCESp{
     font-size: 1.1em;
   } 
+}
+/*---XQ---*/
+.ruapp .craftingp {
+  margin-top:-15px;
+}
+.koapp .craftingp {
+  margin-top:-10px;
+}
+.jaapp .kingp {
+  margin-top:-10px;
+}
+.jaapp .ALLIANCESp {
+  margin-top:-10px;
 }
 </style>

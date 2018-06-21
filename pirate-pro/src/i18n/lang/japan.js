@@ -324,7 +324,8 @@ module.exports = {
 		,
 		general_hint_getkittysuccess:"取得成功!"
 		,
-		// general_hint_getkittysuccess:"獲得海盗猫"
-		
+		home_button_claim: "獲得"
+		,
+		home_button_claimkitties: "獲得海盗猫"
 	}
 }

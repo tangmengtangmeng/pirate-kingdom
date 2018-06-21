@@ -84,7 +84,7 @@ const state = {
 	CaptainKitty_address4: "0xf6052acf2d8ee25269da62fc721fd6e90772e328",
 	KittyCoreInstance: "",
 	CaptainKittyInstance: "",
-	isGetKitty: false,
+	isGetKitty: undefined,
 	KittyCount: 0,			//kitty猫
 	CaptainKittyCount: 0,	//海盗猫
 	network: 0,

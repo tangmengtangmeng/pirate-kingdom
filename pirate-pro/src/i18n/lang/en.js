@@ -380,6 +380,9 @@ module.exports = {
 		home_text_youcanclaim: "You can claim："
 		,
 		general_hint_getkittysuccess: "Claim Successfully"
-		
+		,
+		home_button_claim: "CLAIM"
+		,
+		home_button_claimkitties: "CLAIM KITTIES"
 	}
 }
