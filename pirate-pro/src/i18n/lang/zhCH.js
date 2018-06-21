@@ -19,7 +19,7 @@ module.exports = {
         ,
         home_title_presalehint:"这三个神话级海盗仅在预售中出现，千万别错过！"
         ,
-        game_text_sold:"剩余："
+        game_text_sold:"剩余:"
         ,
         game_text_soldout:"已售罄"
         ,
@@ -375,5 +375,11 @@ module.exports = {
         ,
         home_title_introduction:"玩法介绍"
         ,
-	}
+        home_text_piratekitties: "海盗猫"
+        ,
+        home_text_youcanclaim: "你可以认领： "
+        ,
+        general_hint_getkittysuccess: "认领成功。"
+        
+    }
 }

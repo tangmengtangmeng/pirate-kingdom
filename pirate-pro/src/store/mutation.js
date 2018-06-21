@@ -58,6 +58,7 @@ const mutations = {
 		state.buymsg.player = "";
 		state.buymsg.buycard = "";
 		state.buymsg.verifyemail = "";
+		state.buymsg.claimKitties = "";
 		state.buymsg.invite = "";
 		state.btnclicked[0] = false;
 		state.btnclicked[1] = false;
@@ -76,11 +77,18 @@ const mutations = {
 		state.buymsg.confirmbuycard = "";
 		state.buymsg.buycard = "";
 		state.buymsg.player = "";
+		state.buymsg.claimKitties = "";
 	},
 	clearmycaptain (state) {
 		state.mycaptain1 = [];
 		state.mycaptain2 = [];
 		state.mycaptain3 = [];
+	},
+	showPOPUP (state) {
+		state.showPOPUP = true;
+	},
+	hidePOPUP (state) {
+		state.showPOPUP = false;
 	},
 	showfaq (state) {
 		state.showFAQ = true;
@@ -88,6 +96,17 @@ const mutations = {
 	hidefaq (state) {
 		state.showFAQ = false;
 	},
-
+	showterms (state) {
+		state.showTerms = true;
+	},
+	hideterms (state) {
+		state.showTerms = false;
+	},
+	showpolicy (state) {
+		state.showPolicy = true;
+	},
+	hidepolicy (state) {
+		state.showPolicy = false;
+	}
 }
 export default mutations
