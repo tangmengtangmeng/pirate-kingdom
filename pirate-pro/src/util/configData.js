@@ -28,6 +28,7 @@ const configData = {
 	get_myinvitecode: '/api/users/getMyInviteCode',
 	setlog: '/api/log/main',
 	verifyemail: '/api/users/verifyEmail',
+	get_myinfo: '/api/users/getMyInfo',
 }
 
 export default configData

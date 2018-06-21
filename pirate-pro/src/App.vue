@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:class="{'zhapp':locale_zh,'enapp':locale_en}">
+  <div id="app" v-bind:class="{'zhapp':locale_zh,'enapp':locale_en,'jaapp':locale_ja,'ruapp':locale_ru,'koapp':locale_ko}">
     <HeaderBanner v-show="showheader.showheader"></HeaderBanner>
     <router-view/>
     <FooterBar v-show="showfooter.showfooter"></FooterBar>
@@ -82,6 +82,27 @@ export default {
     },
     locale_en () {
       if(this.$store.state.locale == "en"){
+        return true
+      }else{
+        return false
+      }
+    },
+    locale_ja () {
+      if(this.$store.state.locale == "ja"){
+        return true
+      }else{
+        return false
+      }
+    },
+    locale_ru () {
+      if(this.$store.state.locale == "ru"){
+        return true
+      }else{
+        return false
+      }
+    },
+    locale_ko () {
+      if(this.$store.state.locale == "ko"){
         return true
       }else{
         return false

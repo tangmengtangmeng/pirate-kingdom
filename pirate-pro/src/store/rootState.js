@@ -88,6 +88,10 @@ const state = {
 	KittyCount: 0,			//kitty猫
 	CaptainKittyCount: 0,	//海盗猫
 	network: 0,
+	inickname: "",
+	iaccount: "",
+	iemail: "",
+	is_verify: "",
 	//合约参数
 	CaptainGameConfig_abiarray: CaptainGameConfig.abi,
 	CaptainGameConfig_address4: "0xff48deaf17b23842f91c204dca547e2107f2c751",

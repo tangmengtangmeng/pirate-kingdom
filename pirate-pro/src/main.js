@@ -9,9 +9,9 @@ import initCss from './components/css/init.css'
 import LangEn from './i18n/lang/en'
 import LangZhCH from './i18n/lang/zhCH'
 import LangZhHK from './i18n/lang/zhHK'
-/*import Langko from './i18n/lang/korea'
+import Langko from './i18n/lang/korea'
 import Langja from './i18n/lang/japan'
-import Langru from './i18n/lang/russion'*/
+import Langru from './i18n/lang/russion'
 import axios from 'axios'
 import service from "./util/service"
 import configData from "./util/configData"
@@ -38,9 +38,9 @@ const i18n = new VueI18n({
     'en': LangEn,
     'zh-ch': LangZhCH,
     'zh-hk': LangZhHK,
-    /*'ko': Langko,
+    'ko': Langko,
     'ja': Langja,
-    'ru': Langru*/
+    'ru': Langru
   }
 })
 

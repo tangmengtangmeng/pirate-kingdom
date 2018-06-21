@@ -19,8 +19,6 @@ var arrhash = [];
 
 service.init = function(){
 	
-    
-
 	console.log("初始化海盗网站==cookie:",document.cookie);
 	console.log("初始化海盗网站==昵称：",localStorage.getItem("昵称"));
 	console.log("初始化海盗网站==以太坊：",sessionStorage.getItem("我的以太坊账户"));
@@ -216,6 +214,9 @@ service.init = function(){
 			console.log("注册失败",error);
 		})
 	}
+
+	//调取用户信息
+	service.getmyinfo();
 	
 }
 
@@ -635,22 +636,43 @@ service.setnickname = function(){
 
 service.changenickname = function(nameObj){
 	var username = nameObj.name.toString();
+	var email = nameObj.email?nameObj.email.toString():"";
 	var tokenstr = store.state.myaccount;
 	/*var newsignature = web3.toHex("pirate_change_name:"+username);
 	console.log("十六进制",username,tokenstr,newsignature);*/
 	var url = configData.base_url + configData.set_username;
 	var address = store.state.myaccount;
 	var nowtime = new Date().getTime();
-	var secstr = "name="+username+"&time="+nowtime+"&token="+address+"&"+"09acE6EbXWdHWAjCQBqgU6GfKg7PgQza";
-	console.log("签名：",secstr);
-	secstr = encodeURI(secstr);
-	secstr = md5(secstr);
-	var postData = {
-		name: username,
-		token: address,
-		time: nowtime,
-		signature: secstr
-	};
+	var secstr;
+	var postData;
+	if(email){
+		secstr = md5(encodeURI("email="+email+"&name="+username+"&time="+(new Date().getTime())+"&token="+address+"&"+"09acE6EbXWdHWAjCQBqgU6GfKg7PgQza"));
+		console.log("签名：",secstr);
+		postData = {
+			name: username,
+			email: email,
+			token: address,
+			time: nowtime,
+			signature: secstr
+		};
+		
+		/*secstr = encodeURI(secstr);
+		secstr = md5(secstr);
+		console.log("签名：",secstr);*/
+	}else{
+		secstr = md5(encodeURI("name="+username+"&time="+(new Date().getTime())+"&token="+address+"&"+"09acE6EbXWdHWAjCQBqgU6GfKg7PgQza"));
+		console.log("签名：",secstr);
+		postData = {
+			name: username,
+			token: address,
+			time: nowtime,
+			signature: secstr
+		};
+		
+		/*secstr = encodeURI(secstr);
+		secstr = md5(secstr);*/
+	}
+	
 	/*web3.currentProvider.sendAsync({
 		id: 1,
 		method: 'personal_sign',
@@ -725,10 +747,13 @@ service.verifyEmail = function(m,a){
 		  axios.post(url,postData).then(function(response){
 		  	console.log("验证邮箱：",response);
 		  	if(response.data.state == 200){
-		  		alert("验证成功")
+		  		// alert("验证成功")
+		  		store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.home_hint_verifysuccessfully;
 		  		localStorage.setItem("验证邮箱",emailaddress);
 		  	}else if(response.data.state == 10010){
-		  		alert("该邮箱已经验证过")
+		  		store.dispatch("showsmallpopup");
+				store.state.alertmsg.alert = i18n.messages[i18n.locale].message.home_hint_emailexists;
 		  	}else if(response.data.state == 10011){
 		  		alert("验证请求太过频繁")
 		  	}else if(response.data.state == 500){
@@ -838,5 +863,31 @@ service.createKitties = function () {   //领取海盗猫
 	}
 }
 
+service.getmyinfo = function(){
+	var url = configData.base_url + configData.get_myinfo;
+	var nowtime = new Date().getTime();
+	var postData;
+	var address = store.state.myaccount;
+	var secstr = md5(encodeURI("time="+(new Date().getTime())+"&token="+address+"&"+"09acE6EbXWdHWAjCQBqgU6GfKg7PgQza"));
+	console.log("签名：",secstr);
+	postData = {
+		token: address,
+		time: nowtime,
+		signature: secstr
+	};
+	axios.post(url,postData).then(function(response){
+		console.log("查询用户信息：",response);
+		store.state.is_verify = response.data.data.is_verify;
+		if(response.data.data.is_verify){
+			store.state.inickname = response.data.data.name;
+			store.state.iaccount = response.data.data.token;
+			store.state.iemail = response.data.data.email;
+
+		}
+		
+	}).catch(function(error){
+		console.log("查询用户信息失败",error);
+	})
+}
 
 export default service

@@ -324,7 +324,7 @@ module.exports = {
 		,
 		general_hint_getkittysuccess:"取得成功!"
 		,
-		general_hint_getkittysuccess:"獲得海盗猫"
+		// general_hint_getkittysuccess:"獲得海盗猫"
 		
 	}
 }

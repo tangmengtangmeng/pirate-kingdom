@@ -151,17 +151,17 @@ export default {
 		var scrollleft = document.documentElement.scrollLeft || document.body.scrollLeft;
 		var asidebarheight = (val)/1920 * 436 + "px";
 
-		console.log("1111",scrolltop)
+		// console.log("1111",scrolltop)
 		if(scrolltop == 0){
 			_this.asidebartop = parseInt(topheight) + parseInt(asidebarheight)*0.22+"px";
-			console.log("1111",scrolltop)
+			// console.log("1111",scrolltop)
 		}else if(scrolltop <= parseInt(topheight)/2){
 			_this.asidebartop = parseInt(topheight) - scrolltop/4 + parseInt(asidebarheight)*0.22 +"px";
-			console.log("1111",scrolltop)
+			// console.log("1111",scrolltop)
 
 		}else{
 			_this.asidebartop = (val2 - parseInt(_this.asidebarheight))/2 + scrolltop + parseInt(asidebarheight)*0.22  +"px";
-			console.log("1111",scrolltop,_this.asidebartop)
+			// console.log("1111",scrolltop,_this.asidebartop)
 		}
 		
 		_this.asidebarright = -scrollleft + "px";

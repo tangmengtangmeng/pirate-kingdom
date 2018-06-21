@@ -2,9 +2,9 @@
   <div :style="{'height':popupheight,'top':popuptop}" class="bigpopup">
   	<div class="close" @click="closepopup"></div>
   	<div v-show="bigpopupBuymsg.buycard" class="buycard">
-		<div class="role" :class="{'role1':role1,'role2':role2,'role3':role3}"></div>
+		<div class="role" :class="{'role1':role1,'role2':role2,'role3':role3}"><p>{{$store.state.roletype}}</p></div>
 		<div class="introduce">
-		  	<div class="name"><div class="ghost"></div><p class="colorb">{{bigpopupBuymsg.buycard?((bigpopupBuymsg.player == 1)?$t("message.game_text_piratename3"):((bigpopupBuymsg.player == 2)?$t("message.game_text_piratename5"):$t("message.game_text_piratename6"))):""}} {{$t("message.game_text_level")}}1</p></div>
+		  	<div class="name"><div class="ghost"></div><p class="colorb">{{bigpopupBuymsg.buycard?((bigpopupBuymsg.player == 1)?$t("message.game_text_piratename3"):((bigpopupBuymsg.player == 2)?$t("message.game_text_piratename5"):$t("message.game_text_piratename6"))):""}} <span>{{$t("message.game_text_level")}}1</span></p></div>
 		  	<div class="moredetail colorb">{{bigpopupBuymsg.buycard?((bigpopupBuymsg.player == 1)?$t('message.game_text_story3'):((bigpopupBuymsg.player == 2)?$t('message.game_text_story5'):$t('message.game_text_story6'))):""}}</div>
 		  	<div class="ability">
 		  		<div class="row"><div class="col-30">{{$t("message.game_text_attack")}}</div><div class="col-30 colorw">{{bigpopupBuymsg.buycard?($store.state.captain[bigpopupBuymsg.player - 1].attack1+" - "+$store.state.captain[bigpopupBuymsg.player - 1].attack2):""}}</div></div>
@@ -18,7 +18,7 @@
 		<div class="known">{{$t("message.game_text_confirmpurchase")}}"{{bigpopupBuymsg.player == 1?$t("message.game_text_piratename3"):(bigpopupBuymsg.player == 2?$t("message.game_text_piratename5"):$t("message.game_text_piratename6"))}}"<br/>{{$t("message.game_hint_blockchain")}}</div>
 		<div class="price"><div>{{confirm_price}} ETH</div></div>
 		<div class="cancelbtn bold" @click="closepopup"><p>{{$t("message.general_button_cancel")}}</p></div>
-		<div class="nextbtn bold" @click="buycard"><p>{{$t("message.general_button_ok")}}</p></div>
+		<div class="nextbtn bold" @click="buycard"><p>{{$t("message.general_button_buynow")}}</p></div>
 	</div>
 	<div v-show="bigpopupBuymsg.myassets" class="myassets">
 		<div class="myassetstitle"><div class="ghost"></div><div>{{$t("message.game_title_myassets")}}</div></div>
@@ -31,15 +31,17 @@
 		<p>{{$t("message.home_text_getChests")}}</p>
 		<input type="text" v-model="inviteurl" readonly="readonly" id="inviteinput"/>
 		<div class="invitebtn" @click="copyid"></div>
-		<p class="mybox">{{$t("message.home_text_countofchest")}} {{boxamount}}</p>
 	</div>
 	<div v-show="bigpopupBuymsg.verifyemail" class="verifyemail">
 		<div class="setnicktitle"><div class="ghost"></div><div>{{$t("message.home_text_userinfo")}}</div></div>
-		<input type="text" maxlength="20" v-model="inputnickname" class="inputnickname" v-bind:placeholder="alertplaceholder" @focus="clearplace"/><br/>
+		<p v-show="hasverify" class="alertp">{{$t("message.home_hint_emailexists")}}</p>
+		<p v-show="nameisnull" class="alertp">{{$t("message.game_text_setname")}}</p>
+		<p v-show="mailerror" class="alertp">{{$t("message.home_hint_incorrectemail")}}</p>
+		<input type="text" maxlength="20" v-model="inputnickname" class="inputnickname" v-bind:placeholder="alertplaceholder" @focus="clearplace1"/><br/>
 		<input type="text" v-model="inputethaccount" class="inputethaccount" readonly="readonly"/><br/>
-		<input type="text" v-model="inputmail" class="inputemail" v-bind:placeholder="mailplaceholder" @focus="clearplace"/><div class="verifybtn" @click="verifyEmail"><p>{{$t("message.home_button_verify")}}</p></div>
-		<p v-show="notverify">{{$t("message.home_text_verifyhint")}}</p>
-		<p v-show="!notverify">{{$t("message.home_hint_emailexists")}}</p>
+		<input type="text" v-model="inputmail" class="inputemail" v-bind:readonly="!notverify"/>
+		<div class="verifybtn" @click="verifyEmail" v-show="notverify"><p>{{$t("message.home_button_verify")}}</p></div>
+		<p v-bind:class="{'hidden':!notverify}">{{$t("message.home_text_verifyhint")}}</p>
 		<div class="savebtn" @click="changenickname"><p>{{$t("message.general_button_ok")}}</p></div>
 	</div>	
 	<!--add by Anna @2018/6/20-->
@@ -68,23 +70,31 @@ export default {
       alertplaceholder: "",
       mailplaceholder: "",
       inputnickname: "",
+      inputethaccount: "",
       inputmail: "",
-      notverify: true,
+      notverify: "",
+      hasverify: "",
       boxamount: "-",
       inviteurl: "",
-
+      nameisnull: false,
+      mailerror: false,
     }
   },
   methods: {
   	closepopup: function () {
-  		this.inputnickname = "";
-  		this.alertplaceholder = "";
-  		this.mailplaceholder = "";
-  		this.inputmail = "";
-  		this.notverify = true;
+  		this.nameisnull = false;
+        this.mailerror=false;
+        /*this.notverify =false;
+        this.hasverify=false;*/
   		this.$store.dispatch("closebigpopup");
   		this.$store.dispatch("clearbigpopup");
   		
+  	},
+  	initerr: function () {
+  		this.nameisnull = false;
+        this.mailerror=false;
+        this.notverify =false;
+        this.hasverify=false;
   	},
   	buycard: function () {
   		var i = this.bigpopupBuymsg.player;
@@ -99,35 +109,54 @@ export default {
   	changenickname: function () {
   		var name = this.inputnickname;
   		console.log("设置新昵称名是：",name);
+
   		if(name){
-  			var data = {name:name}
-	  		this.service.changenickname(data);
-	  		this.closepopup();
+  			if(!this.notverify){
+  				var data = {name:name,email:this.inputmail};
+		  		this.service.changenickname(data);
+		  		console.log("9999999");
+		  		this.closepopup();
+  			}else{
+  				var reg = new RegExp("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$");
+				if(!reg.test(this.inputmail)){
+					this.initerr();
+					this.mailerror = true;
+					return;
+				}
+				var data = {name:name}
+		  		this.service.changenickname(data);
+		  		this.closepopup();
+  			}
+			
+  			
   		}else{
-  			this.alertplaceholder = this.$t("message.game_text_setname");
+  			this.initerr();
+  			this.nameisnull = true;
   		}
   	},
-  	clearplace: function () {
-  		this.alertplaceholder = "";
-  		this.mailplaceholder = "";
+  	clearplace1: function () {
+  		this.inputnickname ="";
+        
+  	},
+  	clearplace2: function () {
+  		this.inputmail="";
   	},
   	verifyEmail: function () {
-  		if(!this.inputnickname){
-  			this.alertplaceholder = this.$t("message.game_text_setname");
-  			return;
-  		}
+  		
   		var myaccount = this.inputethaccount;
   		var mail = this.inputmail;
   		var reg = new RegExp("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$");
   		if(mail && myaccount){
-  			if(localStorage.getItem("验证邮箱") == mail){
-				this.notverify = false;
-				return;
-			}
 			if(!reg.test(mail)){
-				this.inputmail = "";
-				this.mailplaceholder = this.$t("message.home_hint_incorrectemail");
+				this.initerr();
+				this.mailerror = true;
 				return;
+			}else{
+				if(localStorage.getItem("验证邮箱") == mail){
+					this.initerr();
+					this.notverify = true;
+					return;
+				}
 			}
   			this.service.verifyEmail(mail,myaccount);
   			this.closepopup();
@@ -135,7 +164,8 @@ export default {
   			if(!myaccount){
 
   			}else if(!mail){
-  				this.mailplaceholder = this.$t("message.home_hint_incorrectemail");
+  				this.initerr();
+  				this.mailerror = true;
   			}
   		}
   	},
@@ -192,8 +222,47 @@ export default {
       this.popuptop = (val2 - parseInt(this.popupheight) )/2 + scrolltop + "px";
     // }
     
+    //默认显示有昵称
+    var _this = this;
+    setTimeout(function(){
+    	_this.inputnickname = _this.$store.state.inickname;
+    	_this.inputethaccount = _this.$store.state.iaccount;
+    	_this.inputmail = _this.$store.state.iemail;
+    	_this.notverify = !_this.$store.state.is_verify;
+        _this.hasverify = _this.$store.state.is_verify;
+    	console.log("0000",_this.inputnickname);
+    },2000)
     
-    
+
+    /*//默认显示有昵称
+    var arr = JSON.parse(localStorage.getItem("昵称"));
+    if(!arr){
+    	return;
+    }
+    for(var i=0;i<arr.length;i++){
+		if(arr[i].meta.indexOf(web3.eth.accounts[0]) >-1){
+			this.inputnickname = arr[i].name;
+		}else{
+			if(this.$store.state.myaccount){
+				if(arr[i].meta.indexOf(this.$store.state.myaccount)>-1){
+					this.inputnickname = arr[i].name;
+				}else{
+					this.inputnickname = arr[0].name;
+				}
+			}else{
+				this.inputnickname = arr[0].name;
+			}
+			
+		}
+	}
+    //默认检测邮箱是否已经验证
+    console.log("验证邮箱",localStorage.getItem("验证邮箱"))
+    if(localStorage.getItem("验证邮箱")){
+    	this.initerr();
+		this.notverify = false;
+		this.hasverify = true;
+		this.inputmail = localStorage.getItem("验证邮箱");
+	}*/
 
   },
   computed: {
@@ -259,13 +328,14 @@ export default {
     		return true;
     	}
     },
-    inputethaccount () {
+    /*inputethaccount () {
     	if(this.$store.state.myaccount){
     		return this.$store.state.myaccount
     	}else{
     		return ""
     	}
-    },
+    },*/
+
     
   },
   destroyed () {
@@ -338,6 +408,9 @@ export default {
 		height: 8.5%;
 		position: relative;
 		left: 20%;
+	}
+	.name span{
+		font-size: 0.7em;
 	}
 	.name .ghost{
 		width: 10%;
@@ -865,12 +938,14 @@ export default {
 	}
 	.verifybtn{
 		width: 15%;
-		height: 8%;
-		position: relative;
-		top:-6%;
-    	left: 60%;
-    	color: #fff;
-    	display: table;
+	    height: 7.5%;
+	    position: relative;
+	    top: -5.8%;
+	    left: 60%;
+	    color: #fff;
+	    display: table;
+	    background-color: rgb(223,89,0);
+	    border-radius: 5px;
 	}
 	.verifybtn:hover{
 		cursor: pointer;
@@ -878,6 +953,14 @@ export default {
 	.verifybtn>p{
 		display: table-cell;
 		vertical-align: middle;
+	}
+	.verifyemail .alertp{
+		color: rgb(223,89,0);
+		position: absolute;
+		top: 27%;
+		width: 51%;
+    	text-align: left;
+    	left: 24%;
 	}
 	.verifyemail>p{
 		color: rgb(223,89,0);

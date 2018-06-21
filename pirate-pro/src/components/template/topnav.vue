@@ -18,10 +18,9 @@
 	        <li></li>
 	        <li class="en" @click="changeLocale('en')" v-show="selectlan&&!lan_en"></li>
 	        <li class="zh" @click="changeLocale('zh-ch')" v-show="selectlan&&!lan_zh"></li>
-          <!-- <li class="ko" @click="changeLocale('ko')" v-show="selectlan&&!lan_ko"></li>
+          <li class="ko" @click="changeLocale('ko')" v-show="selectlan&&!lan_ko"></li>
           <li class="ja" @click="changeLocale('ja')" v-show="selectlan&&!lan_ja"></li>
-          <li class="ru" @click="changeLocale('ru')" v-show="selectlan&&!lan_ru"></li> -->
-          
+          <li class="ru" @click="changeLocale('ru')" v-show="selectlan&&!lan_ru"></li>
 	    </ul>
       <div class="invite" @click="showinvite"><p>{{$t("message.home_button_invite")}}</p></div>
 		</div>
@@ -104,15 +103,36 @@ export default {
     lan_en () {
       if(this.$store.state.locale == "en"){
         return true
-      }else if(this.$store.state.locale == "zh-ch"){
+      }else{
         return false
       }
     },
     lan_zh () {
-      if(this.$store.state.locale == "en"){
-        return false
-      }else if(this.$store.state.locale == "zh-ch"){
+      if(this.$store.state.locale == "zh-ch"){
         return true
+      }else{
+        return false
+      }
+    },
+    lan_ja () {
+      if(this.$store.state.locale == "ja"){
+        return true
+      }else{
+        return false
+      }
+    },
+    lan_ru () {
+      if(this.$store.state.locale == "ru"){
+        return true
+      }else{
+        return false
+      }
+    },
+    lan_ko () {
+      if(this.$store.state.locale == "ko"){
+        return true
+      }else{
+        return false
       }
     },
     
@@ -130,7 +150,7 @@ export default {
   min-width: 1000px;
 	height: 5%;
 	position: fixed;
-	top: 20px;
+	top: 0;
 	background:rgba(0,0,0,0.5); 
   z-index: 100;
 }
@@ -175,6 +195,7 @@ export default {
 }
 .twitter,.facebook,.discord,.telegram,.wechat,.qq{
   width: 3%;
+  min-width: 25px;
   height: 74%;
   margin-left: 0.6%;
 }
@@ -274,9 +295,9 @@ export default {
 }
 .topright ul{
     width: 6%;
-    min-width: 0;
+    min-width: 50px;
     height: 73%;
-    min-height: 0;
+    min-height: 35px;
     float: right;
     background:url("../../assets/arrow.png") right center no-repeat;
     background-size: contain;
@@ -355,7 +376,7 @@ export default {
   }
   .topright .row{
     width: 20%;
-    min-width: 110px;
+    min-width: 167px;
     height: 100%;
     float: right;
     margin-right: 20%;
